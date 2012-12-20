@@ -1,4 +1,4 @@
-X0Y0::Application.routes.draw do
+Sovs::Application.routes.draw do
   devise_for :users
   
   resources :users do
