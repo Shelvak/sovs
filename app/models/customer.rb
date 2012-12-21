@@ -21,6 +21,7 @@ class Customer < ActiveRecord::Base
     :cuit, :phone
 
   validate :validate_customer_kind
+  validates :iva_kind, :bill_kind, presence: true
   validates :business_name, :cuit, uniqueness: true
 
   def to_s

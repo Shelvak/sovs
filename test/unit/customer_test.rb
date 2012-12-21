@@ -28,17 +28,11 @@ class CustomerTest < ActiveSupport::TestCase
   end
     
   test 'validates blank attributes' do
-    @customer.business_name = ''
-    @customer.cuit = ''
     @customer.iva_kind = ''
     @customer.bill_kind = ''
     
     assert @customer.invalid?
-    assert_equal 4, @customer.errors.size
-    assert_equal [error_message_from_model(@customer, :business_name, :blank)],
-      @customer.errors[:business_name]
-    assert_equal [error_message_from_model(@customer, :cuit, :blank)],
-      @customer.errors[:cuit]
+    assert_equal 2, @customer.errors.size
     assert_equal [error_message_from_model(@customer, :iva_kind, :blank)],
       @customer.errors[:iva_kind]
     assert_equal [error_message_from_model(@customer, :bill_kind, :blank)],
@@ -56,5 +50,23 @@ class CustomerTest < ActiveSupport::TestCase
       @customer.errors[:cuit]
     assert_equal [error_message_from_model(@customer, :business_name, :taken)],
       @customer.errors[:business_name]
+  end
+
+  test 'validate customer kind' do
+    @customer.name = ''
+    @customer.business_name = ''
+
+    assert @customer.invalid?
+    assert_equal 1, @customer.errors.size
+    assert_equal [error_message_from_model(@customer, :name, :blank)],
+      @customer.errors[:name]
+
+    @customer.business_name = 'Some'
+    @customer.cuit = ''
+
+    assert @customer.invalid?
+    assert_equal 1, @customer.errors.size
+    assert_equal [error_message_from_model(@customer, :cuit, :blank)],
+      @customer.errors[:cuit]
   end
 end
