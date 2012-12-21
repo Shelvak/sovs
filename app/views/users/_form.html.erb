@@ -7,6 +7,7 @@
             <%= f.input :name, input_html: { autofocus: true, maxlength: 255 } %>
             <%= f.input :lastname, input_html: { maxlength: 255 } %>
             <%= f.input :email, required: true, input_html: { maxlength: 255 } %>
+            <%= place_selector_for_user(f) %>
 
             <% if ['new', 'create'].include?(action_name) %>
               <%= f.input :password, required: true, input_html: { maxlength: 255 } %>

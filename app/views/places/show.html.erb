@@ -1,0 +1,8 @@
+<div class="readonly-data">
+  <h2><%= @place %></h2>
+</div>
+
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_place_path(@place) if can? :update, @place %> |
+  <%= link_to t('label.list'), places_path %>
+</div>

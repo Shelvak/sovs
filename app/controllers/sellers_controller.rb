@@ -1,4 +1,8 @@
 class SellersController < ApplicationController
+  before_filter :authenticate_user!
+      
+  check_authorization
+  load_and_authorize_resource
   
   # GET /sellers
   # GET /sellers.json

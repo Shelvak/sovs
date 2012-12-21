@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121221011259) do
+ActiveRecord::Schema.define(:version => 20121221024233) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(:version => 20121221011259) do
 
   add_index "customers", ["business_name"], :name => "index_customers_on_business_name", :unique => true
   add_index "customers", ["cuit"], :name => "index_customers_on_cuit", :unique => true
+
+  create_table "places", :force => true do |t|
+    t.string   "description", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "places", ["description"], :name => "index_places_on_description", :unique => true
 
   create_table "providers", :force => true do |t|
     t.string   "name",       :null => false
@@ -70,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20121221011259) do
     t.integer  "lock_version",           :default => 0,  :null => false
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.integer  "place_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

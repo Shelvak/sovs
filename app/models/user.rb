@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :lastname, :email, :password, :password_confirmation,
-    :role, :remember_me, :lock_version
+    :role, :remember_me, :lock_version, :place_id
   
   # Defaul order
   default_scope order('lastname ASC')
@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :name, :lastname, :email, length: { maximum: 255 }, allow_nil: true,
     allow_blank: true
+
+  belongs_to :place
   
   def initialize(attributes = nil, options = {})
     super(attributes, options)
