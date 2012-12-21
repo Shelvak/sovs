@@ -1,0 +1,25 @@
+<div class="readonly-data">
+  <h2><%= @seller %></h2>
+
+  <p>
+    <strong><%= Seller.human_attribute_name 'code' %></strong>:
+    <%= @seller.code %>
+  </p>
+  <p>
+    <strong><%= Seller.human_attribute_name 'name' %></strong>:
+    <%= @seller.name %>
+  </p>
+  <p>
+    <strong><%= Seller.human_attribute_name 'address' %></strong>:
+    <%= @seller.address %>
+  </p>
+  <p>
+    <strong><%= Seller.human_attribute_name 'phone' %></strong>:
+    <%= @seller.phone %>
+  </p>
+  
+</div>
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_seller_path(@seller) if can? :update, @seller %> |
+  <%= link_to t('label.list'), sellers_path %>
+</div>

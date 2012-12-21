@@ -1,4 +1,10 @@
 Sovs::Application.routes.draw do
+  resources :sellers
+
+
+  resources :providers
+
+
   devise_for :users
   
   resources :users do

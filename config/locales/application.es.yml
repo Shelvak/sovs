@@ -1,5 +1,5 @@
 'es':
-  app_name: 'Sovs'
+  app_name: 'Sist. Org de Ventas y Stock'
   
   attributes:
     created_at: 'Creación'
@@ -7,11 +7,28 @@
     
   activerecord:
     models:
+      provider:
+        one: 'Proveedor'
+        other: 'Proveedores'
+      seller:
+        one: 'Vendedor'
+        other: 'Vendedores'
       user:
         one: 'Usuario'
         other: 'Usuarios'
       
     attributes:
+      provider:
+        name: 'Nombre'
+        contact: 'Persona de contacto'
+        address: 'Dirección'
+        cuit: 'CUIT'
+        phone: 'Teléfono'
+      seller:
+        code: 'Código'
+        name: 'Nombre'
+        address: 'Dirección'
+        phone: 'Teléfono'
       user:
         name: 'Nombre'
         lastname: 'Apellido'
@@ -42,6 +59,8 @@
   menu:
     actions:
       logout: 'Salir de la aplicación'
+    providers: 'Proveedores'
+    sellers: 'Vendedores'
     users: 'Usuarios'
     
   messages:
@@ -54,6 +73,28 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
+    providers:
+      index_title: 'Listado de proveedores'
+      show_title: 'Detalle de proveedor'
+      new_title: 'Nuevo proveedor'
+      edit_title: 'Modificar prodveedor'
+      correctly_created: 'Proveedor agregado correctamente.'
+      correctly_updated: 'Proveedor actualizado correctamente.'
+      stale_object_error: 'El proveedor no pudo ser actualizado, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ningún proveedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Proveedor</span>'
+      new: 'Nuevo Proveedor'
+    sellers:
+      index_title: 'Listado de vendedores'
+      show_title: 'Detalle de vendedor'
+      new_title: 'Nuevo vendedor'
+      edit_title: 'Modificar prodveedor'
+      correctly_created: 'Vendedor agregado correctamente.'
+      correctly_updated: 'Vendedor actualizado correctamente.'
+      stale_object_error: 'El vendedor no pudo ser actualizado, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ningún vendedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Vendedor</span>'
+      new: 'Nuevo Vendedor'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'
