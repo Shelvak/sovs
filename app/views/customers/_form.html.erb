@@ -1,0 +1,18 @@
+<%= simple_form_for @customer, defaults: { input_html: { class: 'span6' } } do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :business_name %>
+    <%= iva_kind_select_for_customer(f) %>
+    <%= bill_kind_select_for_customer(f) %>
+    <%= f.input :address %>
+    <%= f.input :cuit %>
+    <%= f.input :phone %>
+  </div>
+
+  <div class="form-actions">
+    <div class="pull-right"><%= yield :form_actions %></div>
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+<% end %>

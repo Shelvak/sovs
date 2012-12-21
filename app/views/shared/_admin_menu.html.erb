@@ -6,13 +6,16 @@
   ) %>
   <ul class='dropdown-menu'>
     <%= show_menu_link(
-      name: 'users', controllers: 'users', path: users_path
-    ) if can?(:read, User) %>
+      name: 'customers', controllers: 'customers', path: customers_path
+    ) if can?(:read, Customer) %>
     <%= show_menu_link(
       name: 'providers', controllers: 'providers', path: providers_path
     ) if can?(:read, Provider) %>
     <%= show_menu_link(
       name: 'sellers', controllers: 'sellers', path: sellers_path
     ) if can?(:read, Seller) %>
+    <%= show_menu_link(
+      name: 'users', controllers: 'users', path: users_path
+    ) if can?(:read, User) %>
   </ul>
 </li>

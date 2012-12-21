@@ -1,4 +1,7 @@
 Sovs::Application.routes.draw do
+  resources :customers
+
+
   resources :sellers
 
 

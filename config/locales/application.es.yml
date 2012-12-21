@@ -7,6 +7,9 @@
     
   activerecord:
     models:
+      customer:
+        one: 'Cliente'
+        other: 'Clientes'
       provider:
         one: 'Proveedor'
         other: 'Proveedores'
@@ -18,6 +21,14 @@
         other: 'Usuarios'
       
     attributes:
+      customer:
+        name: 'Nombre'
+        business_name: 'Razón social'
+        address: 'Dirección'
+        cuit: 'CUIT'
+        phone: 'Teléfono'
+        iva_kind: 'Condición frente al IVA'
+        bill_kind: 'Tipo de factura'
       provider:
         name: 'Nombre'
         contact: 'Persona de contacto'
@@ -59,6 +70,7 @@
   menu:
     actions:
       logout: 'Salir de la aplicación'
+    customers: 'Clientes'
     providers: 'Proveedores'
     sellers: 'Vendedores'
     users: 'Usuarios'
@@ -73,6 +85,28 @@
       empty_search:
         title:
           html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
+    customers:
+      index_title: 'Listado de clientees'
+      show_title: 'Detalle de cliente'
+      new_title: 'Nuevo cliente'
+      edit_title: 'Modificar prodveedor'
+      correctly_created: 'Cliente agregado correctamente.'
+      correctly_updated: 'Cliente actualizado correctamente.'
+      stale_object_error: 'El cliente no pudo ser actualizado, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ningún cliente hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Cliente</span>'
+      new: 'Nuevo Cliente'
+      kinds:
+        iva_resp_insc: 'IVA RESPONSABLE INSCRIPTO'
+        iva_resp_not_insc: 'IVA RESPONSABLE NO INSCRIPTO'
+        not_resp: 'NO RESPONSABLE'
+        exempt_iva: 'IVA EXENTO'
+        resp_monot: 'RESPONSABLE MONOTRIBUTO'
+        final_consumer: 'CONSUMIDOR FINAL'
+        not_categoriced: 'SUJETO NO CATEGORIZADO'
+        social_monot: 'MONOTRIBUTISTA SOCIAL'
+        small_event_contributor: 'PEQUEÑO CONTRIBUYENTE EVENTUAL'
+        social_small_event_contributor: 'PEQUEÑO CONTRIBUYENTE EVENTUAL SOCIAL'
     providers:
       index_title: 'Listado de proveedores'
       show_title: 'Detalle de proveedor'
