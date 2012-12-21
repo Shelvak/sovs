@@ -8,7 +8,9 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @title = t('view.customers.index_title')
-    @customers = Customer.page(params[:page])
+    @searchable = true
+    @customers = Customer.filtered_list(params[:q]).order(
+      :name, :business_name).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

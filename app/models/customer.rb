@@ -1,6 +1,6 @@
 class Customer < ActiveRecord::Base
   has_paper_trail
-  has_magick_columns business_name: :string, cuit: :string
+  has_magick_columns name: :string, business_name: :string, cuit: :string
 
   KINDS = {
     iva_resp_insc: 'I',
@@ -20,11 +20,15 @@ class Customer < ActiveRecord::Base
   attr_accessible :name, :business_name, :iva_kind, :bill_kind, :address,
     :cuit, :phone
 
-  validates :business_name, :iva_kind, :bill_kind, :cuit, presence: true
+  validate :validate_customer_kind
   validates :business_name, :cuit, uniqueness: true
 
   def to_s
-    [self.business_name, self.cuit].join(' - ')
+    if self.business_name.present?
+      [self.business_name, self.cuit].join(' - ') 
+    else
+      self.name
+    end
   end
 
   alias_method :label, :to_s
@@ -36,6 +40,15 @@ class Customer < ActiveRecord::Base
     }
 
     super(default_options.merge(options || {}))
+  end
+
+  def validate_customer_kind
+    if self.business_name.present?
+      self.errors.add :cuit, :blank if self.cuit.blank?
+    else
+      self.errors.add :name, :blank if self.name.blank?
+    end
+
   end
 
   def self.filtered_list(query)

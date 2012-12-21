@@ -16,7 +16,7 @@ module CustomersHelper
 
   def iva_kind_select_for_customer(form)
     form.input :iva_kind, collection: customer_kinds_for_select,
-      selected: form.object.iva_kind, prompt: false, 
+      selected: form.object.iva_kind || 'F', prompt: false, 
       required: false, input_html: { class: 'span6' }
   end
 end

@@ -11,7 +11,7 @@
   </p>
   <p>
     <strong><%= Customer.human_attribute_name 'iva_kind' %></strong>:
-    <%= @customer.iva_kind %>
+    <%= translation_for_customer_kind @customer.iva_kind %>
   </p>
   <p>
     <strong><%= Customer.human_attribute_name 'bill_kind' %></strong>:
