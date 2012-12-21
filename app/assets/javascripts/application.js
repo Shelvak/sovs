@@ -21,3 +21,7 @@
 //= require date_pickers
 //= require mobile
 //= require users
+//= require customers
+//= require providers
+//= require places
+//= require sellers

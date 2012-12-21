@@ -29,7 +29,7 @@ class PlacesControllerTest < ActionController::TestCase
       post :create, place: Fabricate.attributes_for(:place)
     end
 
-    assert_redirected_to place_url(assigns(:place))
+    assert_redirected_to places_url
   end
 
   test "should show place" do
@@ -51,7 +51,7 @@ class PlacesControllerTest < ActionController::TestCase
   test "should update place" do
     put :update, id: @place, 
       place: Fabricate.attributes_for(:place)
-    assert_redirected_to place_url(assigns(:place))
+    assert_redirected_to places_url
   end
 
   test "should destroy place" do
