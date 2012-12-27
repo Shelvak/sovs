@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121221031507) do
+ActiveRecord::Schema.define(:version => 20121227153840) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -37,13 +37,19 @@ ActiveRecord::Schema.define(:version => 20121221031507) do
   add_index "places", ["description"], :name => "index_places_on_description", :unique => true
 
   create_table "providers", :force => true do |t|
-    t.string   "name",       :null => false
+    t.string   "name",        :null => false
     t.string   "contact"
     t.string   "address"
-    t.string   "cuit",       :null => false
+    t.string   "cuit",        :null => false
     t.string   "phone"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "other_phone"
+    t.string   "locality"
+    t.string   "city"
+    t.string   "province"
+    t.string   "fax"
+    t.integer  "postal_code"
   end
 
   add_index "providers", ["cuit"], :name => "index_providers_on_cuit", :unique => true

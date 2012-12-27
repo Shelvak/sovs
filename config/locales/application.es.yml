@@ -40,6 +40,12 @@
         address: 'Dirección'
         cuit: 'CUIT'
         phone: 'Teléfono'
+        other_phone: 'Otro teléfono'
+        fax: 'Fax'
+        locality: 'Localidad'
+        city: 'Departamento'
+        province: 'Provincia'
+        postal_code: 'Código postal'
       seller:
         code: 'Código'
         name: 'Nombre'

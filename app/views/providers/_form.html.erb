@@ -1,12 +1,29 @@
-<%= simple_form_for @provider, defaults: { input_html: { class: 'span6' } } do |f| %>
+<%= simple_form_for @provider, defaults: { input_html: { class: 'span10' } } do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :contact %>
-    <%= f.input :address %>
-    <%= f.input :cuit %>
-    <%= f.input :phone %>
+    <div class='row-fluid'>
+      <div class='span6'>
+        <%= f.input :name %>
+        <%= f.input :contact %>
+        <%= f.input :address %>
+        <%= f.input :cuit %>
+        <%= f.input :phone %>
+      </div>
+      <div class='span6'>
+        <%= f.input :province, collection: argentina_provinces, selected: 'Mendoza' %>
+        <%= f.input :city, collection: ['Seleccione provincia por favor'] %>
+        <%= f.input :locality %>
+        <div class='row-fluid'>
+          <div class='span4'>
+            <%= f.input :postal_code, input_html: { class: 'span8' } %>
+          </div>
+          <div class='span8'>
+            <%= f.input :fax, input_html: { class: 'span9' } %>
+          </div>
+        <%= f.input :other_phone %>
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">

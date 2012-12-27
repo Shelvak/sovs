@@ -2,7 +2,8 @@ class Provider < ActiveRecord::Base
   has_paper_trail
   has_magick_columns name: :string, cuit: :string
 
-  attr_accessible :name, :contact, :address, :cuit, :phone
+  attr_accessible :name, :contact, :address, :cuit, :phone, :other_phone,
+    :locality, :city, :province, :fax, :postal_code
 
   validates :name, :cuit, presence: true
   validates :cuit, uniqueness: true

@@ -1,26 +1,56 @@
 <div class="readonly-data">
   <h2><%= @provider %></h2>
 
-  <p>
-    <strong><%= Provider.human_attribute_name 'name' %></strong>:
-    <%= @provider.name %>
-  </p>
-  <p>
-    <strong><%= Provider.human_attribute_name 'contact' %></strong>:
-    <%= @provider.contact %>
-  </p>
-  <p>
-    <strong><%= Provider.human_attribute_name 'address' %></strong>:
-    <%= @provider.address %>
-  </p>
-  <p>
-    <strong><%= Provider.human_attribute_name 'cuit' %></strong>:
-    <%= @provider.cuit %>
-  </p>
-  <p>
-    <strong><%= Provider.human_attribute_name 'phone' %></strong>:
-    <%= @provider.phone %>
-  </p>
+  <div class='row-fluid'>
+    <div class='span6'>
+      <p>
+        <strong><%= Provider.human_attribute_name 'name' %></strong>:
+        <%= @provider.name %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'contact' %></strong>:
+        <%= @provider.contact %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'address' %></strong>:
+        <%= @provider.address %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'cuit' %></strong>:
+        <%= @provider.cuit %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'phone' %></strong>:
+        <%= @provider.phone %>
+      </p>
+    </div>
+    <div class='span6'>
+      <p>
+        <strong><%= Provider.human_attribute_name 'postal_code' %></strong>:
+        <%= @provider.postal_code %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'locality' %></strong>:
+        <%= @provider.locality %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'city' %></strong>:
+        <%= @provider.city %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'province' %></strong>:
+        <%= @provider.province %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'other_phone' %></strong>:
+        <%= @provider.other_phone %>
+      </p>
+      <p>
+        <strong><%= Provider.human_attribute_name 'fax' %></strong>:
+        <%= @provider.fax %>
+      </p>
+    </div>
+  </div>
   
 </div>
 <div class="form-actions">
