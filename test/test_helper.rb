@@ -50,14 +50,13 @@ class ActionDispatch::IntegrationTest
     fill_in 'user_email', with: user.email
     fill_in 'user_password', with: '123456'
     
-    first(:css, '.btn.btn-primary').click
+    find('.btn-primary.submit').click
     
     assert_equal users_path, current_path
-    
     assert_page_has_no_errors!
-    assert page.has_css?('footer.alert')
+    assert page.has_css?('.alert.alert-info')
     
-    within 'footer.alert' do
+    within '.alert.alert-info' do
       assert page.has_content?(I18n.t('devise.sessions.signed_in'))
     end
   end

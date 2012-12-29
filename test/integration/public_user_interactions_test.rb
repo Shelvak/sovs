@@ -19,8 +19,7 @@ class PublicUserInteractionsTest < ActionDispatch::IntegrationTest
     
     assert_page_has_no_errors!
     
-    find('.dropdown-toggle').click
-    first(:link, '¿Olvidaste tu contraseña?').click
+    find('#reset-password').click
 
     assert_page_has_no_errors!
     assert_equal new_user_password_path, current_path
@@ -28,15 +27,15 @@ class PublicUserInteractionsTest < ActionDispatch::IntegrationTest
     fill_in 'user_email', with: user.email
     
     assert_difference 'ActionMailer::Base.deliveries.size' do
-      first(:css, '.btn.btn-primary').click
+      find('.btn-primary.submit').click
     end
     
     assert_equal new_user_session_path, current_path
     
     assert_page_has_no_errors!
-    assert page.has_css?('footer.alert')
+    assert page.has_css?('.alert.alert-info')
     
-    within 'footer.alert' do
+    within '.alert.alert-info' do
       assert page.has_content?(I18n.t('devise.passwords.send_instructions'))
     end
   end
@@ -49,9 +48,9 @@ class PublicUserInteractionsTest < ActionDispatch::IntegrationTest
     assert_equal new_user_session_path, current_path
     
     assert_page_has_no_errors!
-    assert page.has_css?('footer.alert')
+    assert page.has_css?('.alert.alert-info')
     
-    within 'footer.alert' do
+    within '.alert.alert-info' do
       assert page.has_content?(I18n.t('devise.sessions.signed_out'))
     end
   end
