@@ -1,0 +1,78 @@
+<div class="readonly-data">
+  <h2><%= @product %></h2>
+
+  <div class='row-fluid'>
+    <div class='span6'>
+      <p>
+        <strong><%= Product.human_attribute_name 'code' %></strong>:
+        <%= @product.code %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'description' %></strong>:
+        <%= @product.description %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'retail_unit' %></strong>:
+        <%= @product.retail_unit %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'purchase_unit' %></strong>:
+        <%= @product.purchase_unit %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'unity_relation' %></strong>:
+        <%= @product.unity_relation %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'total_stock' %></strong>:
+        <%= @product.total_stock %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'min_stock' %></strong>:
+        <%= @product.min_stock %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'packs' %></strong>:
+        <%= @product.packs %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'pack_content' %></strong>:
+        <%= @product.pack_content %>
+      </p>
+    </div>
+    <div class='span6'>
+      <p>
+        <strong><%= Product.human_attribute_name 'cost' %></strong>:
+        <%= number_to_currency @product.cost %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'iva_cost' %></strong>:
+        <%= number_to_currency @product.iva_cost %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'gain' %></strong>:
+        <%= "#{@product.gain} %" %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'retail_price' %></strong>:
+        <%= number_to_currency @product.retail_price %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'unit_price' %></strong>:
+        <%= number_to_currency @product.unit_price %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'special_price' %></strong>:
+        <%= number_to_currency @product.special_price %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'provider_id' %></strong>:
+        <%= link_to @product.provider, provider_path(@product.provider) %>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="form-actions">
+  <%= link_to t('label.edit'), edit_product_path(@product) if can? :update, @product %> |
+  <%= link_to t('label.list'), products_path %>
+</div>

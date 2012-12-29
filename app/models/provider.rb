@@ -8,6 +8,8 @@ class Provider < ActiveRecord::Base
   validates :name, :cuit, presence: true
   validates :cuit, uniqueness: true
 
+  has_many :products
+
   def to_s
     [self.name, self.cuit].join(' - ')
   end

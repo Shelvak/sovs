@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227153840) do
+ActiveRecord::Schema.define(:version => 20121229171740) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -35,6 +35,31 @@ ActiveRecord::Schema.define(:version => 20121227153840) do
   end
 
   add_index "places", ["description"], :name => "index_places_on_description", :unique => true
+
+  create_table "products", :force => true do |t|
+    t.integer  "code",                                                       :null => false
+    t.string   "description",                                                :null => false
+    t.string   "retail_unit",    :limit => 2
+    t.string   "purchase_unit",  :limit => 2
+    t.decimal  "unity_relation",              :precision => 15, :scale => 2
+    t.decimal  "total_stock",                 :precision => 15, :scale => 2
+    t.decimal  "min_stock",                   :precision => 15, :scale => 2
+    t.integer  "packs"
+    t.decimal  "pack_content",                :precision => 15, :scale => 2
+    t.decimal  "cost",                        :precision => 15, :scale => 2
+    t.decimal  "iva_cost",                    :precision => 15, :scale => 2
+    t.decimal  "gain",                        :precision => 4,  :scale => 2
+    t.decimal  "retail_price",                :precision => 15, :scale => 2
+    t.decimal  "unit_price",                  :precision => 15, :scale => 2
+    t.decimal  "special_price",               :precision => 15, :scale => 2
+    t.integer  "provider_id"
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
+  end
+
+  add_index "products", ["code"], :name => "index_products_on_code", :unique => true
+  add_index "products", ["description"], :name => "index_products_on_description"
+  add_index "products", ["provider_id"], :name => "index_products_on_provider_id"
 
   create_table "providers", :force => true do |t|
     t.string   "name",        :null => false

@@ -12,7 +12,12 @@
           <ul class="nav">
             <%= render partial: 'shared/admin_menu' %>
           </ul>
+          <ul class='nav'>
+            <%= show_menu_link(
+              name: 'products', controllers: 'products', path: products_path
+            ) if can?(:read, Product) %>
           <%= render partial: 'shared/nav_search' %>
+        </ul>
           <ul class="nav pull-right">
             <li>
               <%= link_to(

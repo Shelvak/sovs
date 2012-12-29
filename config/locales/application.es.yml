@@ -13,6 +13,9 @@
       place:
         one: 'Local comercial'
         other: 'Locales comerciales'
+      product:
+        one: 'Producto'
+        other: 'Productos'
       provider:
         one: 'Proveedor'
         other: 'Proveedores'
@@ -34,6 +37,23 @@
         bill_kind: 'Tipo de factura'
       place:
         description: 'Descripción'
+      product:
+        code: 'Código'
+        description: 'Descripción'
+        retail_unit: 'Unidad venta'
+        purchase_unit: 'Unidad compra'
+        unity_relation: 'Relación Compra/Venta'
+        total_stock: 'Stock total'
+        min_stock: 'Punto pedido'
+        packs: 'Packs'
+        pack_content: 'Contenido de los packs'
+        cost: 'Costo sin IVA'
+        iva_cost: 'Costo con IVA'
+        gain: 'Ganancia (%)'
+        retail_price: 'Precio de venta'
+        unit_price: 'Precio por unidad'
+        special_price: 'Precio especial'
+        provider_id: 'Proveedor'
       provider:
         name: 'Nombre'
         contact: 'Persona de contacto'
@@ -83,6 +103,7 @@
       logout: 'Salir de la aplicación'
     customers: 'Clientes'
     places: 'Locales'
+    products: 'Productos'
     providers: 'Proveedores'
     sellers: 'Vendedores'
     users: 'Usuarios'
@@ -130,6 +151,17 @@
       empty_index:
         html: 'No se ha creado ningún local hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Local</span>'
       new: 'Nuevo Local'   
+    products:
+      index_title: 'Listado de productos'
+      show_title: 'Detalle de producto'
+      new_title: 'Nuevo producto'
+      edit_title: 'Modificar producto'
+      correctly_created: 'Producto agregado correctamente.'
+      correctly_updated: 'Producto actualizado correctamente.'
+      stale_object_error: 'El producto no pudo ser actualizado, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ningún producto hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Producto</span>'
+      new: 'Nuevo Producto'
     providers:
       index_title: 'Listado de proveedores'
       show_title: 'Detalle de proveedor'

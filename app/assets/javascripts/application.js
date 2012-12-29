@@ -17,11 +17,13 @@
 //= require twitter/bootstrap
 //= require turboevents
 //= require turbolinks
+//= require autocomplete
 //= require common
 //= require date_pickers
 //= require mobile
 //= require users
 //= require customers
+//= require products
 //= require providers
 //= require places
 //= require sellers

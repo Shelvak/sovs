@@ -1,16 +1,10 @@
 Sovs::Application.routes.draw do
 
-  resources :places
+  resources :products do
+    get :autocomplete_for_provider_name, on: :collection
+  end
 
-
-  resources :customers
-
-
-  resources :sellers
-
-
-  resources :providers
-
+  resources :places, :customers, :sellers, :providers
 
   devise_for :users
   
