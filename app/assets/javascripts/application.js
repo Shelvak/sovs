@@ -27,4 +27,5 @@
 //= require products
 //= require providers
 //= require places
+//= require sales
 //= require sellers

@@ -1,25 +1,33 @@
-<fieldset class="row-fluid">
+<fieldset class="row-fluid product_line" data-price="<%= f.object.price %>">
+  <% id = f.object.object_id %>
   <div class="span4">
     <%= f.input :auto_product_name, label: false, input_html: {
       class: 'autocomplete-field span9',
       value: f.object.product,
       data: {
-        'autocomplete-id-target' => '#sale_product_lines_product_id',
-        'autocomplete-url' => autocomplete_for_product_name_sales_path(format: :json)     
+        'autocomplete-id-target' => "#sale_product_lines_product_id_#{id}",
+        'autocomplete-price-target' => "#sale_product_lines_price_#{id}",
+        'autocomplete-url' => autocomplete_for_product_name_sales_path(format: :json)
       }                                                                                    
     }  %>
-    <%= f.input :product_id, as: :hidden, class: 'autocomplete-id' %>
+    <%= f.input :product_id, as: :hidden, input_html: {
+      class: 'autocomplete-id', id: "sale_product_lines_product_id_#{id}" } %>
   </div>
   <div class='span2'>
     <%= f.input :quantity, label: false, 
-      input_html: { class: 'span8' } %>
+      input_html: { value: f.object.quantity || 1, 
+      class: 'price-modifier span8' } %>
   </div>
   <div class='span2'>
     <%= f.input :price, label: false, as: :string,
-      input_html: { class: 'span8', disabled: true } %>
+      input_html: { class: 'price-modifier span8', readonly: true,
+      value: f.object.price, autocomplete: 'off',
+      id: "sale_product_lines_price_#{id}" } %>
   </div>
   <div class="span2 nested-actions">
-    <%= f.input :id, as: :hidden %>
+    <span class='money badge'>
+      <%= number_to_currency((f.object.price || 0) * (f.object.quantity || 0)) %>
+    </span>
     <%= link_to_remove_nested_item(f) %>
   </div>
 </fieldset>

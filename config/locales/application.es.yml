@@ -201,6 +201,8 @@
         html: 'No se ha creado ninguna venta hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva Venta</span>'
       new: 'Nueva Venta'
       new_product_line: 'Nuevo producto'
+      seller_not_found: 'Vendedor no encontrado'
+      wait_for_customer: 'No se encontro el cliente, espere a las sugerencias de busqueda'
     sellers:
       index_title: 'Listado de vendedores'
       show_title: 'Detalle de vendedor'

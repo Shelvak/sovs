@@ -30,13 +30,15 @@ class SaleTest < ActiveSupport::TestCase
   end
     
   test 'validates blank attributes' do
-    @sale.seller_id = ''
+    @sale.seller_code = ''
     @sale.total_price = ''
     
     assert @sale.invalid?
-    assert_equal 2, @sale.errors.size
-    assert_equal [error_message_from_model(@sale, :seller_id, :blank)],
-      @sale.errors[:seller_id]
+    assert_equal 3, @sale.errors.size
+    assert_equal [
+      error_message_from_model(@sale, :seller_code, :blank),
+      I18n.t('view.sales.seller_not_found')
+    ].sort, @sale.errors[:seller_code].sort
     assert_equal [error_message_from_model(@sale, :total_price, :blank)],
       @sale.errors[:total_price]
   end
@@ -47,5 +49,18 @@ class SaleTest < ActiveSupport::TestCase
     assert @sale.invalid?
     assert_equal [error_message_from_model(@sale, :total_price, :not_a_number)],
       @sale.errors[:total_price]
+
+    @sale.reload
+    @sale.total_price = -3.6
+
+    assert @sale.invalid?
+    assert_equal [error_message_from_model(@sale, :total_price, :greater_than, count: 0)],
+      @sale.errors[:total_price]
+
+    @sale.reload
+    @sale.sale_kind = 'rock'
+    assert @sale.invalid?
+    assert_equal [error_message_from_model(@sale, :sale_kind, :too_long, count: 1)],
+      @sale.errors[:sale_kind]
   end
 end
