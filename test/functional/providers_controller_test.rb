@@ -76,4 +76,29 @@ class ProvidersControllerTest < ActionController::TestCase
     assert_select '#unexpected_error', false
     assert_template 'providers/index'
   end
+
+  test 'should add increase' do
+    3.times do
+      Fabricate(
+        :product, provider_id: @provider.id,
+        cost: 10,
+        iva_cost: 10,
+        gain: 10,
+        retail_price: 11,
+        unit_price: 11,
+        special_price: 11
+      )
+    end
+
+    get :add_increase, id: @provider.id, add: 10
+    assert_redirected_to provider_url(@provider)
+    @provider.reload
+    @provider.products.each do |product|
+      assert_equal 11, product.cost
+      assert_equal 11, product.iva_cost
+      assert_equal 12.1, product.retail_price
+      assert_equal 12.1, product.unit_price
+      assert_equal 12.1, product.special_price
+    end
+  end
 end

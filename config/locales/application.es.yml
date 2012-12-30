@@ -99,6 +99,7 @@
     show: 'Ver'
     
   menu:
+    admin: 'Administración'
     actions:
       logout: 'Salir de la aplicación'
     customers: 'Clientes'

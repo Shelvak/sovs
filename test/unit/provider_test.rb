@@ -48,4 +48,31 @@ class ProviderTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@provider, :cuit, :taken)],
       @provider.errors[:cuit]
   end
+
+  test 'increase all products price' do
+    3.times do
+      Fabricate(
+        :product, provider_id: @provider.id,
+        cost: 10,
+        iva_cost: 10,
+        gain: 10,
+        retail_price: 11,
+        unit_price: 11,
+        special_price: 11
+      )
+    end
+  
+    assert_difference 'Version.count', 3 do
+      assert_no_difference ['Provider.count', 'Product.count'] do
+        @provider.increase_all_products!(10)
+      end
+    end
+    @provider.products.each do |product|
+      assert_equal 11, product.cost
+      assert_equal 11, product.iva_cost
+      assert_equal 12.1, product.retail_price
+      assert_equal 12.1, product.unit_price
+      assert_equal 12.1, product.special_price
+    end
+  end
 end

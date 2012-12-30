@@ -109,4 +109,30 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@product, :packs, :not_an_integer)],
       @product.errors[:packs]
   end
+
+  test 'probe the correct increase of percentage' do
+    provider = @product.provider_id
+    @product = Fabricate(
+      :product, provider_id: provider,
+      cost: 10,
+      iva_cost: 10,
+      gain: 10,
+      retail_price: 11,
+      unit_price: 11,
+      special_price: 11
+    )
+  
+    assert_difference 'Version.count' do
+      assert_no_difference 'Product.count' do
+        # Have to pass with number not percentage
+        @product.increase_prices_with_percentage!(1.10)
+      end
+    end
+
+    assert_equal 11, @product.cost
+    assert_equal 11, @product.iva_cost
+    assert_equal 12.1, @product.retail_price
+    assert_equal 12.1, @product.unit_price
+    assert_equal 12.1, @product.special_price
+  end
 end

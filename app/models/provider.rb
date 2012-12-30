@@ -31,12 +31,10 @@ class Provider < ActiveRecord::Base
 
   def increase_all_products!(percentage)
     add_percentage = percentage.to_f / 100 + 1
-    p add_percentage
 
     Product.transaction do
       begin
         self.products.each do |product|
-          p product.code
           product.increase_prices_with_percentage!(add_percentage)
         end
       rescue
