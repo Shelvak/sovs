@@ -89,4 +89,20 @@ class SalesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def autocomplete_for_customer_name
+    customers = Customer.filtered_list(params[:q]).limit(5)
+
+    respond_to do |format|
+      format.json { render json: customers }
+    end
+  end
+
+  def autocomplete_for_product_name
+    products = Product.filtered_list(params[:q]).limit(5)
+
+    respond_to do |format|
+      format.json { render json: products }
+    end
+  end
 end

@@ -18,6 +18,7 @@
 //= require turboevents
 //= require turbolinks
 //= require autocomplete
+//= require dynamic_form
 //= require common
 //= require date_pickers
 //= require mobile

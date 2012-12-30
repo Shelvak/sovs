@@ -2,10 +2,53 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :customer_id %>
-    <%= f.input :seller_id %>
-    <%= f.input :sale_kind %>
-    <%= f.input :total_price %>
+    <div class='row-fluid'>
+      <div class='span3'>
+        <%= f.input :seller_code %>
+      </div>
+      <div class='span6'>
+        <%= f.label :customer_id %>
+        <%= f.input :auto_customer_name, label: false, input_html: {
+          class: 'autocomplete-field span9',
+          value: @sale.customer,
+          data: {
+            'autocomplete-id-target' => '#sale_customer_id',
+            'autocomplete-url' => autocomplete_for_customer_name_sales_path(format: :json)
+          }
+        }  %>
+        <%= f.input :customer_id, as: :hidden %>
+      </div>
+      <div class='span3'>
+        <%= sale_kind_select_for_sale(f) %>
+      </div>
+    </div>
+    <div class='page-header'>
+      <div class='row-fluid'>
+        <div class='span4'>
+          <h4><%= ProductLine.human_attribute_name('product_id') %></h4>
+        </div>
+        <div class='span2'>
+          <h4><%= ProductLine.human_attribute_name('quantity') %></h4>
+        </div>
+        <div class='span2'>
+          <h4><%= ProductLine.human_attribute_name('price') %></h4>
+        </div>
+        <div class='span2'>
+        </div>
+      </div>
+    </div>
+    <div id='product_lines'>
+      <%= f.simple_fields_for :product_lines do |pl| %>
+        <%= render partial: 'product_line', locals: { f: pl } if pl.object %>
+      <% end %>
+
+      <%= link_to_add_fields t('view.sales.new_product_line'), f, :product_lines %>
+    </div>
+    <div class='row-fluid'>
+      <div class='pull-right'>
+        <%= f.input :total_price, input_html: { disabled: true } %> 
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">

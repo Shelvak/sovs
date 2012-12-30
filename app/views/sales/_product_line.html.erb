@@ -1,0 +1,25 @@
+<fieldset class="row-fluid">
+  <div class="span4">
+    <%= f.input :auto_product_name, label: false, input_html: {
+      class: 'autocomplete-field span9',
+      value: f.object.product,
+      data: {
+        'autocomplete-id-target' => '#sale_product_lines_product_id',
+        'autocomplete-url' => autocomplete_for_product_name_sales_path(format: :json)     
+      }                                                                                    
+    }  %>
+    <%= f.input :product_id, as: :hidden, class: 'autocomplete-id' %>
+  </div>
+  <div class='span2'>
+    <%= f.input :quantity, label: false, 
+      input_html: { class: 'span8' } %>
+  </div>
+  <div class='span2'>
+    <%= f.input :price, label: false, as: :string,
+      input_html: { class: 'span8', disabled: true } %>
+  </div>
+  <div class="span2 nested-actions">
+    <%= f.input :id, as: :hidden %>
+    <%= link_to_remove_nested_item(f) %>
+  </div>
+</fieldset>

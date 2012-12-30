@@ -57,6 +57,10 @@
         unit_price: 'Precio por unidad'
         special_price: 'Precio especial'
         provider_id: 'Proveedor'
+      product_line:
+        product_id: 'Producto'
+        quantity: 'Cantidad'
+        price: 'Precio'
       provider:
         name: 'Nombre'
         contact: 'Persona de contacto'
@@ -70,9 +74,10 @@
         province: 'Provincia'
         postal_code: 'Código postal'
       sale:
+        seller_code: 'Código del vendedor'
         seller_id: 'Vendedor'
         customer_id: 'Cliente'
-        sale_kind: 'Tipo'
+        sale_kind: 'Tipo venta'
         total_price: 'Precio total'
       seller:
         code: 'Código'
@@ -195,6 +200,7 @@
       empty_index:
         html: 'No se ha creado ninguna venta hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva Venta</span>'
       new: 'Nueva Venta'
+      new_product_line: 'Nuevo producto'
     sellers:
       index_title: 'Listado de vendedores'
       show_title: 'Detalle de vendedor'
