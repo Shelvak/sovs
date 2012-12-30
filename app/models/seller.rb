@@ -6,6 +6,8 @@ class Seller < ActiveRecord::Base
   validates :code, :name, presence: true
   validates :code, uniqueness: true
 
+  has_many :sales
+
   def to_s
     [self.name, self.code].join(' - ')
   end

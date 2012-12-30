@@ -19,6 +19,9 @@
       provider:
         one: 'Proveedor'
         other: 'Proveedores'
+      sale:
+        one: 'Venta'
+        other: 'Ventas'
       seller:
         one: 'Vendedor'
         other: 'Vendedores'
@@ -66,6 +69,11 @@
         city: 'Departamento'
         province: 'Provincia'
         postal_code: 'Código postal'
+      sale:
+        seller_id: 'Vendedor'
+        customer_id: 'Cliente'
+        sale_kind: 'Tipo'
+        total_price: 'Precio total'
       seller:
         code: 'Código'
         name: 'Nombre'
@@ -106,6 +114,7 @@
     places: 'Locales'
     products: 'Productos'
     providers: 'Proveedores'
+    sales: 'Ventas'
     sellers: 'Vendedores'
     users: 'Usuarios'
     
@@ -175,6 +184,17 @@
         html: 'No se ha creado ningún proveedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Proveedor</span>'
       new: 'Nuevo Proveedor'
       add_increase: 'Agregar aumento (%)'
+    sales:
+      index_title: 'Listado de ventas'
+      show_title: 'Detalle de venta'
+      new_title: 'Nueva venta'
+      edit_title: 'Modificar venta'
+      correctly_created: 'Venta agregada correctamente.'
+      correctly_updated: 'Venta actualizada correctamente.'
+      stale_object_error: 'La venta no pudo ser actualizado, intente nuevamente.'
+      empty_index:
+        html: 'No se ha creado ninguna venta hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva Venta</span>'
+      new: 'Nueva Venta'
     sellers:
       index_title: 'Listado de vendedores'
       show_title: 'Detalle de vendedor'

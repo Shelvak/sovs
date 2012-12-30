@@ -16,6 +16,9 @@
             <%= show_menu_link(
               name: 'products', controllers: 'products', path: products_path
             ) if can?(:read, Product) %>
+            <%= show_menu_link(
+              name: 'sales', controllers: 'sales', path: sales_path
+            ) if can?(:read, Sale) %>
           <%= render partial: 'shared/nav_search' %>
         </ul>
           <ul class="nav pull-right">

@@ -1,5 +1,8 @@
 Sovs::Application.routes.draw do
 
+  resources :sales
+
+
   resources :products do
     get :autocomplete_for_provider_name, on: :collection
   end

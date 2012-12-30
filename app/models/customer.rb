@@ -24,6 +24,8 @@ class Customer < ActiveRecord::Base
   validates :iva_kind, :bill_kind, presence: true
   validates :business_name, :cuit, uniqueness: true
 
+  has_many :sales
+
   def to_s
     if self.business_name.present?
       [self.business_name, self.cuit].join(' - ') 

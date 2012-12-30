@@ -20,6 +20,7 @@ class Product < ActiveRecord::Base
     numericality: { allow_nil: true, allow_blank: true }
 
   belongs_to :provider
+  has_many :product_lines
 
   def to_s
     [self.code, self.description].join(' - ')
