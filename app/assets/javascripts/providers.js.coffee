@@ -37,3 +37,12 @@ jQuery ($) ->
 
   $('#provider_province').linkToStates('#provider_city')
   $('#provider_province').change()
+
+  $('#add_provider_increase').on 'click', () ->
+    increase = prompt('Ingrese el % de aumento')
+    parse = parseFloat(increase)
+    if $.isNumeric(parse) && parse != 0.00
+      window.location = window.location.pathname + '/add_increase?add=' + increase
+    else
+      alert('No ha ingresado un valor correcto')
+      window.location = window.location.pathname

@@ -23,6 +23,10 @@
         <strong><%= Provider.human_attribute_name 'phone' %></strong>:
         <%= @provider.phone %>
       </p>
+      <p>
+        <%= link_to t('view.providers.add_increase'), '#',
+          id: 'add_provider_increase' %>
+      </p>
     </div>
     <div class='span6'>
       <p>

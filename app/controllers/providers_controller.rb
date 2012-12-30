@@ -94,4 +94,18 @@ class ProvidersController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def add_increase
+    @provider = Provider.find(params[:id])
+
+    all_ok = @provider.increase_all_products!(params[:add].to_f)
+    
+    respond_to do |format|
+      if all_ok
+        format.html { redirect_to @provider, notice: 'Todo actualizado' }
+      else
+        format.html { redirect_to @provider, error: 'Algo flasho' }
+      end
+    end
+  end
 end

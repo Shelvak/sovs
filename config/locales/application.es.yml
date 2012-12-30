@@ -173,6 +173,7 @@
       empty_index:
         html: 'No se ha creado ningún proveedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Proveedor</span>'
       new: 'Nuevo Proveedor'
+      add_increase: 'Agregar aumento (%)'
     sellers:
       index_title: 'Listado de vendedores'
       show_title: 'Detalle de vendedor'

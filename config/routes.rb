@@ -4,7 +4,10 @@ Sovs::Application.routes.draw do
     get :autocomplete_for_provider_name, on: :collection
   end
 
-  resources :places, :customers, :sellers, :providers
+  resources :places, :customers, :sellers
+  resources :providers do
+    get :add_increase, on: :member
+  end
 
   devise_for :users
   

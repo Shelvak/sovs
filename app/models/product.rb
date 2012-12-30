@@ -28,4 +28,13 @@ class Product < ActiveRecord::Base
   def self.filtered_list(query)
     query.present? ? magick_search(query) : scoped
   end
+
+  def increase_prices_with_percentage!(percentage)
+    self.cost *= percentage
+    self.iva_cost *= percentage
+    self.retail_price *= percentage
+    self.unit_price *= percentage
+    self.special_price *= percentage
+    self.save!
+  end
 end
