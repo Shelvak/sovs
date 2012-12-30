@@ -26,11 +26,13 @@ class Sale < ActiveRecord::Base
       self.errors.add :auto_customer_name, I18n.t('view.sales.wait_for_customer')
     end
 
-    seller = Seller.find_by_code(self.seller_code)
-    if seller
-      self.seller_id = seller.id
-    else
-     self.errors.add :seller_code, I18n.t('view.sales.seller_not_found')
+    if self.seller_code.present?
+      seller = Seller.find_by_code(self.seller_code)
+      if seller
+        self.seller_id = seller.id
+      else
+       self.errors.add :seller_code, I18n.t('view.sales.seller_not_found')
+      end
     end
   end
 end

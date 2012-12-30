@@ -52,8 +52,8 @@ class ActionDispatch::IntegrationTest
     
     find('.btn-primary.submit').click
     
-    assert_equal users_path, current_path
     assert_page_has_no_errors!
+    assert_equal new_sale_path, current_path
     assert page.has_css?('.alert.alert-info')
     
     within '.alert.alert-info' do
@@ -63,5 +63,15 @@ class ActionDispatch::IntegrationTest
   
   def assert_page_has_no_errors!
     assert page.has_no_css?('#unexpected_error')
+  end
+
+  def remove_data_confirm_attr
+    remove_confirm = "$('a[data-confirm]').data('confirm', '').removeAttr('data-confirm')"
+    page.execute_script(remove_confirm)
+  end
+
+  def select_first_autocomplete_item(field)
+    assert page.has_xpath?("//li[@class='ui-menu-item']", visible: true)
+    find(field).native.send_keys :arrow_down, :tab
   end
 end

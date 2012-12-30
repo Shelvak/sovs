@@ -1,22 +1,44 @@
 <div class="readonly-data">
-  <h2><%= @sale %></h2>
+  <h2><%= (l @sale.created_at).camelize %></h2>
 
   <p>
     <strong><%= Sale.human_attribute_name 'customer_id' %></strong>:
-    <%= @sale.customer_id %>
+    <%= @sale.customer %>
   </p>
   <p>
     <strong><%= Sale.human_attribute_name 'seller_id' %></strong>:
-    <%= @sale.seller_id %>
+    <%= @sale.seller %>
   </p>
   <p>
     <strong><%= Sale.human_attribute_name 'sale_kind' %></strong>:
     <%= @sale.sale_kind %>
   </p>
-  <p>
-    <strong><%= Sale.human_attribute_name 'total_price' %></strong>:
-    <%= @sale.total_price %>
-  </p>
+
+  <table class='table table-striped'>
+    <thead>
+      <tr>
+        <th><%= ProductLine.human_attribute_name 'product_id' %></th>
+        <th><%= ProductLine.human_attribute_name 'quantity' %></th>
+        <th><%= ProductLine.human_attribute_name 'price' %></th>
+        <th><%= ProductLine.human_attribute_name 'partial_price' %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @sale.product_lines.each do |pl| %>
+        <tr>
+          <td><%= pl.product %></td>
+          <td><%= pl.quantity %></td>
+          <td><%= number_to_currency pl.price %></td>
+          <td><%= number_to_currency(pl.price * pl.quantity) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+  <h3>
+    <%= Sale.human_attribute_name 'total_price' %>:
+    <%= number_to_currency @sale.total_price %>
+  </h3>
   
 </div>
 <div class="form-actions">

@@ -34,11 +34,9 @@ class SaleTest < ActiveSupport::TestCase
     @sale.total_price = ''
     
     assert @sale.invalid?
-    assert_equal 3, @sale.errors.size
-    assert_equal [
-      error_message_from_model(@sale, :seller_code, :blank),
-      I18n.t('view.sales.seller_not_found')
-    ].sort, @sale.errors[:seller_code].sort
+    assert_equal 2, @sale.errors.size
+    assert_equal [error_message_from_model(@sale, :seller_code, :blank)],
+      @sale.errors[:seller_code]
     assert_equal [error_message_from_model(@sale, :total_price, :blank)],
       @sale.errors[:total_price]
   end

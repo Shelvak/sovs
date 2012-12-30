@@ -29,7 +29,7 @@ class SalesControllerTest < ActionController::TestCase
       post :create, sale: Fabricate.attributes_for(:sale)
     end
 
-    assert_redirected_to sale_url(assigns(:sale))
+    assert_redirected_to new_sale_url
   end
 
   test "should show sale" do

@@ -61,6 +61,7 @@
         product_id: 'Producto'
         quantity: 'Cantidad'
         price: 'Precio'
+        partial_price: 'Precio parcial'
       provider:
         name: 'Nombre'
         contact: 'Persona de contacto'

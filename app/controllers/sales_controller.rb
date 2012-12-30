@@ -1,4 +1,8 @@
 class SalesController < ApplicationController
+  before_filter :authenticate_user!
+  
+  check_authorization
+  load_and_authorize_resource
   
   # GET /sales
   # GET /sales.json
@@ -29,6 +33,7 @@ class SalesController < ApplicationController
   def new
     @title = t('view.sales.new_title')
     @sale = Sale.new
+    @sale.product_lines.build unless @sale.product_lines.any?
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,7 +55,7 @@ class SalesController < ApplicationController
 
     respond_to do |format|
       if @sale.save
-        format.html { redirect_to @sale, notice: t('view.sales.correctly_created') }
+        format.html { redirect_to new_sale_path, notice: t('view.sales.correctly_created') }
         format.json { render json: @sale, status: :created, location: @sale }
       else
         format.html { render action: 'new' }

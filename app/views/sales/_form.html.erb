@@ -4,7 +4,7 @@
   <div class="form-inputs">
     <div class='row-fluid'>
       <div class='span2'>
-        <%= f.input :seller_code, input_html: { class: 'span6' } %>
+        <%= f.input :seller_code, input_html: { class: 'span6', autofocus: true } %>
       </div>
       <div class='span7'>
         <%= f.label :customer_id %>
@@ -52,7 +52,7 @@
   </div>
 
   <div class="form-actions">
-    <div class="pull-right"><%= yield :form_actions %></div>
     <%= f.button :submit, class: 'btn-primary' %>
+    <div class="pull-right"><%= yield :form_actions %></div>
   </div>
 <% end %>

@@ -3,7 +3,7 @@
   <div class="span4">
     <%= f.input :auto_product_name, label: false, input_html: {
       class: 'autocomplete-field span9',
-      value: f.object.product,
+      value: f.object.product, autofocus: true,
       data: {
         'autocomplete-id-target' => "#sale_product_lines_product_id_#{id}",
         'autocomplete-price-target' => "#sale_product_lines_price_#{id}",
