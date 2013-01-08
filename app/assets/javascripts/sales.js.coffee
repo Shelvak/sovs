@@ -17,7 +17,6 @@ window.Sale =
 
 jQuery ($) ->
   if (add_nested = $('.btn.btn-small[data-dynamic-form-event="addNestedItem"]')).length > 0
-    console.log('entro al nested')
     new_title = add_nested.attr('data-original-title') + ' (CTROL + ALT + A)'
     add_nested.attr('data-original-title', new_title)
 
@@ -32,4 +31,3 @@ jQuery ($) ->
   $(document).on 'change keyup', '.price-modifier', ->
     Sale.updateLinePrice $(this).parents('.product_line')
     Sale.updateTotalPrice()
-

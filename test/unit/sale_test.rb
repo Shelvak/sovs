@@ -61,4 +61,21 @@ class SaleTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@sale, :sale_kind, :too_long, count: 1)],
       @sale.errors[:sale_kind]
   end
+
+  test 'discount stock in all product_lines' do
+    @sale = Sale.new(Fabricate.attributes_for(
+      :sale, product_lines_attributes: { 
+        new_1: Fabricate.attributes_for(:product_line, quantity: 1),
+        new_2: Fabricate.attributes_for(:product_line, quantity: 1)
+      }
+    ))
+    
+    product_line_products_stock = @sale.product_lines.map { |pl| pl.product.total_stock - 1 }
+    assert_difference 'Sale.count' do
+      assert @sale.save!
+    end
+
+    reloaded_stock = @sale.reload.product_lines.map { |pl| pl.product.total_stock }
+    assert_equal reloaded_stock.sort, product_line_products_stock.sort
+  end
 end

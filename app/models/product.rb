@@ -49,4 +49,10 @@ class Product < ActiveRecord::Base
     self.special_price *= percentage
     self.save!
   end
+
+  def discount_stock(quantity)
+    self.total_stock -= quantity
+    self.packs = total_stock.to_i / self.packs
+    self.save!
+  end
 end

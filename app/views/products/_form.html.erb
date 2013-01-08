@@ -42,10 +42,10 @@
           <%= f.input :min_stock %>
         </div>
         <div class='span2'>
-          <%= f.input :packs %>
+          <%= f.input :packs, input_html: { class: 'span6 stock-modifier' } %>
         </div>
         <div class='span4'>
-          <%= f.input :pack_content %>
+          <%= f.input :pack_content, input_html: { class: 'span6 stock-modifier' } %>
         </div>
       </div>
     </div>

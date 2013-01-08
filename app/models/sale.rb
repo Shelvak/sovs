@@ -6,6 +6,7 @@ class Sale < ActiveRecord::Base
     :seller_code, :auto_customer_name, :product_lines_attributes
 
   before_validation :manual_validate
+  after_save :discount_sold_stock
 
   validates :seller_code, :total_price, presence: true
   validates :sale_kind, length: { maximum: 1 }
@@ -33,6 +34,12 @@ class Sale < ActiveRecord::Base
       else
        self.errors.add :seller_code, I18n.t('view.sales.seller_not_found')
       end
+    end
+  end
+
+  def discount_sold_stock
+    self.product_lines.each do |pl|
+      pl.product.discount_stock(pl.quantity)
     end
   end
 end

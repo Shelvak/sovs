@@ -4,6 +4,7 @@
     <%= f.input :auto_product_name, label: false, input_html: {
       class: 'autocomplete-field span9',
       value: f.object.product, autofocus: true,
+      autocomplete: 'off',
       data: {
         'autocomplete-id-target' => "#sale_product_lines_product_id_#{id}",
         'autocomplete-price-target' => "#sale_product_lines_price_#{id}",
@@ -14,9 +15,9 @@
       class: 'autocomplete-id', id: "sale_product_lines_product_id_#{id}" } %>
   </div>
   <div class='span2'>
-    <%= f.input :quantity, label: false, 
+    <%= f.input :quantity, label: false, as: :string,
       input_html: { value: f.object.quantity || 1, 
-      class: 'price-modifier span8' } %>
+      class: 'price-modifier span8', autocomplete: 'off' } %>
   </div>
   <div class='span2'>
     <%= f.input :price, label: false, as: :string,
