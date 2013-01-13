@@ -23,7 +23,7 @@ class Product < ActiveRecord::Base
   has_many :product_lines
 
   def to_s
-    [self.code, self.description].join(' - ')
+    "[#{self.code}] #{self.description}"
   end
 
   alias_method :label, :to_s
@@ -52,7 +52,7 @@ class Product < ActiveRecord::Base
 
   def discount_stock(quantity)
     self.total_stock -= quantity
-    self.packs = total_stock.to_i / self.packs
+    self.packs = total_stock.to_i / self.packs if self.packs > 0.0
     self.save!
   end
 end

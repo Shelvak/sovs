@@ -19,8 +19,8 @@
       <tr>
         <th><%= ProductLine.human_attribute_name 'product_id' %></th>
         <th><%= ProductLine.human_attribute_name 'quantity' %></th>
+        <th><%= Product.human_attribute_name 'unit_price' %></th>
         <th><%= ProductLine.human_attribute_name 'price' %></th>
-        <th><%= ProductLine.human_attribute_name 'partial_price' %></th>
       </tr>
     </thead>
     <tbody>
@@ -28,8 +28,8 @@
         <tr>
           <td><%= pl.product %></td>
           <td><%= pl.quantity %></td>
+          <td><%= number_to_currency pl.unit_price %></td>
           <td><%= number_to_currency pl.price %></td>
-          <td><%= number_to_currency(pl.price * pl.quantity) %></td>
         </tr>
       <% end %>
     </tbody>

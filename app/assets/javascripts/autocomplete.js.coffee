@@ -30,8 +30,8 @@ jQuery ($)->
         input.data('item', selected.item)
         $(input.data('autocompleteIdTarget')).val(selected.item.id)
 
-        if $(input.data('autocompletePriceTarget'))
-          $(input.data('autocompletePriceTarget')).val(selected.item.retail_price)
+        if $(input.data('autocompleteUnitPriceTarget'))
+          $(input.data('autocompleteUnitPriceTarget')).val(selected.item.retail_price)
 
         input.trigger 'autocomplete:update', input
 

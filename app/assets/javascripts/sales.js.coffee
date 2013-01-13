@@ -1,11 +1,12 @@
 window.Sale =
   updateLinePrice: (product_line)->
     quantity = parseFloat product_line.find('input[name$="[quantity]"]').val()
-    price = parseFloat product_line.find('input[name$="[price]"]').val()
+    unit_price = parseFloat product_line.find('input[name$="[unit_price]"]').val()
 
-    line_price = ((quantity || 0) * (price || 0)).toFixed(2)
+    line_price = ((quantity || 0) * (unit_price || 0)).toFixed(2)
     product_line.find('span.money').html("$ #{line_price}")
     product_line.attr('data-price', line_price)
+    product_line.find('input[name$="[price]"]').val(line_price)
 
   updateTotalPrice: () ->
     totalPrice = 0.0

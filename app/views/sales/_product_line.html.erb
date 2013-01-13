@@ -7,7 +7,7 @@
       autocomplete: 'off',
       data: {
         'autocomplete-id-target' => "#sale_product_lines_product_id_#{id}",
-        'autocomplete-price-target' => "#sale_product_lines_price_#{id}",
+        'autocomplete-unit-price-target' => "#sale_product_lines_unit_price_#{id}",
         'autocomplete-url' => autocomplete_for_product_name_sales_path(format: :json)
       }                                                                                    
     }  %>
@@ -20,15 +20,16 @@
       class: 'price-modifier span8', autocomplete: 'off' } %>
   </div>
   <div class='span2'>
-    <%= f.input :price, label: false, as: :string,
+    <%= f.input :unit_price, label: false, as: :string,
       input_html: { class: 'price-modifier span8', readonly: true,
-      value: f.object.price, autocomplete: 'off',
-      id: "sale_product_lines_price_#{id}" } %>
+      value: f.object.unit_price, autocomplete: 'off',
+      id: "sale_product_lines_unit_price_#{id}" } %>
   </div>
   <div class="span2 nested-actions">
     <span class='money badge'>
-      <%= number_to_currency((f.object.price || 0) * (f.object.quantity || 0)) %>
+      <%= number_to_currency(f.object.price || 0) %>
     </span>
+    <%= f.input :price, as: :hidden %>
     <%= link_to_remove_nested_item(f) %>
   </div>
 </fieldset>
