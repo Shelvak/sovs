@@ -12,7 +12,7 @@ class SalesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @sales }
+      format.json { render json: @sales.to_json(include: :product_lines) }
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121230015834) do
+ActiveRecord::Schema.define(:version => 20130113055807) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -37,12 +37,13 @@ ActiveRecord::Schema.define(:version => 20121230015834) do
   add_index "places", ["description"], :name => "index_places_on_description", :unique => true
 
   create_table "product_lines", :force => true do |t|
-    t.integer  "product_id", :null => false
-    t.decimal  "quantity",   :null => false
-    t.decimal  "price",      :null => false
-    t.integer  "sale_id",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "product_id",                                :null => false
+    t.decimal  "quantity",                                  :null => false
+    t.decimal  "price",                                     :null => false
+    t.integer  "sale_id",                                   :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.decimal  "unit_price", :precision => 15, :scale => 2, :null => false
   end
 
   add_index "product_lines", ["product_id"], :name => "index_product_lines_on_product_id"
@@ -91,6 +92,31 @@ ActiveRecord::Schema.define(:version => 20121230015834) do
 
   add_index "providers", ["cuit"], :name => "index_providers_on_cuit", :unique => true
   add_index "providers", ["name"], :name => "index_providers_on_name"
+
+  create_table "rr_logged_events", :force => true do |t|
+    t.string   "activity"
+    t.string   "change_table"
+    t.string   "diff_type"
+    t.string   "change_key"
+    t.string   "left_change_type"
+    t.string   "right_change_type"
+    t.string   "description"
+    t.string   "long_description",  :limit => 1000
+    t.datetime "event_time"
+    t.string   "diff_dump",         :limit => 2000
+  end
+
+  create_table "rr_pending_changes", :force => true do |t|
+    t.string   "change_table"
+    t.string   "change_key"
+    t.string   "change_new_key"
+    t.string   "change_type"
+    t.datetime "change_time"
+  end
+
+  create_table "rr_running_flags", :id => false, :force => true do |t|
+    t.integer "active"
+  end
 
   create_table "sales", :force => true do |t|
     t.integer  "customer_id"

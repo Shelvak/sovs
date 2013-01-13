@@ -60,6 +60,7 @@
       default: "%A, %d de %B de %Y - %H:%M"
       short: "%d de %b %H:%M"
       long: "%d de %B de %Y %H:%M"
+      for_file: "%d-%m-%Y_%H:%M"
     am: "am"
     pm: "pm"
 
@@ -76,7 +77,7 @@
     format:
       separator: ","
       delimiter: "."
-      precision: 3
+      precision: 2
       significant: false
       strip_insignificant_zeros: false
 

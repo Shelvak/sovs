@@ -6,12 +6,13 @@ class Sale < ActiveRecord::Base
     :seller_code, :auto_customer_name, :product_lines_attributes
 
   before_validation :manual_validate
-  after_save :discount_sold_stock
+  after_save :discount_sold_stock, :send_to_print
 
   validates :seller_code, :total_price, presence: true
   validates :sale_kind, length: { maximum: 1 }
-  validates :total_price, numericality: { allow_nil: true, allow_blank: true,
-    greater_than: 0 }
+  validates :total_price, numericality: { 
+    allow_nil: true, allow_blank: true, greater_than: 0
+  }
 
   belongs_to :seller
   belongs_to :customer
@@ -32,7 +33,7 @@ class Sale < ActiveRecord::Base
       if seller
         self.seller_id = seller.id
       else
-       self.errors.add :seller_code, I18n.t('view.sales.seller_not_found')
+        self.errors.add :seller_code, I18n.t('view.sales.seller_not_found')
       end
     end
   end
@@ -41,5 +42,13 @@ class Sale < ActiveRecord::Base
     self.product_lines.each do |pl|
       pl.product.discount_stock(pl.quantity)
     end
+  end
+
+  def send_to_print
+    Printer.print_common_tax(self) if self.common_bill?
+  end
+
+  def common_bill?
+    self.sale_kind == 'B' || self.sale_kind == '-'
   end
 end
