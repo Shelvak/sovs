@@ -4,6 +4,7 @@
   attributes:
     created_at: 'Creación'
     updated_at: 'Actualización'
+    date: 'Fecha'
     
   activerecord:
     models:
@@ -112,6 +113,7 @@
     new: 'Nuevo'
     search: 'Buscar'
     show: 'Ver'
+    generate: 'Generar'
     
   menu:
     admin: 'Administración'
@@ -132,8 +134,10 @@
     tax_worthless: 'Sin valor fiscal'
     seller: 'Vendedor Nro: %{seller}'
     thinks: 'Gracias!! Lo esperamos nuevamente'
-    total_is: 'Total: %{total}'
+    total_price: 'Total: %{total}'
     items_count_with_net_price: '%{count} items  --------------------> Neto %{price}'
+    daily_sales_report_for: 'Reporte diario de venta [%{day}]'
+    total_sales_count: 'Total de [ Ventas: %{sales_count}, Recaudado: %{total_price} ]'
     
   view:
     generic:
@@ -212,6 +216,8 @@
       new_product_line: 'Nuevo producto'
       seller_not_found: 'Vendedor no encontrado'
       wait_for_customer: 'No se encontro el cliente, espere a las sugerencias de busqueda'
+      daily_report: 'Informe diario'
+      print_report_title: 'Imprimir informe diario'
     sellers:
       index_title: 'Listado de vendedores'
       show_title: 'Detalle de vendedor'

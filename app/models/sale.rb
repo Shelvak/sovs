@@ -5,8 +5,13 @@ class Sale < ActiveRecord::Base
   attr_accessible :customer_id, :seller_id, :sale_kind, :total_price,
     :seller_code, :auto_customer_name, :product_lines_attributes
 
+  scope :in_day, ->(day) { where(
+    "created_at > :from AND created_at < :to",
+    from: day.to_time, to: day.to_time.end_of_day
+  ) }
+
   before_validation :manual_validate
-  after_save :discount_sold_stock, :send_to_print
+  after_save :discount_sold_stock, :send_to_print, on: :create
 
   validates :seller_code, :total_price, presence: true
   validates :sale_kind, length: { maximum: 1 }

@@ -62,6 +62,7 @@ GEM
       execjs
     coffee-script-source (1.4.0)
     connection_pool (1.0.0)
+    cups (0.0.7)
     daemons (1.1.9)
     database_cleaner (0.9.1)
     devise (2.2.0)
@@ -215,6 +216,7 @@ DEPENDENCIES
   capistrano
   capybara
   coffee-rails
+  cups
   database_cleaner
   devise
   fabrication

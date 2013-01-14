@@ -9,6 +9,6 @@ class Seller < ActiveRecord::Base
   has_many :sales
 
   def to_s
-    [self.code, self.name].join(' - ')
+    ["[#{self.code}]", self.name].join(' ')
   end
 end

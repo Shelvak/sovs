@@ -4,6 +4,7 @@
       default: "%d/%m/%Y"
       short: "%d de %b"
       long: "%d de %B de %Y"
+      for_report: "%A - %d/%m/%Y"
 
     day_names:
       - domingo

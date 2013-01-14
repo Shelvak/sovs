@@ -95,6 +95,14 @@ class SalesController < ApplicationController
     end
   end
 
+  def daily_report
+    if params[:to_print]
+      if Printer.print_daily_report(params[:to_print][:date].to_date)
+        redirect_to sales_url, notice: 'Se imprimio el informe'
+      end
+    end
+  end
+
   def autocomplete_for_customer_name
     customers = Customer.filtered_list(params[:q]).limit(5)
 

@@ -1,0 +1,13 @@
+<div class='form-inputs'>
+  <h3><%= t('view.sales.print_report_title') %></h3>
+
+  <div class='row-fluid'>
+    <%= simple_form_for :to_print, html: { method: :put } do |f| %>
+      <%= f.input :date, label: t('attributes.date'), as: :date_picker %>
+      <%= f.button :submit, t('label.generate'), class: 'btn' %>
+    <% end %>
+  </div>
+</div>
+<div class='form-actions'>
+  <%= link_to t('label.list'), sales_path %>
+</div>

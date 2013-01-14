@@ -1,9 +1,11 @@
 Sovs::Application.routes.draw do
-
+  
   resources :sales do
     collection do
       get :autocomplete_for_customer_name
       get :autocomplete_for_product_name
+      get :daily_report
+      put :daily_report
     end
   end
 

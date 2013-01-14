@@ -61,4 +61,14 @@ class SalesControllerTest < ActionController::TestCase
 
     assert_redirected_to sales_path
   end
+
+  test "should print daily report" do
+    get :daily_report
+    assert_response :success
+    assert_select '#unexpected_error', false
+    assert_template "sales/daily_report"
+
+    put :daily_report, to_print: { date: Date.today }
+    assert_redirected_to sales_url
+  end
 end

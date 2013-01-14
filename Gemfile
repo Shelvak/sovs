@@ -16,6 +16,7 @@ gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
 gem 'prawn'
+gem 'cups'
 
 
 group :assets do
