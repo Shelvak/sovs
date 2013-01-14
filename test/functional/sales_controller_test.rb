@@ -26,7 +26,12 @@ class SalesControllerTest < ActionController::TestCase
 
   test "should create sale" do
     assert_difference('Sale.count') do
-      post :create, sale: Fabricate.attributes_for(:sale)
+      sale = Fabricate.attributes_for(:sale)
+      sale.delete(:product_lines)
+      sale.merge!(product_lines_attributes: {
+        1 => Fabricate.attributes_for(:product_line, sale_id: nil)
+      })
+      post :create, sale: sale
     end
 
     assert_redirected_to new_sale_url
@@ -38,28 +43,6 @@ class SalesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:sale)
     assert_select '#unexpected_error', false
     assert_template "sales/show"
-  end
-
-  test "should get edit" do
-    get :edit, id: @sale
-    assert_response :success
-    assert_not_nil assigns(:sale)
-    assert_select '#unexpected_error', false
-    assert_template "sales/edit"
-  end
-
-  test "should update sale" do
-    put :update, id: @sale, 
-      sale: Fabricate.attributes_for(:sale)
-    assert_redirected_to sale_url(assigns(:sale))
-  end
-
-  test "should destroy sale" do
-    assert_difference('Sale.count', -1) do
-      delete :destroy, id: @sale
-    end
-
-    assert_redirected_to sales_path
   end
 
   test "should print daily report" do

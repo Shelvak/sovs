@@ -22,8 +22,6 @@
               <td><%= sale.sale_kind %></td>
               <td><%= number_to_currency sale.total_price %></td>
               <td><%= link_to_show sale %></td>
-              <td><%= link_to_edit edit_sale_path(sale) if can? :update, sale %></td>
-              <td><%= link_to_destroy sale if can? :destroy, sale %></td>
             </tr>
           <% end %>
         </tbody>

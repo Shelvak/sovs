@@ -7,6 +7,12 @@
     date: 'Fecha'
     
   activerecord:
+    errors:
+      models:
+        sale:
+          attributes:
+            base:
+              must_have_one_item: 'La venta tiene que tener almenos 1 item'
     models:
       customer:
         one: 'Cliente'

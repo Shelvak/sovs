@@ -16,7 +16,7 @@ window.DynamicFormEvent =
 
   removeItem: (e)->
     EffectHelper.remove e.closest('fieldset'), ->
-      $(document).trigger('dynamic-item.removed', target)
+      $(document).trigger('dynamic-item.removed', e)
     
 window.DynamicFormHelper =
   newIdCounter: 0,

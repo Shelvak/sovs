@@ -6,7 +6,7 @@ Fabricator(:product) do
   unity_relation  { 100.0 * rand }
   total_stock     { 100.0 * rand }
   min_stock       { 100.0 * rand }
-  packs           { rand(100) }
+  packs           { 100 * rand(100) }
   pack_content    { 100.0 * rand }
   cost            { 100.0 * rand }
   iva_cost        { 100.0 * rand }

@@ -41,12 +41,6 @@ class SalesController < ApplicationController
     end
   end
 
-  # GET /sales/1/edit
-  def edit
-    @title = t('view.sales.edit_title')
-    @sale = Sale.find(params[:id])
-  end
-
   # POST /sales
   # POST /sales.json
   def create
@@ -61,37 +55,6 @@ class SalesController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @sale.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PUT /sales/1
-  # PUT /sales/1.json
-  def update
-    @title = t('view.sales.edit_title')
-    @sale = Sale.find(params[:id])
-
-    respond_to do |format|
-      if @sale.update_attributes(params[:sale])
-        format.html { redirect_to @sale, notice: t('view.sales.correctly_updated') }
-        format.json { head :ok }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @sale.errors, status: :unprocessable_entity }
-      end
-    end
-  rescue ActiveRecord::StaleObjectError
-    redirect_to edit_sale_url(@sale), alert: t('view.sales.stale_object_error')
-  end
-
-  # DELETE /sales/1
-  # DELETE /sales/1.json
-  def destroy
-    @sale = Sale.find(params[:id])
-    @sale.destroy
-
-    respond_to do |format|
-      format.html { redirect_to sales_url }
-      format.json { head :ok }
     end
   end
 

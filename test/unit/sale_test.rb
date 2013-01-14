@@ -6,10 +6,12 @@ class SaleTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Sale.count', 'Version.count'] do
-      @sale = Sale.create(Fabricate.attributes_for(
-        :sale, customer_id: @sale.customer_id, seller_id: @sale.seller_id)
-      )
+    assert_difference 'Sale.count' do
+      assert_difference 'Version.count', 5 do
+        @sale = Sale.create(Fabricate.attributes_for(
+          :sale, customer_id: @sale.customer_id, seller_id: @sale.seller_id)
+        )
+      end 
     end 
   end
     
@@ -24,7 +26,7 @@ class SaleTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'Version.count', 2 do
       assert_difference('Sale.count', -1) { @sale.destroy }
     end
   end
@@ -63,13 +65,15 @@ class SaleTest < ActiveSupport::TestCase
   end
 
   test 'discount stock in all product_lines' do
-    @sale = Sale.new(Fabricate.attributes_for(
-      :sale, product_lines_attributes: { 
+    sale_attrs = Fabricate.attributes_for(:sale, product_lines: nil)
+    sale_attrs.delete(:product_lines)
+    
+    @sale = Sale.new(sale_attrs.merge(product_lines_attributes: { 
         new_1: Fabricate.attributes_for(:product_line, quantity: 1),
         new_2: Fabricate.attributes_for(:product_line, quantity: 1)
       }
     ))
-    
+
     product_line_products_stock = @sale.product_lines.map { |pl| pl.product.total_stock - 1 }
     assert_difference 'Sale.count' do
       assert @sale.save!
