@@ -2,6 +2,14 @@
 
 Sistema de Organización de Ventas y Stock
 
+== Instalar
+- bundle
+- rake db:create:all
+- rake db:migrate
+- mkdir private
+- mkdir private/to_print
+- enjoy
+
 == (The MIT License)
 
 Copyright (c) 2012 Los Mostros
