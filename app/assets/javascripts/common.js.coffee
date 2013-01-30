@@ -11,6 +11,9 @@ new Rule
 
   unload: -> clearTimeout timer for i, timer of @map.timers
 
+window.State =
+  gain_changed: false
+
 jQuery ($) ->
   $(document).on 'click', 'a.submit', -> $('form').submit(); false
   
@@ -25,3 +28,5 @@ jQuery ($) ->
     $(this).find('.dropdown-toggle').addClass('disabled')
 
   Inspector.instance().load()
+
+
