@@ -60,6 +60,8 @@
         cost: 'Costo sin IVA'
         iva_cost: 'Costo con IVA'
         gain: 'Ganancia (%)'
+        unit_gain: 'Ganancia Unidad (%)'
+        special_gain: 'Ganancia Especial (%)'
         retail_price: 'Precio de venta'
         unit_price: 'Precio por unidad'
         special_price: 'Precio especial'

@@ -2,14 +2,17 @@ window.Product =
   updateAllPrices: ->
     unless State.gain_charged
       $('#product_gain').val(30)
+      $('#product_unit_gain').val(30)
+      $('#product_special_gain').val(30)
       
     value = $('#product_iva_cost').val()
-    earn = $('#product_gain').val()
-    final_price = (value * (earn / 100 + 1)).toFixed(2)
+    gain = $('#product_gain').val() / 100 + 1
+    unit_gain = $('#product_unit_gain').val() / 100 + 1
+    special_gain = $('#product_special_gain').val() / 100 +1
 
-    $('#product_retail_price').val(final_price)
-    $('#product_unit_price').val(final_price)
-    $('#product_special_price').val(final_price)
+    $('#product_retail_price').val((value * gain).toFixed(2))
+    $('#product_unit_price').val((value * unit_gain).toFixed(2))
+    $('#product_special_price').val((value * special_gain).toFixed(2))
 
   updateTotalStock: ->
     total_stock = $('#product_packs').val() * $('#product_pack_content').val()
@@ -35,4 +38,5 @@ new Rule
     $(document).off 'keyup', '#product_cost', @map.update_iva_cost
     $(document).off 'keyup', '.price-modifier', @map.update_all_prices
     $(document).off 'keyup', '.stock-modifier', @map.update_total_stock
+    State.gain_charged = false
 

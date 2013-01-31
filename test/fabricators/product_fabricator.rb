@@ -14,5 +14,7 @@ Fabricator(:product) do
   retail_price    { 100.0 * rand }
   unit_price      { 100.0 * rand }
   special_price   { 100.0 * rand }
+  unit_gain       { 100.0 * rand }
+  special_gain    { 100.0 * rand }
   provider_id     { Fabricate(:provider).id }
 end

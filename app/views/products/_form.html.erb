@@ -50,12 +50,16 @@
       </div>
     </div>
     <div class='row-fluid'>
-      <div class='span6'>
+      <div class='span4'>
         <%= f.input :cost %>
         <%= f.input :iva_cost, input_html: { class: 'span6 price-modifier' } %>
-        <%= f.input :gain, input_html: { class: 'span6 price-modifier' } %>
       </div>
-      <div class='span6'>
+      <div class='span4'>
+        <%= f.input :gain, input_html: { class: 'span6 price-modifier' } %>
+        <%= f.input :unit_gain, input_html: { class: 'span6 price-modifier' } %>
+        <%= f.input :special_gain, input_html: { class: 'span6 price-modifier' } %>
+      </div>
+      <div class='span4'>
         <%= f.input :retail_price %>
         <%= f.input :unit_price %>
         <%= f.input :special_price %>

@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
   attr_accessible :code, :description, :retail_unit, :purchase_unit,
     :unity_relation, :total_stock, :min_stock, :packs, :pack_content, 
     :cost, :iva_cost, :gain, :retail_price, :unit_price, :special_price,
-    :provider_id, :auto_provider_name
+    :provider_id, :auto_provider_name, :unit_gain, :special_gain
 
   validates :code, :description, presence: true
   validates :code, uniqueness: true
@@ -16,8 +16,8 @@ class Product < ActiveRecord::Base
     allow_nil: true, allow_blank: true, only_integer: true
   }
   validates :unity_relation, :total_stock, :min_stock, :pack_content, :cost, 
-    :iva_cost, :retail_price, :unit_price, :special_price, :gain, 
-    numericality: { allow_nil: true, allow_blank: true }
+    :iva_cost, :retail_price, :unit_price, :special_price, :gain, :unit_gain,
+    :special_gain, numericality: { allow_nil: true, allow_blank: true }
 
   belongs_to :provider
   has_many :product_lines

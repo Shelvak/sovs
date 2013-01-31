@@ -76,9 +76,11 @@ class ProductTest < ActiveSupport::TestCase
     @product.unit_price = '?xx'
     @product.special_price = '?xx'
     @product.gain = '?xx'
+    @product.unit_gain = '?xx'
+    @product.special_gain = '?xx'
 
     assert @product.invalid?
-    assert_equal 11, @product.errors.count
+    assert_equal 13, @product.errors.count
     assert_equal [error_message_from_model(@product, :unity_relation, :not_a_number)],
       @product.errors[:unity_relation]
     assert_equal [error_message_from_model(@product, :packs, :not_a_number)],
@@ -101,6 +103,10 @@ class ProductTest < ActiveSupport::TestCase
       @product.errors[:special_price]
     assert_equal [error_message_from_model(@product, :gain, :not_a_number)],
       @product.errors[:gain]
+    assert_equal [error_message_from_model(@product, :unit_gain, :not_a_number)],
+      @product.errors[:unit_gain]
+    assert_equal [error_message_from_model(@product, :special_gain, :not_a_number)],
+      @product.errors[:special_gain]
 
     @product.reload
     @product.packs = '0.01'
