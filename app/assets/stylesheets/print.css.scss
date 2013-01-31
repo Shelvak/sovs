@@ -1,0 +1,42 @@
+body {
+  color: #000;
+  background: #fff;
+  font-family: georgia, serif;
+  font-size: 12px;
+}
+
+nav, .navbar, .pagination-container, 
+.iconic, .btn, .form-actions {
+  display: none;
+}
+
+a, a:hover, a:visited {
+  color: #000;
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+
+  td {
+    padding: .1em 1em;
+  }
+
+  td, th {
+    border: 1px solid #666;
+  }
+
+  th {
+    padding: .25em 1em;
+    text-align: left;
+  }
+}
+
+td, th, h1, h2, h3, h4, h5, h6 {
+  font-family: helvetica, sans-serif;
+  color: black;
+}
+
+.not-printable {
+  display: none;
+}
