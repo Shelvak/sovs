@@ -17,6 +17,7 @@ gem 'sidekiq'
 gem 'capistrano'
 gem 'prawn'
 gem 'cups'
+gem 'newrelic_rpm'
 
 
 group :assets do

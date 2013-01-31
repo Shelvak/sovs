@@ -128,6 +128,7 @@
     actions:
       logout: 'Salir de la aplicación'
     customers: 'Clientes'
+    daily_boxes: 'Caja Diaria'
     places: 'Locales'
     products: 'Productos'
     providers: 'Proveedores'
@@ -176,6 +177,13 @@
         social_monot: 'MONOTRIBUTISTA SOCIAL'
         small_event_contributor: 'PEQUEÑO CONTRIBUYENTE EVENTUAL'
         social_small_event_contributor: 'PEQUEÑO CONTRIBUYENTE EVENTUAL SOCIAL'
+    daily_boxes:
+      index_title: 'Caja diaria del último mes'
+      day: 'Día'
+      total_sales_amount: 'Vendido'
+      total_sales_count: 'Cant. Ventas'
+      empty_index:
+        html: 'No se ha creado ninguna venta hasta el momento'
     places:
       index_title: 'Listado de locales'
       show_title: 'Detalle de local'

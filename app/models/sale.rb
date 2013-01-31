@@ -64,4 +64,8 @@ class Sale < ActiveRecord::Base
   def common_bill?
     self.sale_kind == 'B' || self.sale_kind == '-'
   end
+
+  def created_at_date
+    self.created_at.to_date
+  end
 end

@@ -1,5 +1,5 @@
 Fabricator(:product) do
-  code            { 100000 * rand }
+  code            { 1000000000 * rand }
   description     { Faker::Lorem.sentence }
   retail_unit     { ['Kg', 'g', 'L', 'ml', 'Un'].sample }
   purchase_unit   { ['Kg', 'g', 'L', 'ml', 'Un'].sample }

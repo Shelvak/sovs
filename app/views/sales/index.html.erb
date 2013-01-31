@@ -16,13 +16,15 @@
 
         <tbody>
           <% @sales.each do |sale| %>
-            <tr>
-              <td><%= sale.customer %></td>
-              <td><%= sale.seller %></td>
-              <td><%= sale.sale_kind %></td>
-              <td><%= number_to_currency sale.total_price %></td>
-              <td><%= link_to_show sale %></td>
-            </tr>
+            <% cache ['sales', sale.id] do %>
+              <tr>
+                <td><%= sale.customer %></td>
+                <td><%= sale.seller %></td>
+                <td><%= sale.sale_kind %></td>
+                <td><%= number_to_currency sale.total_price %></td>
+                <td><%= link_to_show sale %></td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

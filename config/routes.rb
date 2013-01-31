@@ -1,4 +1,6 @@
 Sovs::Application.routes.draw do
+
+  match 'daily_boxes' => 'daily_box#index', via: :get
   
   resources :sales, except: [:edit, :update, :destroy] do
     collection do

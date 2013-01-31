@@ -19,6 +19,9 @@
             <%= show_menu_link(
               name: 'sales', controllers: 'sales', path: sales_path
             ) if can?(:read, Sale) %>
+            <%= show_menu_link(
+              name: 'daily_boxes', controllers: 'daily_box', path: daily_boxes_path
+            ) %>
           <%= render partial: 'shared/nav_search' %>
         </ul>
           <ul class="nav pull-right">

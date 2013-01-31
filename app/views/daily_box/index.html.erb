@@ -1,0 +1,49 @@
+<div class='readonly-data'>
+  <h2><%= t('view.daily_boxes.index_title') %></h2>
+
+  <% if @boxes.empty? %>
+    <%= render 'shared/empty_index' %>
+  <% else %>
+    <% @boxes.each_with_index do |(day, records), i| %>
+      <% if 0 == i % 16 %>
+        <div class="row-fluid">
+      <% end %>
+      <% if 0 == i % 8 %>
+        <div class="span6">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th><%= t('view.daily_boxes.day') %></th>
+                <th><%= t('view.daily_boxes.total_sales_amount') %></th>
+                <th><%= t('view.daily_boxes.total_sales_count') %></th>
+              </tr>
+            </thead>
+
+            <tbody>
+          <% end %>
+              <% if  day == Date.today %>
+                <tr class='success'>
+                  <td><%= l day %></td>
+                  <td><%= number_to_currency records.sum(&:total_price) %></td>
+                  <td><%= records.count %></td>
+                </tr>
+              <% else %>
+                <% cache ['daily-box', day] do %>
+                  <tr>
+                    <td><%= l day %></td>
+                    <td><%= number_to_currency records.sum(&:total_price) %></td>
+                    <td><%= records.count %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% if 7 == i % 8 %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+      <% if 15 == i % 16 %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
