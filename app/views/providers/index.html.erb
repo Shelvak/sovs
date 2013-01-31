@@ -11,7 +11,7 @@
             <th><%= Provider.human_attribute_name 'address' %></th>
             <th><%= Provider.human_attribute_name 'cuit' %></th>
             <th><%= Provider.human_attribute_name 'phone' %></th>
-            <th colspan="3"></th>
+            <th class='not-printable' colspan="3"></th>
           </tr>
         </thead>
 
@@ -23,11 +23,11 @@
               <td><%= provider.address %></td>
               <td><%= provider.cuit %></td>
               <td><%= provider.phone %></td>
-              <td><%= link_to_show provider %></td>
-              <td><%= link_to_edit(
+              <td class='not-printable'><%= link_to_show provider %></td>
+              <td class='not-printable'><%= link_to_edit(
                   edit_provider_path(provider)
                 )if can? :update, provider %></td>
-              <td><%= link_to_destroy provider if can? :destroy, provider %></td>
+              <td class='not-printable'><%= link_to_destroy provider if can? :destroy, provider %></td>
             </tr>
           <% end %>
         </tbody>

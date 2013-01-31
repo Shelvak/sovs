@@ -1,9 +1,16 @@
 window.Product =
   updateAllPrices: ->
     unless State.gain_charged
-      $('#product_gain').val(30)
-      $('#product_unit_gain').val(30)
-      $('#product_special_gain').val(30)
+      gain = $('#product_gain').val()
+      unit_gain = $('#product_unit_gain').val()
+      special_gain = $('#product_special_gain').val()
+
+      unless gain > 0.0
+        $('#product_gain').val(30)
+      unless unit_gain > 0.0
+        $('#product_unit_gain').val(30)
+      unless special_gain > 0.0
+        $('#product_special_gain').val(30)
       
     value = $('#product_iva_cost').val()
     gain = $('#product_gain').val() / 100 + 1
@@ -27,8 +34,10 @@ new Rule
       State.gain_charged = true
     @map.update_all_prices ||= ->
       Product.updateAllPrices()
+      State.gain_charged = true
     @map.update_total_stock ||= ->
       Product.updateTotalStock()
+      State.gain_charged = true
 
     $(document).on 'keyup', '#product_cost', @map.update_iva_cost
     $(document).on 'keyup', '.price-modifier', @map.update_all_prices

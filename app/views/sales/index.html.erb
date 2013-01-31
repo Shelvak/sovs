@@ -10,7 +10,7 @@
             <th><%= Sale.human_attribute_name 'seller_id' %></th>
             <th><%= Sale.human_attribute_name 'sale_kind' %></th>
             <th><%= Sale.human_attribute_name 'total_price' %></th>
-            <th colspan="3"></th>
+            <th class='not-printable' colspan="3"></th>
           </tr>
         </thead>
 
@@ -22,7 +22,7 @@
                 <td><%= sale.seller %></td>
                 <td><%= sale.sale_kind %></td>
                 <td><%= number_to_currency sale.total_price %></td>
-                <td><%= link_to_show sale %></td>
+                <td class='not-printable'><%= link_to_show sale %></td>
               </tr>
             <% end %>
           <% end %>
