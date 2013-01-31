@@ -105,6 +105,7 @@
           one: 'Perfil'
           other: 'Perfiles'
         remember_me: 'Recordarme'
+        place_id: 'Lugar de preferencia'
         
   errors:
     title: 'Error'

@@ -9,8 +9,9 @@ class SaleTest < ActiveSupport::TestCase
     assert_difference 'Sale.count' do
       assert_difference 'Version.count', 5 do
         @sale = Sale.create(Fabricate.attributes_for(
-          :sale, customer_id: @sale.customer_id, seller_id: @sale.seller_id)
-        )
+          :sale, customer_id: @sale.customer_id, 
+          seller_id: @sale.seller_id, place_id: @sale.place_id
+        ))
       end 
     end 
   end

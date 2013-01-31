@@ -15,12 +15,12 @@ mendoza_cities = [
 $.fn.extend
   linkToStates: (province_select) ->
     $(this).on 'change', () ->
-      selected = $(this).attr('value')
+      selected = $(this).val()
       $(province_select).removeOptions()
       switch selected
         when 'Mendoza' then $(province_select).addOptions(mendoza_cities)
         else
-          $(province_select).addOptions(['Seleccione provincia por favor'])
+          $(province_select).addOptions(['Provincia sin departamentos cargados'])
 
   removeOptions: () ->
     select = "##{$(this).attr('id')} option"
@@ -32,17 +32,23 @@ $.fn.extend
     array.map (element) ->
       target_select.append(new Option(element))
   
+new Rule
+  load: ->
+    @map.increase_provider_prices ||= ->
+      increase = prompt('Ingrese el % de aumento')
+      parse = parseFloat(increase)
+      if $.isNumeric(parse) && parse != 0.00
+        window.location = window.location.pathname + '/add_increase?add=' + increase
+      else
+        alert('No ha ingresado un valor correcto')
+    @map.activate_province_select ||= ->
+      $(this).linkToStates('#provider_city')
 
-jQuery ($) ->
 
-  $('#provider_province').linkToStates('#provider_city')
-  $('#provider_province').change()
+    $(document).on 'click', '#add_provider_increase', @map.increase_provider_prices
+    $(document).on 'change', '#provider_province', @map.activate_province_select
 
-  $('#add_provider_increase').on 'click', () ->
-    increase = prompt('Ingrese el % de aumento')
-    parse = parseFloat(increase)
-    if $.isNumeric(parse) && parse != 0.00
-      window.location = window.location.pathname + '/add_increase?add=' + increase
-    else
-      alert('No ha ingresado un valor correcto')
-      window.location = window.location.pathname
+  unload: ->
+    $(document).off 'click', '#add_provider_increase', @map.increase_provider_prices
+    $(document).off 'change', '#provider_province', @map.activate_province_select
+
