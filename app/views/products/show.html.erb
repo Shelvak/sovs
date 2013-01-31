@@ -58,8 +58,16 @@
         <%= number_to_currency @product.retail_price %>
       </p>
       <p>
+        <strong><%= Product.human_attribute_name 'unit_gain' %></strong>:
+        <%= @product.unit_gain %>
+      </p>
+      <p>
         <strong><%= Product.human_attribute_name 'unit_price' %></strong>:
         <%= number_to_currency @product.unit_price %>
+      </p>
+      <p>
+        <strong><%= Product.human_attribute_name 'special_gain' %></strong>:
+        <%= @product.special_gain %>
       </p>
       <p>
         <strong><%= Product.human_attribute_name 'special_price' %></strong>:
