@@ -12,7 +12,7 @@
       </div>
       <div class='span6'>
         <%= f.input :province, collection: argentina_provinces, selected: 'Mendoza' %>
-        <%= f.input :city, collection: ['Seleccione provincia por favor'] %>
+        <%= f.input :city, collection: [], prompt: true %>
         <%= f.input :locality %>
         <div class='row-fluid'>
           <div class='span4'>
@@ -31,4 +31,9 @@
     <div class="pull-right"><%= yield :form_actions %></div>
     <%= f.button :submit, class: 'btn btn-primary' %>
   </div>
+<% end %>
+
+<% content_for :bottom_extra_js do %>
+  <%= javascript_tag '$("#provider_province").linkToStates("#provider_city")' %>
+  <%= javascript_tag '$("#provider_province").change()' %>
 <% end %>

@@ -15,6 +15,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body id="c_<%= controller_name %>" data-action="<%= action_name %>" <%= raw 'class="logged_in"' if user_signed_in? %>>
+  <%= yield :head_extra_js %>
   <%= render 'shared/menu' %>
   <div id="loading_caption" class="alert" style="display: none;">
     <strong><%= t('label.loading') %></strong>
@@ -25,5 +26,6 @@
   
   <%= render 'shared/notice' if flash.notice %>
   <%= render 'shared/alert' if flash.alert %>
+  <%= yield :bottom_extra_js %>
 </body>
 </html>
