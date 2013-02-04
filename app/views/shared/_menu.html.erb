@@ -10,7 +10,7 @@
       <% if user_signed_in? %>
         <div class="nav-collapse">
           <ul class="nav">
-            <%= render partial: 'shared/admin_menu' %>
+            <%= render partial: 'shared/admin_menu' if can?(:read, :admin_menu) %>
           </ul>
           <ul class='nav'>
             <%= show_menu_link(
@@ -21,7 +21,7 @@
             ) if can?(:read, Sale) %>
             <%= show_menu_link(
               name: 'daily_boxes', controllers: 'daily_box', path: daily_boxes_path
-            ) %>
+            ) if can?(:read, :daily_box) %>
           <%= render partial: 'shared/nav_search' %>
         </ul>
           <ul class="nav pull-right">

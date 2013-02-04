@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
       logger.error(([ex, ''] + ex.backtrace).join("\n"))
     end
   end
+
+  rescue_from CanCan::AccessDenied do
+    redirect_to new_sale_url, alert: t('errors.access_denied')
+  end
   
   def user_for_paper_trail
     current_user.try(:id)
@@ -35,5 +39,21 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     new_sale_path
+  end
+
+  def make_datetime_range(parameters = nil)
+    if parameters
+      from_datetime = Timeliness::Parser.parse(
+        parameters[:from], :datetime, zone: :local
+      )
+      to_datetime = Timeliness::Parser.parse(
+        parameters[:to], :datetime, zone: :local
+      )
+    end
+
+    from_datetime ||= Time.now.at_beginning_of_day
+    to_datetime ||= Time.now
+
+    [from_datetime.to_datetime, to_datetime.to_datetime].sort
   end
 end

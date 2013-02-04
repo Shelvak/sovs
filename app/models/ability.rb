@@ -25,9 +25,11 @@ class Ability
     can :update, :all
     can :edit_profile, User
     can :update_profile, User
+    can :manage, Product
+    can :manage, Sale
   end
   
   def default_rules
-    can :read, :all
+    #can :read, :all
   end
 end

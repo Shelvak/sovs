@@ -123,6 +123,8 @@
     search: 'Buscar'
     show: 'Ver'
     generate: 'Generar'
+    others: 'Otros'
+    total: 'Total'
     
   menu:
     admin: 'Administración'
@@ -135,6 +137,7 @@
     providers: 'Proveedores'
     sales: 'Ventas'
     sellers: 'Vendedores'
+    stats: 'Estadísticas'
     users: 'Usuarios'
     
   messages:
@@ -246,6 +249,21 @@
       empty_index:
         html: 'No se ha creado ningún vendedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Vendedor</span>'
       new: 'Nuevo Vendedor'
+      seller: 'Vendedor'
+      sales_count: 'Ventas'
+    stats:
+      index_title: 'Estadísticas'
+      date: 'Fecha'
+      sold: 'Vendido'
+      empty_result: 'La busqueda no dio resultados'
+      date_filter:
+        start: 'Inicio'
+        end: 'Fin'
+        apply: 'Aplicar'
+      sales_by_seller:
+        title: 'Ventas por vendedor'
+      sales_earn:
+        title: 'Ganancia de ventas'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'

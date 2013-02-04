@@ -1,4 +1,4 @@
-<% controllers = ['users', 'providers', 'sellers', 'places', 'customers'] %>
+<% controllers = ['users', 'providers', 'sellers', 'places', 'customers', 'stats'] %>
 <li class="dropdown <%= 'active' if controllers.include?(controller_name) %>">
   <%= link_to(
     "#{t('menu.admin')} <b class='caret'></b>".html_safe, '#', 
@@ -20,5 +20,8 @@
     <%= show_menu_link(
       name: 'users', controllers: 'users', path: users_path
     ) if can?(:read, User) %>
+    <%= show_menu_link(
+      name: 'stats', controllers: 'stats', path: stats_path
+    ) if can?(:read, :stats) %>
   </ul>
 </li>

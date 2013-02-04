@@ -1,7 +1,13 @@
 Sovs::Application.routes.draw do
 
   match 'daily_boxes' => 'daily_box#index', via: :get
-  
+
+  match 'stats(.:format)' => 'stats#index', as: 'stats', via: :get
+  match 'stats/sales_by_seller(.:format)' => 'stats#sales_by_seller',
+    as: 'sales_by_seller_stats', via: :get
+  match 'stats/sales_earn(.:format)' => 'stats#sales_earn',
+    as: 'sales_earn_stats', via: :get
+    
   resources :sales, except: [:edit, :update, :destroy] do
     collection do
       get :autocomplete_for_customer_name

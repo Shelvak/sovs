@@ -1,5 +1,5 @@
 class DailyBoxController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :authorize_daily_box!
   
   # GET /daily_boxes
   # GET /daily_boxes.json
@@ -13,5 +13,11 @@ class DailyBoxController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @boxes }
     end
+  end
+
+  private
+
+  def authorize_daily_box!
+    authorize! :daily_box, :all
   end
 end

@@ -95,31 +95,6 @@ ActiveRecord::Schema.define(:version => 20130131183437) do
   add_index "providers", ["cuit"], :name => "index_providers_on_cuit", :unique => true
   add_index "providers", ["name"], :name => "index_providers_on_name"
 
-  create_table "rr_logged_events", :force => true do |t|
-    t.string   "activity"
-    t.string   "change_table"
-    t.string   "diff_type"
-    t.string   "change_key"
-    t.string   "left_change_type"
-    t.string   "right_change_type"
-    t.string   "description"
-    t.string   "long_description",  :limit => 1000
-    t.datetime "event_time"
-    t.string   "diff_dump",         :limit => 2000
-  end
-
-  create_table "rr_pending_changes", :force => true do |t|
-    t.string   "change_table"
-    t.string   "change_key"
-    t.string   "change_new_key"
-    t.string   "change_type"
-    t.datetime "change_time"
-  end
-
-  create_table "rr_running_flags", :id => false, :force => true do |t|
-    t.integer "active"
-  end
-
   create_table "sales", :force => true do |t|
     t.integer  "customer_id"
     t.integer  "seller_id",                :null => false

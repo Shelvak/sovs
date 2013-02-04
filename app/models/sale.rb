@@ -4,11 +4,15 @@ class Sale < ActiveRecord::Base
   attr_accessor :seller_code, :auto_customer_name
   attr_accessible :customer_id, :seller_id, :sale_kind, :total_price,
     :seller_code, :auto_customer_name, :product_lines_attributes, 
-    :product_lines, :place_id
+    :product_lines, :place_id, :created_at
 
   scope :in_day, ->(day) { where(
     "created_at > :from AND created_at < :to",
     from: day.to_time, to: day.to_time.end_of_day
+  ) }
+  scope :between, ->(_from, _to) { where(
+    "created_at >= :from AND created_at <= :to",
+    from: _from.beginning_of_day, to: _to.end_of_day
   ) }
 
   before_validation :manual_validate
@@ -67,5 +71,17 @@ class Sale < ActiveRecord::Base
 
   def created_at_date
     self.created_at.to_date
+  end
+
+  def self.stats_by_seller_between(from, to)
+    between(from, to).group_by(&:seller_id).map do |seller, sales|
+      [Seller.find(seller).to_s, sales.size]
+    end
+  end
+
+  def self.earn_between(from, to)
+    between(from, to).group_by(&:created_at_date).map do |day, sales|
+      [day, sales.sum(&:total_price)]
+    end
   end
 end

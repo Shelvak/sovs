@@ -33,7 +33,7 @@
   </div>
 <% end %>
 
-<% content_for :bottom_extra_js do %>
+<% content_for :bottom_extra do %>
   <%= javascript_tag '$("#provider_province").linkToStates("#provider_city")' %>
   <%= javascript_tag '$("#provider_province").change()' %>
 <% end %>
