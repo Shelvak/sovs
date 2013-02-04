@@ -4,7 +4,7 @@ class Sale < ActiveRecord::Base
   attr_accessor :seller_code, :auto_customer_name
   attr_accessible :customer_id, :seller_id, :sale_kind, :total_price,
     :seller_code, :auto_customer_name, :product_lines_attributes, 
-    :product_lines, :place_id, :created_at
+    :product_lines, :place_id
 
   scope :in_day, ->(day) { where(
     "created_at > :from AND created_at < :to",

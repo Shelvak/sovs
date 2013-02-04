@@ -17,8 +17,8 @@
 //= require jquery/jquery-ui-timepicker-addon
 //= require twitter/bootstrap
 //= require inspector
-// require turboevents
-// require turbolinks
+//= require turboevents
+//= require turbolinks
 //= require autocomplete
 //= require dynamic_form
 //= require effect_helper
