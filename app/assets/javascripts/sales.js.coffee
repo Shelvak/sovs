@@ -16,19 +16,28 @@ window.Sale =
     $('#sale_total_price').val(totalPrice.toFixed(2))
 
 
-jQuery ($) ->
-  if (add_nested = $('.btn.btn-small[data-dynamic-form-event="addNestedItem"]')).length > 0
-    new_title = add_nested.attr('data-original-title') + ' (CTROL + ALT + A)'
-    add_nested.attr('data-original-title', new_title)
+  add_nested_btn: '.btn.btn-small[data-dynamic-form-event="addNestedItem"]'
+
+new Rule
+  condition: -> $(Sale.add_nested_btn).length
+  load: ->
+    add_nested_btn = $(Sale.add_nested_btn)
+    new_title = add_nested_btn.attr('data-original-title') + ' (CTROL + ALT + A)'
+    add_nested_btn.attr('data-original-title', new_title)
 
     # Captura de atajos de teclado
     $(document).keydown (e)->
       key = e.which
 
-      if (key == 65 || key == 97) && e.ctrlKey && e.altKey
-        add_nested.click()
+      if e.ctrlKey && e.altKey && (key == 65 || key == 97)
         e.preventDefault()
+        add_nested_btn.click()
 
-  $(document).on 'change keyup', '.price-modifier', ->
-    Sale.updateLinePrice $(this).parents('.product_line')
-    Sale.updateTotalPrice()
+    @map.update_line_price ||= ->
+        Sale.updateLinePrice $(this).parents('.product_line')
+        Sale.updateTotalPrice()
+
+    $(document).on 'keyup', '.price-modifier', @map.update_line_price
+
+  unload: ->
+    $(document).off 'keyup', '.price-modifier', @map.update_line_price

@@ -15,7 +15,10 @@ class SalesInteractionsTest < ActionDispatch::IntegrationTest
     fill_in 'sale_seller_code', with: 3
     select 'B', from: 'sale_sale_kind'
     fill_in 'sale_product_lines_attributes_0_auto_product_name', with: '100'
-    select_first_autocomplete_item('#sale_product_lines_attributes_0_auto_product_name')  
+    sleep 0.5
+    find(
+      '#sale_product_lines_attributes_0_auto_product_name'
+    ).native.send_keys :tab
 
     assert_equal 10.0, find_field('sale_total_price').value.to_f
     assert page.has_css?('.product_line', count: 1)
@@ -30,7 +33,7 @@ class SalesInteractionsTest < ActionDispatch::IntegrationTest
       find('.btn-primary').click
     end
 
-    last_sale = Sale.order(:id).last
+
     assert_page_has_no_errors!
     assert_equal new_sale_path, current_path
   end
