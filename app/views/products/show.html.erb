@@ -75,7 +75,9 @@
       </p>
       <p>
         <strong><%= Product.human_attribute_name 'provider_id' %></strong>:
-        <%= link_to @product.provider, provider_path(@product.provider) %>
+        <%= link_to(
+          @product.provider, provider_path(@product.provider)
+        ) if @product.provider %>
       </p>
     </div>
   </div>

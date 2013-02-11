@@ -24,7 +24,9 @@
               <td><%= product.total_stock %></td>
               <td><%= number_to_currency product.iva_cost %></td>
               <td><%= number_to_currency product.unit_price %></td>
-              <td><%= link_to product.provider, provider_path(product.provider) %></td>
+              <td><%= link_to(
+                product.provider, provider_path(product.provider)
+              ) if product.provider %></td>
               <td class='not-printable'><%= link_to_show product %></td>
               <td class='not-printable'><%= link_to_edit(
                 edit_product_path(product)
