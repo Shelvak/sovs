@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
   has_paper_trail
-  has_magick_columns code: :integer, description: :string
+  has_magick_columns code: :string
 
   attr_accessor :auto_provider_name
 
