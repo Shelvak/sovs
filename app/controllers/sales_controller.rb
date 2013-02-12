@@ -75,7 +75,7 @@ class SalesController < ApplicationController
   end
 
   def autocomplete_for_product_name
-    products = Product.filtered_list(params[:q]).limit(1)
+    products = Product.with_code(params[:q]).limit(1)
 
     respond_to do |format|
       format.json { render json: products }
