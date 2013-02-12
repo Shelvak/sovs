@@ -2,7 +2,7 @@ class Product < ActiveRecord::Base
   has_paper_trail
   has_magick_columns code: :string, description: :string
 
-  scope :with_code, ->(code) { where("code like ':code'", code: code) }
+  scope :with_code, ->(code) { where("code like :code", code: code.to_s) }
 
   attr_accessor :auto_provider_name
 

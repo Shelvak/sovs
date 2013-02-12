@@ -11,6 +11,7 @@ window.Sale =
   updateTotalPrice: () ->
     totalPrice = 0.0
     $('.product_line').each (i, element)->
+      Sale.updateLinePrice($(this))
       totalPrice += parseFloat($(this).attr('data-price')) || 0
 
     $('#sale_total_price').val(totalPrice.toFixed(2))
@@ -33,11 +34,10 @@ new Rule
         e.preventDefault()
         add_nested_btn.click()
 
-    @map.update_line_price ||= ->
-        Sale.updateLinePrice $(this).parents('.product_line')
-        Sale.updateTotalPrice()
+    @map.update_lines_price ||= ->
+      Sale.updateTotalPrice()
 
-    $(document).on 'keyup', '.price-modifier', @map.update_line_price
+    $(document).on 'keyup change', '.price-modifier', @map.update_lines_price
 
   unload: ->
-    $(document).off 'keyup', '.price-modifier', @map.update_line_price
+    $(document).off 'keyup change', '.price-modifier', @map.update_lines_price
