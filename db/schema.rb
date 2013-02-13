@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130211201807) do
+ActiveRecord::Schema.define(:version => 20130213003717) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -50,15 +50,14 @@ ActiveRecord::Schema.define(:version => 20130211201807) do
   add_index "product_lines", ["sale_id"], :name => "index_product_lines_on_sale_id"
 
   create_table "products", :force => true do |t|
-    t.string   "code",                                                       :null => false
+    t.integer  "code",                                                       :null => false
     t.string   "description",                                                :null => false
     t.string   "retail_unit",    :limit => 2
     t.string   "purchase_unit",  :limit => 2
     t.decimal  "unity_relation",              :precision => 15, :scale => 2
     t.decimal  "total_stock",                 :precision => 15, :scale => 2
     t.decimal  "min_stock",                   :precision => 15, :scale => 2
-    t.integer  "packs"
-    t.decimal  "pack_content",                :precision => 15, :scale => 2
+    t.decimal  "packs",                       :precision => 15, :scale => 2
     t.decimal  "cost",                        :precision => 15, :scale => 2
     t.decimal  "iva_cost",                    :precision => 15, :scale => 2
     t.decimal  "gain",                        :precision => 4,  :scale => 2

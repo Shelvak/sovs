@@ -2,51 +2,46 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <div class='page-header'>
-      <div class='row-fluid'>
-        <div class='span3'>
-          <%= f.input :code, input_html: { class: 'span10' } %>
-        </div>
-        <div class='span9'>
-          <%= f.input :description, input_html: { class: 'span9' } %>
-        </div>
+    <div class='row-fluid'>
+      <div class='span3'>
+        <%= f.input :code, input_html: { class: 'span10' } %>
       </div>
-      <div class='row-fluid'>
-        <div class='span4'>
-          <%= f.label :provider_id %>
-          <%= f.input :auto_provider_name, label: false, input_html: { 
-            value: @product.provider, class: 'autocomplete-field span10',
-            data: {
-              'autocomplete-id-target' => '#product_provider_id',
-              'autocomplete-url' => autocomplete_for_provider_name_products_path(format: :json)
-            }
-          } %>
-          <%= f.input :provider_id, as: :hidden,
-            input_html: { class: 'autocomplete-id' } %>
-        </div>
-        <div class='span2'>
-          <%= retail_unit_select_for_product(f) %>
-        </div>
-        <div class='span2'>
-          <%= purchase_unit_select_for_product(f) %>
-        </div>
-        <div class='span4'>
-          <%= f.input :unity_relation, input_html: { class: 'span6' } %>
-        </div>
+      <div class='span9'>
+        <%= f.input :description, input_html: { class: 'span9' } %>
       </div>
-      <div class='row-fluid'>
-        <div class='span2'>
-          <%= f.input :packs, input_html: { class: 'span8 stock-modifier' } %>
-        </div>
-        <div class='span3'>
-          <%= f.input :pack_content, input_html: { class: 'span8 stock-modifier' } %>
-        </div>
-        <div class='span3'>
-          <%= f.input :min_stock %>
-        </div>
-        <div class='span3'>
-          <%= f.input :total_stock,  input_html: { class: 'span8' } %>
-        </div>
+    </div>
+    <div class='row-fluid'>
+      <div class='span4'>
+        <%= f.label :provider_id %>
+        <%= f.input :auto_provider_name, label: false, input_html: { 
+          value: @product.provider, class: 'autocomplete-field span10',
+          data: {
+            'autocomplete-id-target' => '#product_provider_id',
+            'autocomplete-url' => autocomplete_for_provider_name_products_path(format: :json)
+          }
+        } %>
+        <%= f.input :provider_id, as: :hidden,
+          input_html: { class: 'autocomplete-id' } %>
+      </div>
+      <div class='span2'>
+        <%= retail_unit_select_for_product(f) %>
+      </div>
+      <div class='span2'>
+        <%= purchase_unit_select_for_product(f) %>
+      </div>
+      <div class='span3'>
+        <%= f.input :min_stock %>
+      </div>
+    </div>
+    <div class='row-fluid'>
+      <div class='span4'>
+        <%= f.input :unity_relation, input_html: { class: 'span6 stock-modifier' } %>
+      </div>
+      <div class='span4'>
+        <%= f.input :total_stock,  input_html: { class: 'span6 stock-modifier' } %>
+      </div>
+      <div class='span4'>
+        <%= f.input :packs %>
       </div>
     </div>
     <div class='row-fluid'>

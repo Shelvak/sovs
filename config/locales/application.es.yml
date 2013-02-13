@@ -56,7 +56,6 @@
         total_stock: 'Stock total'
         min_stock: 'Punto pedido'
         packs: 'Packs'
-        pack_content: 'Contenido de los packs'
         cost: 'Costo sin IVA'
         iva_cost: 'Costo con IVA'
         gain: 'Ganancia (%)'

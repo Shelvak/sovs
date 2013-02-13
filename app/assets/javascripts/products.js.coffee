@@ -22,9 +22,10 @@ window.Product =
     $('#product_special_price').val((value * special_gain).toFixed(2))
 
   updateTotalStock: ->
-    if $('#product_packs').val().length && $('#product_pack_content').val().length
-      total_stock = $('#product_packs').val() * $('#product_pack_content').val()
-      $('#product_total_stock').val(total_stock.toFixed(2))
+    if $('#product_unity_relation').val().length && $('#product_total_stock').val().length
+
+      total_packs = $('#product_total_stock').val() / $('#product_unity_relation').val()
+      $('#product_packs').val(total_packs.toFixed(2))
 
 new Rule
   load: ->

@@ -69,7 +69,6 @@ class ProductTest < ActiveSupport::TestCase
     @product.packs = '?xx'
     @product.total_stock = '?xx'
     @product.min_stock = '?xx'
-    @product.pack_content = '?xx'
     @product.cost = '?xx'
     @product.iva_cost = '?xx'
     @product.retail_price = '?xx'
@@ -80,7 +79,7 @@ class ProductTest < ActiveSupport::TestCase
     @product.special_gain = '?xx'
 
     assert @product.invalid?
-    assert_equal 13, @product.errors.count
+    assert_equal 12, @product.errors.count
     assert_equal [error_message_from_model(@product, :unity_relation, :not_a_number)],
       @product.errors[:unity_relation]
     assert_equal [error_message_from_model(@product, :packs, :not_a_number)],
@@ -89,8 +88,6 @@ class ProductTest < ActiveSupport::TestCase
       @product.errors[:total_stock]
     assert_equal [error_message_from_model(@product, :min_stock, :not_a_number)],
       @product.errors[:min_stock]
-    assert_equal [error_message_from_model(@product, :pack_content, :not_a_number)],
-      @product.errors[:pack_content]
     assert_equal [error_message_from_model(@product, :cost, :not_a_number)],
       @product.errors[:cost]
     assert_equal [error_message_from_model(@product, :iva_cost, :not_a_number)],
@@ -107,13 +104,6 @@ class ProductTest < ActiveSupport::TestCase
       @product.errors[:unit_gain]
     assert_equal [error_message_from_model(@product, :special_gain, :not_a_number)],
       @product.errors[:special_gain]
-
-    @product.reload
-    @product.packs = '0.01'
-    assert @product.invalid?
-    assert_equal 1, @product.errors.count
-    assert_equal [error_message_from_model(@product, :packs, :not_an_integer)],
-      @product.errors[:packs]
   end
 
   test 'probe the correct increase of percentage' do

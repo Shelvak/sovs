@@ -1,23 +1,20 @@
 class Product < ActiveRecord::Base
   has_paper_trail
-  has_magick_columns code: :string, description: :string
+  has_magick_columns code: :integer, description: :string
 
-  scope :with_code, ->(code) { where("code like :code", code: code.to_s) }
+  scope :with_code, ->(code) { where("code = :code", code: code.to_i) }
 
   attr_accessor :auto_provider_name
 
   attr_accessible :code, :description, :retail_unit, :purchase_unit,
-    :unity_relation, :total_stock, :min_stock, :packs, :pack_content, 
+    :unity_relation, :total_stock, :min_stock, :packs, 
     :cost, :iva_cost, :gain, :retail_price, :unit_price, :special_price,
     :provider_id, :auto_provider_name, :unit_gain, :special_gain
 
   validates :code, :description, presence: true
   validates :code, uniqueness: true
   validates :retail_unit, :purchase_unit, length: { maximum: 2 }
-  validates :packs, numericality: { 
-    allow_nil: true, allow_blank: true, only_integer: true
-  }
-  validates :unity_relation, :total_stock, :min_stock, :pack_content, :cost, 
+  validates :unity_relation, :total_stock, :min_stock, :cost, :packs,
     :iva_cost, :retail_price, :unit_price, :special_price, :gain, :unit_gain,
     :special_gain, numericality: { allow_nil: true, allow_blank: true }
 
@@ -54,7 +51,7 @@ class Product < ActiveRecord::Base
 
   def discount_stock(quantity)
     self.total_stock -= quantity
-    self.packs = total_stock.to_i / self.packs if self.packs > 0.00
+    self.packs = total_stock.to_i / self.packs if self.packs.to_f > 0.00
     self.save!
   end
 end
