@@ -4,6 +4,8 @@ class Product < ActiveRecord::Base
 
   scope :with_code, ->(code) { where("code = :code", code: code.to_i) }
 
+  before_save :recalc_packs_count
+
   attr_accessor :auto_provider_name
 
   attr_accessible :code, :description, :retail_unit, :purchase_unit,
@@ -53,5 +55,9 @@ class Product < ActiveRecord::Base
     self.total_stock -= quantity
     self.packs = total_stock.to_i / self.packs if self.packs.to_f > 0.00
     self.save!
+  end
+
+  def recalc_packs_count
+    self.packs = (self.total_stock.to_f / self.unity_relation.to_f).round(2)
   end
 end

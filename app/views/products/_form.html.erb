@@ -4,7 +4,7 @@
   <div class="form-inputs">
     <div class='row-fluid'>
       <div class='span3'>
-        <%= f.input :code, input_html: { class: 'span10' } %>
+        <%= f.input :code, input_html: { class: 'span10', autofocus: true } %>
       </div>
       <div class='span9'>
         <%= f.input :description, input_html: { class: 'span9' } %>
@@ -41,7 +41,7 @@
         <%= f.input :total_stock,  input_html: { class: 'span6 stock-modifier' } %>
       </div>
       <div class='span4'>
-        <%= f.input :packs %>
+        <%= f.input :packs, input_html: { readonly: true } %>
       </div>
     </div>
     <div class='row-fluid'>
