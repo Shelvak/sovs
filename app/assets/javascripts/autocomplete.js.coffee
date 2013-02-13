@@ -42,7 +42,7 @@ jQuery ($)->
   .attr('data-observed', true)
 
   # Autocomplete with first item
-  $(document).on 'change keyup', 'input.autocomplete-field-without-ui', ->
+  $(document).on 'change', 'input.autocomplete-field-without-ui', ->
     if (input = $(this)).val().length > 1
       $.ajax
         url: input.data('autocompleteUrl')
@@ -56,3 +56,5 @@ jQuery ($)->
 
             if $(input.data('autocompleteUnitPriceTarget'))
               $(input.data('autocompleteUnitPriceTarget')).val(item.retail_price)
+
+            Sale.updateTotalPrice()

@@ -16,7 +16,6 @@ window.Sale =
 
     $('#sale_total_price').val(totalPrice.toFixed(2))
 
-
   add_nested_btn: '.btn.btn-small[data-dynamic-form-event="addNestedItem"]'
 
 new Rule
@@ -25,6 +24,11 @@ new Rule
     add_nested_btn = $(Sale.add_nested_btn)
     new_title = add_nested_btn.attr('data-original-title') + ' (CTROL + ALT + A)'
     add_nested_btn.attr('data-original-title', new_title)
+
+    # Endless add nested =)
+    add_nested_btn.attr('tabindex')
+    add_nested_btn.attr('tabindex', 3)
+    add_nested_btn.on 'focus', -> $(this).click()
 
     # Captura de atajos de teclado
     $(document).keydown (e)->
@@ -37,7 +41,7 @@ new Rule
     @map.update_lines_price ||= ->
       Sale.updateTotalPrice()
 
-    $(document).on 'keyup change', '.price-modifier', @map.update_lines_price
+    $(document).on 'keyup change focus', '.price-modifier', @map.update_lines_price
 
   unload: ->
-    $(document).off 'keyup change', '.price-modifier', @map.update_lines_price
+    $(document).off 'keyup change focus', '.price-modifier', @map.update_lines_price

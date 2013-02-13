@@ -4,7 +4,7 @@
     <%= f.input :auto_product_name, label: false, input_html: {
       class: 'autocomplete-field-without-ui price-modifier span11',
       value: f.object.product, autofocus: true,
-      autocomplete: 'off',
+      autocomplete: 'off', tabindex: 2,
       data: {
         'autocomplete-id-target' => "#sale_product_lines_product_id_#{id}",
         'autocomplete-unit-price-target' => "#sale_product_lines_unit_price_#{id}",
@@ -16,7 +16,7 @@
   </div>
   <div class='span2'>
     <%= f.input :quantity, label: false, as: :string,
-      input_html: { value: f.object.quantity || 1, 
+      input_html: { value: f.object.quantity || 1, tabindex: 2,
       class: 'price-modifier span8', autocomplete: 'off' } %>
   </div>
   <div class='span2'>

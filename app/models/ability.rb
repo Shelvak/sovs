@@ -21,8 +21,8 @@ class Ability
   end
   
   def regular_rules
-    can :create, :all
-    can :update, :all
+    #can :create, :all
+    #can :update, :all
     can :edit_profile, User
     can :update_profile, User
     can :manage, Product
