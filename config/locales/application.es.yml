@@ -223,6 +223,7 @@
         html: 'No se ha creado ningún proveedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Proveedor</span>'
       new: 'Nuevo Proveedor'
       add_increase: 'Agregar aumento (%)'
+      products: 'Productos del proveedor'
     sales:
       index_title: 'Listado de ventas'
       show_title: 'Detalle de venta'

@@ -9,7 +9,14 @@ class ProductsController < ApplicationController
   def index
     @title = t('view.products.index_title')
     @searchable = true
-    @products = Product.filtered_list(params[:q]).order(:code).page(params[:page])
+    products = if params[:provider_id]
+      @provider = Provider.find(params[:provider_id])
+      @provider.products
+    else
+      Product.scoped
+    end
+
+    @products = products.filtered_list(params[:q]).order(:code).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

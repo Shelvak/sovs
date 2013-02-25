@@ -58,6 +58,7 @@
   
 </div>
 <div class="form-actions">
+  <%= link_to t('view.providers.products'), provider_products_path(@provider) %> |
   <%= link_to t('label.edit'), edit_provider_path(@provider) if can? :update, @provider %> |
   <%= link_to t('label.list'), providers_path %>
 </div>

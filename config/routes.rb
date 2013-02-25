@@ -28,6 +28,7 @@ Sovs::Application.routes.draw do
 
   resources :providers do
     get :add_increase, on: :member
+    resources :products, on: :member
   end
 
   devise_for :users

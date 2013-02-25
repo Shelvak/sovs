@@ -1,6 +1,9 @@
 <% if @products.empty? %>
   <%= render 'shared/empty_index' %>
 <% else %>
+  <% if params[:provider_id] %>
+    <h2><%= @provider %></h2>
+  <% end %>
   <div class="row">
     <div class="span12">
       <table class="table resource-list">
@@ -8,10 +11,17 @@
           <tr>
             <th><%= Product.human_attribute_name 'code' %></th>
             <th><%= Product.human_attribute_name 'description' %></th>
-            <th><%= Product.human_attribute_name 'total_stock' %></th>
-            <th><%= Product.human_attribute_name 'iva_cost' %></th>
-            <th><%= Product.human_attribute_name 'unit_price' %></th>
-            <th><%= Product.human_attribute_name 'provider_id' %></th>
+            <% if params[:provider_id] %>
+              <th><%= Product.human_attribute_name 'min_stock' %></th>
+              <th><%= Product.human_attribute_name 'cost' %></th>
+              <th><%= Product.human_attribute_name 'total_stock' %></th>
+              <th><%= Product.human_attribute_name 'packs' %></th>
+            <% else %>
+              <th><%= Product.human_attribute_name 'iva_cost' %></th>
+              <th><%= Product.human_attribute_name 'unit_price' %></th>
+              <th><%= Product.human_attribute_name 'total_stock' %></th>
+              <th><%= Product.human_attribute_name 'provider_id' %></th>
+            <% end %>
             <th class='not-printable' colspan="4"></th>
           </tr>
         </thead>
@@ -21,12 +31,19 @@
             <tr>
               <td><%= product.code %></td>
               <td><%= product.description %></td>
-              <td><%= product.total_stock %></td>
-              <td><%= number_to_currency product.iva_cost %></td>
-              <td><%= number_to_currency product.unit_price %></td>
-              <td><%= link_to(
-                product.provider, provider_path(product.provider)
-              ) if product.provider %></td>
+              <% if params[:provider_id] %>
+                <td><%= product.min_stock %></td>
+                <td><%= number_to_currency product.cost %></td>
+                <td><%= [product.total_stock, product.retail_unit].join(' ') %></td>
+                <td><%= product.packs %></td>
+              <% else %>
+                <td><%= number_to_currency product.iva_cost %></td>
+                <td><%= number_to_currency product.unit_price %></td>
+                <td><%= [product.total_stock, product.retail_unit].join(' ') %></td>
+                <td><%= link_to(
+                  product.provider, provider_path(product.provider)
+                ) if product.provider %></td>
+              <% end %>
               <td class='not-printable'>
                 <%= link_to '&#xe03b;'.html_safe, 
                   put_to_stock_product_path(product), 
