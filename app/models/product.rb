@@ -51,9 +51,9 @@ class Product < ActiveRecord::Base
     self.save!
   end
 
-  def discount_stock(quantity)
-    self.total_stock -= quantity
-    self.packs = total_stock.to_i / self.packs if self.packs.to_f > 0.00
+  def put_to_stock(quantity)
+    self.total_stock += quantity
+    recalc_packs_count # Product method
     self.save!
   end
 

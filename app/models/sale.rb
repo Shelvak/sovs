@@ -57,7 +57,7 @@ class Sale < ActiveRecord::Base
 
   def discount_sold_stock
     self.product_lines.each do |pl|
-      pl.product.discount_stock(pl.quantity)
+      pl.product.put_to_stock(-pl.quantity)
     end
   end
 

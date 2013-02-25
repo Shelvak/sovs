@@ -22,7 +22,15 @@
     <strong><%= t('label.loading') %></strong>
   </div>
   <div class="container">
-    <div class="content"><%= yield %></div>
+    <div class="content">
+      <%= content_tag(
+        :span, l(Time.now, format: :long), 
+        class: 'only-for-print hide',
+      ) %>
+
+      <%= yield %>
+    
+    </div>
   </div>
   
   <%= render 'shared/notice' if flash.notice %>

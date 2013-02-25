@@ -102,4 +102,17 @@ class ProductsController < ApplicationController
       format.json { render json: providers }
     end
   end
+
+  def put_to_stock
+    product = Product.find(params[:id])
+
+    notice = product.put_to_stock(params[:quantity].to_f) ? 
+      t('view.products.stock_correctly_updated') :
+      t('view.products.stale_object_error')
+
+    respond_to do |format|
+      format.html { redirect_to :back, notice: notice }
+      format.json { render json: product }
+    end
+  end
 end

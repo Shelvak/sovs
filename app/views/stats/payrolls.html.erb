@@ -3,7 +3,7 @@
     <h2><%= @title %></h2>
   </div>
   <div class='span7'>
-    <div class='pull-right'>
+    <div class='pull-right not-printable'>
       <%= simple_form_for :search, html: { method: :get } do |f| %>
         <div class="row-fluid">
           <h4>(<%= t('view.stats.payrolls.date_label') %>)</h4>
@@ -23,7 +23,7 @@
 <% if @payrolls %>
   <div class="readonly-data">
     <div class='tabbable'>
-      <ul class="nav nav-tabs">
+      <ul class="nav nav-tabs not-printable">
         <li class='active'>
           <%= link_to t('view.stats.payrolls.payrolls'), '#payrolls', 
             data: { toggle: 'tab' } %>

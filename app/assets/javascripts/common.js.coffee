@@ -14,6 +14,9 @@ new Rule
 window.State =
   gain_changed: false
 
+window.Message =
+  quantity_to_put_in_stock: false
+
 jQuery ($) ->
   $(document).on 'click', 'a.submit', -> $('form').submit(); false
   

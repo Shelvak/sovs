@@ -132,15 +132,25 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal 12.1, @product.special_price
   end
 
-  test 'discount stock' do
+  test 'put to stock' do
     total_stock = @product.total_stock
 
     assert_difference 'Version.count' do
       assert_no_difference 'Product.count' do
-        assert @product.discount_stock(1.11)
+        assert @product.put_to_stock(-1.11)
       end
     end
 
     assert_equal (total_stock - 1.11).to_f.round(2), @product.reload.total_stock.to_f.round(2)
+
+    total_stock = @product.reload.total_stock
+
+    assert_difference 'Version.count' do
+      assert_no_difference 'Product.count' do
+        assert @product.put_to_stock(3.33)
+      end
+    end
+
+    assert_equal (total_stock + 3.33).to_f.round(2), @product.reload.total_stock.to_f.round(2)
   end
 end

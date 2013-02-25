@@ -206,9 +206,11 @@
       correctly_created: 'Producto agregado correctamente.'
       correctly_updated: 'Producto actualizado correctamente.'
       stale_object_error: 'El producto no pudo ser actualizado, intente nuevamente.'
+      stock_correctly_updated: 'Stock actualizado correctamente.'
       empty_index:
         html: 'No se ha creado ningún producto hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Producto</span>'
       new: 'Nuevo Producto'
+      quantity_to_put_in_stock: 'Cantidad a poner en stock'
     providers:
       index_title: 'Listado de proveedores'
       show_title: 'Detalle de proveedor'

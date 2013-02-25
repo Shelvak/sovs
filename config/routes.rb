@@ -21,6 +21,7 @@ Sovs::Application.routes.draw do
 
   resources :products do
     get :autocomplete_for_provider_name, on: :collection
+    get :put_to_stock, on: :member
   end
 
   resources :places, :customers, :sellers
