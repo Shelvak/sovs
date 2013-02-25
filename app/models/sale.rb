@@ -84,4 +84,36 @@ class Sale < ActiveRecord::Base
       [day, sales.sum(&:total_price)]
     end
   end
+
+  def self.payrolls_of_month(date)
+    if date
+      date = Date.parse(date)
+      from, to = date.beginning_of_month.to_date, date.end_of_month.to_date
+      payrolls_pack = {}
+      payrolls_resume = {}
+
+      (from..to).each do |d|
+        payrolls_pack[d] = []
+        where(
+          'created_at >= ? AND created_at <= ?', 
+          d.beginning_of_day, d.end_of_day
+        ).group_by(&:seller_id).each do |seller, sales|
+          payrolls_pack[d] << [
+            Seller.find(seller).code, sales.count, 
+            sales.sum(&:total_price)
+          ]
+        end
+      end
+
+      where(
+        'created_at >= ? AND created_at <= ?', 
+        from.beginning_of_day, to.end_of_day
+      ).group_by(&:seller_id).each do |seller, sales|
+      
+        payrolls_resume[Seller.find(seller).code] = sales.sum(&:total_price)
+      end
+
+      { stats: payrolls_pack, resume: payrolls_resume }
+    end
+  end
 end

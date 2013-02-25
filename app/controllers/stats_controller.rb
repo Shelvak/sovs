@@ -32,6 +32,16 @@ class StatsController < ApplicationController
     end
   end
 
+  def payrolls
+    @title = t('view.stats.payrolls.title')
+    @payrolls = Sale.payrolls_of_month(params[:search][:date]) if params[:search]
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @payrolls }
+    end
+  end
+
   private
 
   def authorize_stats!

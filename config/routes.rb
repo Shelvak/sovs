@@ -7,6 +7,8 @@ Sovs::Application.routes.draw do
     as: 'sales_by_seller_stats', via: :get
   match 'stats/sales_earn(.:format)' => 'stats#sales_earn',
     as: 'sales_earn_stats', via: :get
+  match 'stats/payrolls(.:format)' => 'stats#payrolls',
+    as: 'stats_payrolls', via: :get
     
   resources :sales, except: [:edit, :update, :destroy] do
     collection do

@@ -263,6 +263,13 @@
         title: 'Ventas por vendedor'
       sales_earn:
         title: 'Ganancia de ventas'
+      payrolls:
+        title: 'Liquidación de sueldos'
+        for_month: 'De %{month}'
+        date_label: 'Ingresa cualquier día del mes que desees buscar'
+        by_date_detail: 'Detallados por día'
+        payrolls: 'Pagos'
+        details: 'Detalles'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'
