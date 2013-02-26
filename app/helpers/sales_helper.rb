@@ -10,7 +10,7 @@ module SalesHelper
   end
 
   def price_type_select_for_product_line(form)
-    price_type_select = ['retail_price', 'unit_price', 'special_price'].map do |v|
+    price_type_select = Customer::PRICE_TYPE.map do |v|
       [Product.human_attribute_name(v), v]
     end
     

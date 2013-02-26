@@ -3,5 +3,6 @@ Fabricator(:product_line) do
   quantity      { 100.0 * rand }
   unit_price    { 100.0 * rand }
   price         { 100.0 * rand }
+  price_type    { Customer::PRICE_TYPE.sample }
   sale_id       { Fabricate(:sale).id }
 end

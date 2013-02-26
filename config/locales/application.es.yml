@@ -45,6 +45,7 @@
         phone: 'Teléfono'
         iva_kind: 'Condición frente al IVA'
         bill_kind: 'Tipo de factura'
+        default_price_type: 'Tipo de precio por defecto'
       place:
         description: 'Descripción'
       product:

@@ -19,4 +19,14 @@ module CustomersHelper
       selected: form.object.iva_kind || 'F', prompt: false, 
       required: false, input_html: { class: 'span6' }
   end
+
+  def default_price_type_select_for_customer(form)
+    price_type_select = Customer::PRICE_TYPE.map do |v|
+      [Product.human_attribute_name(v), v]
+    end
+
+    form.input :default_price_type, collection: price_type_select,
+      selected: form.object.default_price_type, include_blank: true, 
+      required: false, input_html: { class: 'span6' }
+  end
 end
