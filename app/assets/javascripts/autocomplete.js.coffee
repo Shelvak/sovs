@@ -28,7 +28,13 @@ jQuery ($)->
 
         input.val(selected.value)
         input.data('item', selected.item)
-        $(input.data('autocompleteIdTarget')).val(selected.item.id)
+        target = $(input.data('autocompleteIdTarget'))
+        target.val(selected.item.id)
+
+        if value = selected.item.default_price_type
+          target.parents('.row-fluid').
+            find('input[name$="[default_price_type]"]').val(value)
+          $('.product_line').last().find('select[name$="[price_type]"]').val(value)
 
         input.trigger 'autocomplete:update', input
 

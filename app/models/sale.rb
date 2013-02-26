@@ -1,10 +1,10 @@
 class Sale < ActiveRecord::Base
   has_paper_trail
 
-  attr_accessor :seller_code, :auto_customer_name
+  attr_accessor :seller_code, :auto_customer_name, :default_price_type
   attr_accessible :customer_id, :seller_id, :sale_kind, :total_price,
     :seller_code, :auto_customer_name, :product_lines_attributes, 
-    :product_lines, :place_id
+    :product_lines, :place_id, :default_price_type
 
   scope :in_day, ->(day) { where(
     "created_at > :from AND created_at < :to",

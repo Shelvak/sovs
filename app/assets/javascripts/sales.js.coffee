@@ -48,6 +48,13 @@ new Rule
     @map.update_lines_price ||= ->
       Sale.updateTotalPrice()
 
+    @map.select_default_price_type ||= ->
+      console.log('rock!')
+      if (value = $('input[name$="[default_price_type]"]').val())
+        console.log(value)
+        $('.product_line').last().find('select[name$="[price_type]"]').val(value)
+        
+
     @map.autocomplete_for_product_sale ||= ->
       if (input = $(this)).val().length > 0
         $.ajax
@@ -76,10 +83,12 @@ new Rule
     $(document).on 'keyup change focus', '.price-modifier', @map.update_lines_price
     $(document).on 'change', 'input.autocomplete-field-for-product-sale',
       @map.autocomplete_for_product_sale
+    $(document).on 'click', Sale.add_nested_btn, @map.select_default_price_type
 
   unload: ->
     $(document).off 'keyup change focus', '.price-modifier', @map.update_lines_price
     $(document).off 'change', 'input.autocomplete-field-for-product-sale',
       @map.autocomplete_for_product_sale
+    $(document).off 'click', Sale.add_nested_btn, @map.select_default_price_type
 
 
