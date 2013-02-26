@@ -41,20 +41,3 @@ jQuery ($)->
       ).appendTo(ul)
   .attr('data-observed', true)
 
-  # Autocomplete with first item
-  $(document).on 'change', 'input.autocomplete-field-without-ui', ->
-    if (input = $(this)).val().length > 1
-      $.ajax
-        url: input.data('autocompleteUrl')
-        dataType: 'json'
-        data: { q: input.val() }
-        success: (data)->
-          if data.length
-            item = data[0]
-            $(input.data('autocompleteIdTarget')).val(item.id)
-            $(input).val(item.label)
-
-            if $(input.data('autocompleteUnitPriceTarget'))
-              $(input.data('autocompleteUnitPriceTarget')).val(item.retail_price)
-
-            Sale.updateTotalPrice()

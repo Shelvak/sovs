@@ -32,7 +32,7 @@ class Product < ActiveRecord::Base
   def as_json(options = nil)
     default_options = {
       only: [:id],
-      methods: [:label, :retail_price]
+      methods: [:label, :retail_price, :unit_price, :special_price]
     }
 
     super(default_options.merge(options || {}))

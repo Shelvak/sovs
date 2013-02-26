@@ -2,12 +2,11 @@
   <% id = f.object.object_id %>
   <div class="span4">
     <%= f.input :auto_product_name, label: false, input_html: {
-      class: 'autocomplete-field-without-ui price-modifier span11',
+      class: 'autocomplete-field-for-product-sale price-modifier span11',
       value: f.object.product, autofocus: true,
       autocomplete: 'off', tabindex: 2,
       data: {
         'autocomplete-id-target' => "#sale_product_lines_product_id_#{id}",
-        'autocomplete-unit-price-target' => "#sale_product_lines_unit_price_#{id}",
         'autocomplete-url' => autocomplete_for_product_name_sales_path(format: :json)
       }                                                                                    
     }  %>
@@ -22,13 +21,18 @@
   <div class='span2'>
     <%= f.input :unit_price, label: false, as: :string,
       input_html: { class: 'price-modifier span8', readonly: true,
-      value: f.object.unit_price, autocomplete: 'off',
-      id: "sale_product_lines_unit_price_#{id}" } %>
+      value: f.object.unit_price, autocomplete: 'off' } %>
+  </div>
+  <div class="span2">
+    <%= price_type_select_for_product_line(f) %>
   </div>
   <div class="span2 nested-actions">
     <span class='money badge'>
       <%= number_to_currency(f.object.price || 0) %>
     </span>
+    <%= f.input :unit_price_tmp, as: :hidden %>
+    <%= f.input :retail_price_tmp, as: :hidden %>
+    <%= f.input :special_price_tmp, as: :hidden %>
     <%= f.input :price, as: :hidden %>
     <%= link_to_remove_nested_item(f) %>
   </div>
