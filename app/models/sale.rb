@@ -1,10 +1,10 @@
 class Sale < ActiveRecord::Base
   has_paper_trail
 
-  attr_accessor :seller_code, :auto_customer_name
+  attr_accessor :seller_code, :auto_customer_name, :default_price_type
   attr_accessible :customer_id, :seller_id, :sale_kind, :total_price,
     :seller_code, :auto_customer_name, :product_lines_attributes, 
-    :product_lines, :place_id
+    :product_lines, :place_id, :default_price_type
 
   scope :in_day, ->(day) { where(
     "created_at > :from AND created_at < :to",
@@ -57,7 +57,7 @@ class Sale < ActiveRecord::Base
 
   def discount_sold_stock
     self.product_lines.each do |pl|
-      pl.product.discount_stock(pl.quantity)
+      pl.product.put_to_stock(-pl.quantity)
     end
   end
 
@@ -82,6 +82,38 @@ class Sale < ActiveRecord::Base
   def self.earn_between(from, to)
     between(from, to).group_by(&:created_at_date).map do |day, sales|
       [day, sales.sum(&:total_price)]
+    end
+  end
+
+  def self.payrolls_of_month(date)
+    if date
+      date = Date.parse(date)
+      from, to = date.beginning_of_month.to_date, date.end_of_month.to_date
+      payrolls_pack = {}
+      payrolls_resume = {}
+
+      (from..to).each do |d|
+        payrolls_pack[d] = []
+        where(
+          'created_at >= ? AND created_at <= ?', 
+          d.beginning_of_day, d.end_of_day
+        ).group_by(&:seller_id).each do |seller, sales|
+          payrolls_pack[d] << [
+            Seller.find(seller).code, sales.count, 
+            sales.sum(&:total_price)
+          ]
+        end
+      end
+
+      where(
+        'created_at >= ? AND created_at <= ?', 
+        from.beginning_of_day, to.end_of_day
+      ).group_by(&:seller_id).each do |seller, sales|
+      
+        payrolls_resume[Seller.find(seller).code] = sales.sum(&:total_price)
+      end
+
+      { stats: payrolls_pack, resume: payrolls_resume }
     end
   end
 end

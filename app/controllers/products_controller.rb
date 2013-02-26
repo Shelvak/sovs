@@ -9,7 +9,14 @@ class ProductsController < ApplicationController
   def index
     @title = t('view.products.index_title')
     @searchable = true
-    @products = Product.filtered_list(params[:q]).order(:code).page(params[:page])
+    products = if params[:provider_id]
+      @provider = Provider.find(params[:provider_id])
+      @provider.products
+    else
+      Product.scoped
+    end
+
+    @products = products.filtered_list(params[:q]).order(:code).page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -100,6 +107,19 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       format.json { render json: providers }
+    end
+  end
+
+  def put_to_stock
+    product = Product.find(params[:id])
+
+    notice = product.put_to_stock(params[:quantity].to_f) ? 
+      t('view.products.stock_correctly_updated') :
+      t('view.products.stale_object_error')
+
+    respond_to do |format|
+      format.html { redirect_to :back, notice: notice }
+      format.json { render json: product }
     end
   end
 end

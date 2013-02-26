@@ -7,6 +7,8 @@ Sovs::Application.routes.draw do
     as: 'sales_by_seller_stats', via: :get
   match 'stats/sales_earn(.:format)' => 'stats#sales_earn',
     as: 'sales_earn_stats', via: :get
+  match 'stats/payrolls(.:format)' => 'stats#payrolls',
+    as: 'stats_payrolls', via: :get
     
   resources :sales, except: [:edit, :update, :destroy] do
     collection do
@@ -19,12 +21,14 @@ Sovs::Application.routes.draw do
 
   resources :products do
     get :autocomplete_for_provider_name, on: :collection
+    get :put_to_stock, on: :member
   end
 
   resources :places, :customers, :sellers
 
   resources :providers do
     get :add_increase, on: :member
+    resources :products, on: :member
   end
 
   devise_for :users

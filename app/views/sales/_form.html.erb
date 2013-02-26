@@ -25,6 +25,7 @@
           }
         }  %>
         <%= f.input :customer_id, as: :hidden %>
+        <%= f.input :default_price_type, as: :hidden %>
       </div>
       <div class='span3'>
         <%= sale_kind_select_for_sale(f) %>

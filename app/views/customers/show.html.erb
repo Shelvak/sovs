@@ -17,6 +17,12 @@
     <strong><%= Customer.human_attribute_name 'bill_kind' %></strong>:
     <%= @customer.bill_kind %>
   </p>
+  <% if @customer.default_price_type.present? %>
+    <p>
+      <strong><%= Customer.human_attribute_name 'default_price_type' %></strong>:
+      <%= Product.human_attribute_name @customer.default_price_type %>
+    </p>
+  <% end %>
   <p>
     <strong><%= Customer.human_attribute_name 'address' %></strong>:
     <%= @customer.address %>

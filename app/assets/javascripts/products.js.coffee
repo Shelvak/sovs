@@ -39,14 +39,20 @@ new Rule
       State.gain_charged = true
     @map.update_total_stock ||= ->
       Product.updateTotalStock()
+    @map.put_to_stock ||= ->
+      quantity = prompt(Message.quantity_to_put_in_stock)
+      window.location = this.href + '?quantity=' + quantity
+
 
     $(document).on 'keyup', '#product_cost', @map.update_iva_cost
     $(document).on 'keyup', '.price-modifier', @map.update_all_prices
     $(document).on 'keyup', '.stock-modifier', @map.update_total_stock
+    $(document).on 'click', '.put_to_stock', @map.put_to_stock
 
   unload: ->
     $(document).off 'keyup', '#product_cost', @map.update_iva_cost
     $(document).off 'keyup', '.price-modifier', @map.update_all_prices
     $(document).off 'keyup', '.stock-modifier', @map.update_total_stock
+    $(document).off 'click', '.put_to_stock', @map.put_to_stock
     State.gain_charged = false
 

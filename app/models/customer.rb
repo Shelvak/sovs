@@ -2,6 +2,8 @@ class Customer < ActiveRecord::Base
   has_paper_trail
   has_magick_columns name: :string, business_name: :string, cuit: :string
 
+  PRICE_TYPE = ['retail_price', 'unit_price', 'special_price']
+
   KINDS = {
     iva_resp_insc: 'I',
     iva_resp_not_insc: 'R',
@@ -18,7 +20,7 @@ class Customer < ActiveRecord::Base
   BILL_KINDS = ['A', 'B', 'C', 'X']
 
   attr_accessible :name, :business_name, :iva_kind, :bill_kind, :address,
-    :cuit, :phone
+    :cuit, :phone, :default_price_type
 
   validate :validate_customer_kind
   validates :iva_kind, :bill_kind, presence: true
@@ -39,7 +41,7 @@ class Customer < ActiveRecord::Base
   def as_json(options = nil)
     default_options = {
       only: [:id],
-      methods: [:label]
+      methods: [:label, :default_price_type]
     }
 
     super(default_options.merge(options || {}))

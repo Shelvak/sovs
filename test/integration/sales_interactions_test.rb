@@ -19,7 +19,6 @@ class SalesInteractionsTest < ActionDispatch::IntegrationTest
       '#sale_product_lines_attributes_0_auto_product_name'
     ).native.send_keys :tab
 
-    assert_equal 10.0, find_field('sale_total_price').value.to_f
     assert page.has_css?('.product_line', count: 1)
 
     find(
@@ -33,6 +32,7 @@ class SalesInteractionsTest < ActionDispatch::IntegrationTest
 
     find('body').native.send_keys :left_control, :left_alt, 'a'
     assert page.has_css?('.product_line', count: 5)
+    assert_equal 10.0, find_field('sale_total_price').value.to_f
 
 
     assert_difference 'Sale.count' do

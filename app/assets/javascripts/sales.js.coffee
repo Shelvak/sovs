@@ -1,9 +1,14 @@
 window.Sale =
   updateLinePrice: (product_line)->
     quantity = parseFloat product_line.find('input[name$="[quantity]"]').val()
-    unit_price = parseFloat product_line.find('input[name$="[unit_price]"]').val()
+    price_type = product_line.find('select[name$="[price_type]"]').val()
+    unit_price = parseFloat(
+      product_line.find("input[name$='[#{price_type}_tmp]']").val()
+    )
 
     line_price = ((quantity || 0) * (unit_price || 0)).toFixed(2)
+    if unit_price
+      product_line.find('input[name$="[unit_price]"]').val(unit_price)
     product_line.find('span.money').html("$ #{line_price}")
     product_line.attr('data-price', line_price)
     product_line.find('input[name$="[price]"]').val(line_price)
@@ -17,6 +22,8 @@ window.Sale =
     $('#sale_total_price').val(totalPrice.toFixed(2))
 
   add_nested_btn: '.btn.btn-small[data-dynamic-form-event="addNestedItem"]'
+
+
 
 new Rule
   condition: -> $(Sale.add_nested_btn).length
@@ -41,7 +48,47 @@ new Rule
     @map.update_lines_price ||= ->
       Sale.updateTotalPrice()
 
+    @map.select_default_price_type ||= ->
+      console.log('rock!')
+      if (value = $('input[name$="[default_price_type]"]').val())
+        console.log(value)
+        $('.product_line').last().find('select[name$="[price_type]"]').val(value)
+        
+
+    @map.autocomplete_for_product_sale ||= ->
+      if (input = $(this)).val().length > 0
+        $.ajax
+          url: input.data('autocompleteUrl')
+          dataType: 'json'
+          data: { q: input.val() }
+          success: (data)->
+            if data.length
+              item = data[0]
+              target = $(input.data('autocompleteIdTarget'))
+              target.val(item.id)
+              $(input).val(item.label)
+
+              parent = target.parents('.product_line')
+              if item.retail_price
+                parent.find('input[name$="[retail_price_tmp]"]').val(item.retail_price)
+
+              if item.unit_price
+                parent.find('input[name$="[unit_price_tmp]"]').val(item.unit_price)
+
+              if item.special_price
+                parent.find('input[name$="[special_price_tmp]"]').val(item.special_price)
+
+              Sale.updateTotalPrice()
+
     $(document).on 'keyup change focus', '.price-modifier', @map.update_lines_price
+    $(document).on 'change', 'input.autocomplete-field-for-product-sale',
+      @map.autocomplete_for_product_sale
+    $(document).on 'click', Sale.add_nested_btn, @map.select_default_price_type
 
   unload: ->
     $(document).off 'keyup change focus', '.price-modifier', @map.update_lines_price
+    $(document).off 'change', 'input.autocomplete-field-for-product-sale',
+      @map.autocomplete_for_product_sale
+    $(document).off 'click', Sale.add_nested_btn, @map.select_default_price_type
+
+

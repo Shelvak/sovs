@@ -28,7 +28,13 @@ jQuery ($)->
 
         input.val(selected.value)
         input.data('item', selected.item)
-        $(input.data('autocompleteIdTarget')).val(selected.item.id)
+        target = $(input.data('autocompleteIdTarget'))
+        target.val(selected.item.id)
+
+        if value = selected.item.default_price_type
+          target.parents('.row-fluid').
+            find('input[name$="[default_price_type]"]').val(value)
+          $('.product_line').last().find('select[name$="[price_type]"]').val(value)
 
         input.trigger 'autocomplete:update', input
 
@@ -41,20 +47,3 @@ jQuery ($)->
       ).appendTo(ul)
   .attr('data-observed', true)
 
-  # Autocomplete with first item
-  $(document).on 'change', 'input.autocomplete-field-without-ui', ->
-    if (input = $(this)).val().length > 1
-      $.ajax
-        url: input.data('autocompleteUrl')
-        dataType: 'json'
-        data: { q: input.val() }
-        success: (data)->
-          if data.length
-            item = data[0]
-            $(input.data('autocompleteIdTarget')).val(item.id)
-            $(input).val(item.label)
-
-            if $(input.data('autocompleteUnitPriceTarget'))
-              $(input.data('autocompleteUnitPriceTarget')).val(item.retail_price)
-
-            Sale.updateTotalPrice()

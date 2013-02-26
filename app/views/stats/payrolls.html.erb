@@ -1,0 +1,107 @@
+<div class='row-fluid'>
+  <div class="span4">
+    <h2><%= @title %></h2>
+  </div>
+  <div class='span7'>
+    <div class='pull-right not-printable'>
+      <%= simple_form_for :search, html: { method: :get } do |f| %>
+        <div class="row-fluid">
+          <h4>(<%= t('view.stats.payrolls.date_label') %>)</h4>
+          <div class="span4">
+            <%= f.input :date, as: :date_picker, label: false,
+              input_html: { class: 'span9' } %>
+          </div>
+          <div class="span3">
+            <%= f.button :submit, t('label.search') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @payrolls %>
+  <div class="readonly-data">
+    <div class='tabbable'>
+      <ul class="nav nav-tabs not-printable">
+        <li class='active'>
+          <%= link_to t('view.stats.payrolls.payrolls'), '#payrolls', 
+            data: { toggle: 'tab' } %>
+        </li>
+        <li>
+          <%= link_to t('view.stats.payrolls.details'), '#stats', 
+            data: { toggle: 'tab' } %>
+        </li>
+      </ul>
+      
+      <div class="tab-content">
+        <div id="payrolls" class="tab-pane active">
+          <h3><%= t(
+            'view.stats.payrolls.for_month', 
+            month: l(@payrolls[:stats].first.first, format: :month_and_year)
+          ) %></h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Vendedor</th>
+                <th>Ventas</th>
+                <th>Porcentaje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% total_sale = @payrolls[:resume].sum(&:second) %>
+              <% @payrolls[:resume].each do |seller, earn| %>
+                <tr>
+                  <td><%= seller %></td>
+                  <td><%= number_to_currency earn %></td>
+                  <td><%= "#{ (earn / total_sale * 100).round(2) } %" %></td>
+                </tr>
+              <% end %>
+              <tr class="success">
+                <td><strong><%= t('label.total') %></strong></td>
+                <td colspan="2">
+                  <strong><%= number_to_currency total_sale %></strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="stats" class="tab-pane">
+          <h3><%= t('view.stats.payrolls.by_date_detail') %></h3>
+
+          <table class="table table-striped">
+            <tbody>
+              <% @payrolls[:stats].each do |day, stats| %>
+                <tr class="">
+                  <td colspan='4'><%= l day, format: :long %></td>
+                </tr>
+                <% stats.each_with_index do |data, i| %>
+                  <%= raw '<tr class="info">' if 0 == i % 4 %>
+                    <td>
+                      <% data.each_with_index do |d, i| %>
+                        <%= content_tag(
+                          :strong, "#{Sale.human_attribute_name 'seller_id'}:"
+                        ) if i == 0 %>
+                        <%= content_tag(
+                          :strong, "#{t('view.sellers.sales_count')}:"
+                        ) if i == 1 %>
+                        <%= i == 2 ? number_to_currency(d) : "#{d} / " %>
+                      <% end %>
+                    </td>
+                  <%= raw '</tr>' if 3 == i % 4 %>
+                <% end if stats.any? %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+    <div class="alert alert-warning"><%= t('view.stats.empty_result') %></div>
+<% end %>
+  
+<div class="form-actions">
+  <%= link_to t('view.stats.index_title'), stats_path, class: 'btn btn-primary' %>
+</div>
