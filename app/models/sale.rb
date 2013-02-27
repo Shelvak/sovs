@@ -74,9 +74,12 @@ class Sale < ActiveRecord::Base
   end
 
   def self.stats_by_seller_between(from, to)
+    stats = {}
     between(from, to).group_by(&:seller_id).map do |seller, sales|
-      [Seller.find(seller).to_s, sales.size]
+      stats[Seller.find(seller).to_s] = [sales.size, sales.sum(&:total_price)]
     end
+
+    stats
   end
 
   def self.earn_between(from, to)

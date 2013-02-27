@@ -7,27 +7,29 @@
     <div class="alert alert-warning"><%= t('view.stats.empty_result') %></div>
   <% else %>
     <div class='row-fluid'>
-      <div class='span3'>
+      <div class='span4'>
         <table class="table table-striped" data-graph-grid="true" data-others-label="<%= t('label.others') %>">
           <thead>
             <tr>
               <th><%= t('view.sellers.seller') %></th>
               <th><%= t('view.sellers.sales_count') %></th>
+              <th><%= t('view.stats.sold') %></th>
             </tr>
           </thead>
 
           <tbody>
-            <% @sales_by_seller_count.sort.each do |sale, count| %>
+            <% @sales_by_seller_count.sort.each do |seller, stat| %>
               <tr>
-                <td data-label-column="true"><%= sale %></td>
-                <td data-value-column="true"><%= count %></td>
+                <td data-label-column="true"><%= seller %></td>
+                <td data-value-column="true"><%= stat.first %></td>
+                <td><%= number_to_currency stat.last %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
 
-      <div class='span9'>
+      <div class='span8'>
         <div id="graph" class='piechart'></div>
       </div>
     </div>

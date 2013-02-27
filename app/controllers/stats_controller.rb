@@ -10,8 +10,8 @@ class StatsController < ApplicationController
     @title = t('view.stats.sales_by_seller.title')
     @sales_by_seller_count = {}
     
-    Sale.stats_by_seller_between(@from_date, @to_date).each do |s, count|
-      @sales_by_seller_count[s] = count
+    Sale.stats_by_seller_between(@from_date, @to_date).each do |seller, stat|
+      @sales_by_seller_count[seller] = stat
     end
 
     respond_with @sales_by_seller_count do |format|
