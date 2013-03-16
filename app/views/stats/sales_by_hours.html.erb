@@ -1,0 +1,58 @@
+<div class='row-fluid'>
+  <div class="span4">
+    <h2><%= @title %></h2>
+  </div>
+  <div class='span7'>
+    <div class='pull-right not-printable'>
+      <%= simple_form_for :search, html: { method: :get } do |f| %>
+        <div class="row-fluid">
+          <h4>(<%= t('view.stats.sales_by_hours.date_label') %>)</h4>
+          <div class="span4">
+            <%= f.input :date, as: :date_picker, label: false,
+              input_html: { class: 'span9', value: l(@day) } %>
+          </div>
+          <div class="span3">
+            <%= f.button :submit, t('label.search') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @day_stats.any? %>
+  <div class="readonly-data">
+    <h3><%= t(
+      'view.stats.sales_by_hours.for_day', day: l(@day)
+    ) %></h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= t('view.stats.sales_by_hours.horary') %></th>
+          <th><%= t('view.stats.sales_by_hours.sales_count') %></th>
+          <th><%= t('view.stats.sales_by_hours.sold') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @day_stats.each do |hour, data| %>
+          <tr>
+            <td><%= "#{hour} - #{hour}:59" %></td>
+            <td><%= data[:hour_total_count] %></td>
+            <td><%= number_to_currency data[:hour_total_sold] %></td>
+          </tr>
+        <% end %>
+        <tr class="success">
+          <td><strong><%= t('label.total') %></strong></td>
+          <td><strong><%= @stats[:total_count] %></strong></td>
+          <td><strong><%= number_to_currency @stats[:total_sold] %></strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+    <div class="alert alert-warning"><%= t('view.stats.empty_result') %></div>
+<% end %>
+  
+<div class="form-actions">
+  <%= link_to t('view.stats.index_title'), stats_path, class: 'btn btn-primary' %>
+</div>

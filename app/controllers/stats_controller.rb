@@ -42,6 +42,34 @@ class StatsController < ApplicationController
     end
   end
 
+  def sales_by_hours
+    @title = t('view.stats.sales_by_hours.title')
+    @day_stats = {}
+    @stats = { total_count: 0, total_sold: 0.0 }
+
+    @day = if params[:search]
+      Date.parse(params[:search][:date])
+    else
+      Time.zone.now.to_date
+    end
+
+    (8..21).each do |i|
+      hour = Time.zone.parse("#{@day} #{i}:00:00")
+      
+      sales = Sale.where(
+        "created_at >= :start AND  created_at <= :final",
+        start: hour, final: (hour + 59.minutes + 59.seconds)
+      )
+
+      @day_stats[i] = {
+        hour_total_sold: sales.sum(&:total_price), 
+        hour_total_count: sales.count 
+      }
+      @stats[:total_count] += @day_stats[i][:hour_total_count]
+      @stats[:total_sold] += @day_stats[i][:hour_total_sold]
+    end
+  end
+
   private
 
   def authorize_stats!
