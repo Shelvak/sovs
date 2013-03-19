@@ -1,41 +1,49 @@
-<%= include_stats_js %>
+<%= content_for(:head_extra) { include_stats_js } %>
 
-<%= render 'shared/date_filter', from_date: @from_date, to_date: @to_date %>
+<div class="print-ticket">
 
-<div class="readonly-data">
-  <% if @sales_earn.blank? %>
-    <div class="alert alert-warning"><%= t('view.stats.empty_result') %></div>
-  <% else %>
-    <% count = @sales_earn.count %>
-    <div class='<%= count <= 8 ? 'row-fluid' : '' %>'>
-      <div class='<%= count <= 8 ? 'span3' : 'span11' %>'>
-        <h3>
-          <%= t('label.total') %>: 
-          (<%= number_to_currency @sales_earn.sum(&:second) %>)
-        </h3>
-        <table class="table" data-graph-grid="true" data-others-label="<%= t('label.others') %>">
-          <thead>
-            <tr>
-              <th><%= t('view.stats.date') %></th>
-              <th><%= t('view.stats.sold') %></th>
-            </tr>
-          </thead>
+  <%= render 'shared/date_filter', from_date: @from_date, to_date: @to_date %>
 
-          <tbody>
-            <% @sales_earn.sort.each do |day, earn| %>
+  <div class="readonly-data">
+    <% if @sales_earn.blank? %>
+      <div class="alert alert-warning"><%= t('view.stats.empty_result') %></div>
+    <% else %>
+      <% count = @sales_earn.count %>
+      <div class='row-fluid'>
+        <div class='<%= count <= 8 ? 'span3' : 'span11' %>'>
+          <h3>
+            <%= t('label.total') %>: 
+            (<%= number_to_currency @sales_earn.sum(&:second) %>)
+          </h3>
+          <table class="table" 
+            data-graph-grid="true" 
+            data-others-label="<%= t('label.others') %>">
+
+            <thead>
               <tr>
-                <td data-label-column="true"><%= l day %></td>
-                <td data-value-column="true"><%= number_to_currency earn %></td>
+                <th><%= t('view.stats.date') %></th>
+                <th><%= t('view.stats.sold') %></th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              <% i = 0 %>
+              <% @sales_earn.sort.each do |day, earn| %>
+                <tr data-row-id="<%= i %>">
+                  <td data-label-column="true"><%= l day %></td>
+                  <td data-value-column="true"><%= number_to_currency earn %></td>
+                </tr>
+                <% i +=1 %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class='not-printable <%= count <= 8 ? 'span9' : 'span11' %>'>
+          <div id="graph" class='barchart'></div>
+        </div>
       </div>
-      <div class='<%= count <= 8 ? 'span9' : 'span11' %>'>
-        <div id="graph" class='barchart'></div>
-      </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 
 <div class="form-actions">
@@ -51,4 +59,4 @@
       ) %></li>
     </ul>
   </div>
-</div>
+</div> 

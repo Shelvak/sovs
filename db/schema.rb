@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130226162942) do
+ActiveRecord::Schema.define(:version => 20130316160614) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20130226162942) do
   add_index "product_lines", ["sale_id"], :name => "index_product_lines_on_sale_id"
 
   create_table "products", :force => true do |t|
-    t.integer  "code",                                                       :null => false
-    t.string   "description",                                                :null => false
+    t.integer  "code",                                                                          :null => false
+    t.string   "description",                                                                   :null => false
     t.string   "retail_unit",    :limit => 2
     t.string   "purchase_unit",  :limit => 2
     t.decimal  "unity_relation",              :precision => 15, :scale => 2
@@ -67,10 +67,11 @@ ActiveRecord::Schema.define(:version => 20130226162942) do
     t.decimal  "unit_price",                  :precision => 15, :scale => 2
     t.decimal  "special_price",               :precision => 15, :scale => 2
     t.integer  "provider_id"
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
+    t.datetime "created_at",                                                                    :null => false
+    t.datetime "updated_at",                                                                    :null => false
     t.decimal  "unit_gain",                   :precision => 15, :scale => 2
     t.decimal  "special_gain",                :precision => 15, :scale => 2
+    t.boolean  "preference",                                                 :default => false
   end
 
   add_index "products", ["code"], :name => "index_products_on_code", :unique => true

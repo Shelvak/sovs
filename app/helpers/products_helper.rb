@@ -14,4 +14,16 @@ module ProductsHelper
       selected: form.object.purchase_unit, prompt: false, 
       input_html: { class: 'span6' }
   end
+
+  def link_to_low_stock_products
+    count = Product.with_low_stock.count
+    classes = ['badge']
+    classes << 'badge-important' if count > 0
+    count_tag = content_tag(
+      :span, count, class: classes.join(' ')
+    )
+    
+    link_to raw(count_tag), products_path(status: 'low_stock'), 
+      title: t('view.products.low_stock')
+  end
 end

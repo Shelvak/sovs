@@ -1,0 +1,57 @@
+<div class='row-fluid print-ticket'>
+  <div class="span4">
+    <h2><%= @title %></h2>
+  </div>
+  <div class='span7'>
+    <div class='pull-right not-printable'>
+      <%= simple_form_for :search, html: { method: :get } do |f| %>
+        <div class="row-fluid">
+          <h4>(<%= t('view.stats.products_day_stats.date_label') %>)</h4>
+          <div class="span4">
+            <%= f.input :date, as: :date_picker, label: false,
+              input_html: { class: 'span12', value: l(@day) } %>
+          </div>
+          <div class="span3">
+            <%= f.button :submit, t('label.search') %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @products.any? %>
+  <div class="readonly-data print-ticket">
+    <h3><%= t(
+      'view.stats.products_day_stats.for_day', day: l(@day)
+    ) %></h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= ProductLine.human_attribute_name 'product_id' %></th>
+          <th><%= ProductLine.human_attribute_name 'quantity' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |name, quantity| %>
+          <tr>
+            <td><%= name %></td>
+            <td><%= quantity %></td>
+          </tr>
+        <% end %>
+        <% @quantities.each do |unit, quantity| %>
+          <tr class="success">
+            <td><strong><%= [t('label.total'), unit].join(' - ') %></strong></td>
+            <td><strong><%= [quantity.round(3), unit].join(' ') %></strong></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+    <div class="alert alert-warning"><%= t('view.stats.empty_result') %></div>
+<% end %>
+  
+<div class="form-actions">
+  <%= link_to t('view.stats.index_title'), stats_path, class: 'btn btn-primary' %>
+</div>

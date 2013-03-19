@@ -1,14 +1,15 @@
-<%= include_stats_js %>
+<%= content_for(:head_extra) { include_stats_js } %>
 
 <%= render 'shared/date_filter', from_date: @from_date, to_date: @to_date %>
 
-<div class="readonly-data">
+<div class="readonly-data print-ticket">
   <% if @sales_by_seller_count.blank? %>
     <div class="alert alert-warning"><%= t('view.stats.empty_result') %></div>
   <% else %>
     <div class='row-fluid'>
       <div class='span4'>
-        <table class="table table-striped" data-graph-grid="true" data-others-label="<%= t('label.others') %>">
+        <table class="table table-striped" 
+          data-graph-grid="true" data-others-label="<%= t('label.others') %>">
           <thead>
             <tr>
               <th><%= t('view.sellers.seller') %></th>
@@ -29,7 +30,7 @@
         </table>
       </div>
 
-      <div class='span8'>
+      <div class='span8 not-printable'>
         <div id="graph" class='piechart'></div>
       </div>
     </div>

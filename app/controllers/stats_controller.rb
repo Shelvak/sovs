@@ -70,6 +70,20 @@ class StatsController < ApplicationController
     end
   end
 
+  def products_day_stats
+    @title = t('view.stats.products_day_stats.title')
+    @day = params[:search] ? Date.parse(params[:search][:date]) : Date.today
+    @products = {}
+    @quantities = { 'Kg' => 0.0, 'Un' => 0, 'g' => 0.0, 'ml' => 0.0, 'L' => 0.0 }
+
+    Product.with_preference.each do |prod|
+      quantity = prod.product_lines.at_day(@day).sum(&:quantity).round(3)
+
+      @products[prod.to_s] = [quantity, prod.retail_unit].join(' ')
+      @quantities[prod.retail_unit] += quantity 
+    end
+  end
+
   private
 
   def authorize_stats!

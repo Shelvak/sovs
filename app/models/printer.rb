@@ -6,10 +6,18 @@ class Printer
       file_name = "#{sale.id}_#{I18n.l(Time.now, format: :for_file)}.pdf"
       folders = ['private', 'to_print'].join('/')
       file = [folders, file_name].join('/')
+      # Lines count * 20mm + 100mm(title and footer) * 3(size)
+      doc_height = ((sale.product_lines.size * 20 + 150) * 3).round
+      print_height = sale.product_lines.size * 12 + 120
 
-      generated = Prawn::Document.generate(file) do |pdf|
-        pdf.font_size 15
-        pdf.text "<i>#{I18n.t('printer.tax_worthless')}</i>", size: 32, inline_format: true
+      generated = Prawn::Document.generate(
+        file, page_size: [612, doc_height], left_margin: 17
+      ) do |pdf|
+
+        pdf.font_size 10
+        pdf.text I18n.l(Time.now, format: :long)
+        pdf.move_down(5)
+        pdf.text "<i>#{I18n.t('printer.tax_worthless')}</i>", size: 30, inline_format: true
         pdf.move_down(5)
         
         pdf.text I18n.t('printer.seller', seller: sale.seller.code)
@@ -31,13 +39,13 @@ class Printer
           ]
         end
 
-        pdf.table(items, cell_style: { align: :right }) do
+        pdf.table(items, cell_style: { align: :right }, width: 295) do
           column(0).align = :left
         end
 
         pdf.move_down(5)
         pdf.text I18n.t(
-          'printer.items_count_with_net_price', count: sale.product_lines.count,
+          'printer.items_count_with_net_price', count: sale.product_lines.size,
           price: number_to_currency(sale.total_price)
         )
         
@@ -48,10 +56,10 @@ class Printer
         ), size: 20
         
         pdf.move_down(25)
-        pdf.text I18n.t('printer.thinks'), size: 32
+        pdf.text I18n.t('printer.thinks'), size: 20
       end
 
-      send_to_print(file) if generated
+      send_to_print(file, length: print_height) if generated
     end
 
     def print_daily_report(day)
@@ -76,8 +84,13 @@ class Printer
       file_name = "sales_report_#{I18n.l(Time.now, format: :for_file)}.pdf"
       folders = ['private', 'to_print'].join('/')
       file = [folders, file_name].join('/')
+      height = ((Seller.count * 20 + 100) * 3).round
+      print_height = Seller.count * 10 + 157
 
-      generated = Prawn::Document.generate(file) do |pdf|
+      generated = Prawn::Document.generate(
+        file, page_size: [612, height], left_margin: 19
+      ) do |pdf|
+
         pdf.font_size 15
         pdf.text "<i>#{I18n.t('printer.tax_worthless')}</i>", size: 32, inline_format: true
         pdf.move_down(5)
@@ -85,7 +98,7 @@ class Printer
         pdf.text I18n.t('printer.daily_sales_report_for', day: I18n.l(day, format: :for_report))
         pdf.move_down(20)
         
-        pdf.table sellers
+        pdf.table sellers, width: 295
         pdf.move_down(5)
 
         pdf.text I18n.t(
@@ -95,15 +108,20 @@ class Printer
         )
       end
 
-      send_to_print(file) if generated
+      send_to_print(file, length: print_height) if generated
     end
 
     def number_to_currency(number)
       ActionController::Base.helpers.number_to_currency(number)
     end
 
-    def send_to_print(file)
-      %x{lp #{file}}
+    def send_to_print(file, options={})
+      options[:length] = 279  if options[:length].blank?
+      options[:length] = (options[:length] > 220) ? options[:length] : 220
+      options[:width] ||= 216
+      size = [options[:width], options[:length]].join('x')
+
+      %x{lp -o media=Custom.#{size}mm #{file}}
     end
   end
 end

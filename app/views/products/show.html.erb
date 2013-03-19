@@ -12,6 +12,10 @@
         <%= @product.description %>
       </p>
       <p>
+        <strong><%= Product.human_attribute_name 'preference' %></strong>:
+        <%= @product.preference ? t('label.yes') : t('label.no') %>
+      </p>
+      <p>
         <strong><%= Product.human_attribute_name 'retail_unit' %></strong>:
         <%= @product.retail_unit %>
       </p>

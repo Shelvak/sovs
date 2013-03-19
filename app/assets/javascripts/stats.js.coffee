@@ -42,12 +42,13 @@ jQuery ($)->
       )
 
       chart.hover ->
+        console.log(this.bar)
         $(
-          "td[data-value-column]:contains('#{this.bar.value}')"
-        ).parents('tr').addClass('alert-success')
+          "tr[data-row-id='#{this.bar.id}']"
+        ).addClass('alert-success')
       , ->
         $(
-          "td[data-value-column]:contains('#{this.bar.value}')"
-        ).parents('tr').removeClass('alert-success')
+          "tr[data-row-id='#{this.bar.id}']"
+        ).removeClass('alert-success')
 
          

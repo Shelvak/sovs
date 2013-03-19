@@ -22,9 +22,12 @@
             <%= show_menu_link(
               name: 'daily_boxes', controllers: 'daily_box', path: daily_boxes_path
             ) if can?(:read, :daily_box) %>
-          <%= render partial: 'shared/nav_search' %>
-        </ul>
+            <%= render partial: 'shared/nav_search' %>
+          </ul>
           <ul class="nav pull-right">
+            <li>
+              <%= link_to_low_stock_products if can?(:read, Product) %>
+            </li>
             <li>
               <%= link_to(
                 current_user.email, edit_profile_user_path(current_user),

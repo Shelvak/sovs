@@ -10,11 +10,13 @@ class ProductsController < ApplicationController
     @title = t('view.products.index_title')
     @searchable = true
     products = if params[:provider_id]
-      @provider = Provider.find(params[:provider_id])
-      @provider.products
-    else
-      Product.scoped
-    end
+                 @provider = Provider.find(params[:provider_id])
+                 @provider.products
+               elsif params[:status] == 'low_stock'
+                 Product.with_low_stock
+               else
+                 Product.scoped
+               end
 
     @products = products.filtered_list(params[:q]).order(:code).page(params[:page])
 
