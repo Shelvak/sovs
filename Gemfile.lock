@@ -198,7 +198,6 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     validates_timeliness (3.0.14)
       timeliness (~> 0.3.6)
-    virb (0.1.0)
     warden (1.2.1)
       rack (>= 1.0)
     websocket (1.0.7)
@@ -236,5 +235,4 @@ DEPENDENCIES
   turn
   uglifier
   validates_timeliness
-  virb
   will_paginate

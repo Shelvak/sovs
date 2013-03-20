@@ -15,6 +15,16 @@ class DailyBoxController < ApplicationController
     end
   end
 
+  def print_daily_report
+    notice = if Printer.print_daily_report(Date.parse(params[:date]))
+      t('view.stats.send_to_print')
+    else
+      t('view.stats.print_error')
+    end
+  
+    redirect_to daily_boxes_path, notice: notice
+  end
+
   private
 
   def authorize_daily_box!

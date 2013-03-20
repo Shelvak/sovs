@@ -28,7 +28,7 @@ end
 
 group :development do
   gem 'thin'
-  gem 'virb'
+  #gem 'virb'
 end
 
 group :test do

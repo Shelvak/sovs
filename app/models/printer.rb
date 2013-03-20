@@ -70,7 +70,7 @@ class Printer
       ]]
       total_price = 0.00
 
-      Seller.all.each do |seller|
+      Seller.order.each do |seller|
         sales_of_day = seller.sales.in_day(day)
         total_price += sales_of_day.sum(&:total_price)
         sellers << [
@@ -111,17 +111,105 @@ class Printer
       send_to_print(file, length: print_height) if generated
     end
 
+    def print_payrolls(date)
+      payrolls = [[
+        I18n.t('view.stats.payrolls.days'),
+        Seller.scoped.map { |s| I18n.t('view.stats.payrolls.seller_number', seller: s.code) },
+        I18n.t('label.total')
+      ].flatten]
+
+      payrolls << [
+        '  ',
+        ([ 
+          I18n.t('view.stats.payrolls.quantity-total')
+        ] * (Seller.count + 1)),
+      ].flatten
+
+      from, to = date.beginning_of_month.to_date, date.end_of_month.to_date
+      total_count = 0
+      total_money = 0.0
+
+      (from..to).each do |d|
+        day_total = { count: 0, money: 0.0 }
+
+        sellers_day_row = Seller.order.map do |s|
+          s.count_and_sold_of_sales_on_day(d)
+        end
+
+        day_count = sellers_day_row.sum(&:first)
+        day_money = sellers_day_row.sum(&:last).round(2)
+
+        total_count += day_count
+        total_money += day_money
+
+        payrolls << [
+          I18n.l(d, format: :abbr_for_payrolls).upcase,
+          sellers_day_row.map{ |s| [s.first, s.last].join(' | ') },
+          [day_count, day_money].join(' | ')
+        ].flatten
+      end
+
+      total_table = []
+
+      total_table << [
+        I18n.t('view.stats.payrolls.abbr_quantity'),
+        Seller.order.map { |s| s.sales.in_month(date).count },
+        total_count
+      ].flatten
+
+      total_table << [
+        I18n.t('view.stats.payrolls.money'),
+        Seller.order.map { |s| number_to_currency(s.sales.in_month(date).sum(&:total_price)) },
+        number_to_currency(total_money)
+      ].flatten
+
+      total_table << [
+        '%',
+        Seller.order.map do |s|
+          (s.sales.in_month(date).sum(&:total_price) / total_money * 100).round(2)
+        end
+      ].flatten
+
+      file_name = "payrolls_#{date}.pdf"
+      folders = ['private', 'to_print'].join('/')
+      file = [folders, file_name].join('/')
+
+      generated = Prawn::Document.generate(
+        file, page_size: [841.89, 595.28], margin: 15
+      ) do |pdf|
+
+        pdf.font_size 9
+        pdf.text [
+          I18n.t('view.stats.payrolls.title'),
+          I18n.t('view.stats.payrolls.for_month', month: date)
+        ].join(' '), size: 14
+        
+        pdf.table payrolls, width: 800, cell_style: { 
+          padding: [1, 3], height: 15, borders: [:right]
+        } 
+
+        pdf.table total_table, width: 800, cell_style: { 
+          padding: [1, 3], height: 15, borders: [:right, :top, :bottom]
+        }
+      end
+
+      send_to_print(file, landscape: true) if generated
+    end
+
+
     def number_to_currency(number)
       ActionController::Base.helpers.number_to_currency(number)
     end
 
     def send_to_print(file, options={})
-      options[:length] = 279  if options[:length].blank?
+      options[:length] ||= 279
       options[:length] = (options[:length] > 220) ? options[:length] : 220
       options[:width] ||= 216
       size = [options[:width], options[:length]].join('x')
 
-      %x{lp -o media=Custom.#{size}mm #{file}}
+      land = '-o landscape' if options[:landscape]
+
+      %x{lp -o media=Custom.#{size}mm #{land} #{file}}
     end
   end
 end

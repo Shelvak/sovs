@@ -16,6 +16,7 @@
                 <th><%= t('view.daily_boxes.day') %></th>
                 <th><%= t('view.daily_boxes.total_sales_amount') %></th>
                 <th><%= t('view.daily_boxes.total_sales_count') %></th>
+                <th></th>
               </tr>
             </thead>
 
@@ -26,6 +27,11 @@
                   <td><%= l day %></td>
                   <td><%= number_to_currency records.sum(&:total_price) %></td>
                   <td><%= records.count %></td>
+                  <td><%= link_to(
+                    '&#xe000;'.html_safe, 
+                    print_daily_report_path(date: day), 
+                    class: 'iconic', data: { method: :put }
+                  ) %></td>
                 </tr>
               <% else %>
                 <% cache ['daily-box', day] do %>
@@ -33,6 +39,11 @@
                     <td><%= l day %></td>
                     <td><%= number_to_currency records.sum(&:total_price) %></td>
                     <td><%= records.count %></td>
+                    <td><%= link_to(
+                      '&#xe000;'.html_safe, 
+                      print_daily_report_path(date: day), 
+                      class: 'iconic', data: { method: :put }
+                    ) %></td>
                   </tr>
                 <% end %>
               <% end %>

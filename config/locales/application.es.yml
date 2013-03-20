@@ -261,6 +261,8 @@
       date: 'Fecha'
       sold: 'Vendido'
       empty_result: 'La busqueda no dio resultados'
+      send_to_print: 'Enviado a imprimir'
+      print_error: 'Ha ocurrido un error. Por favor verifique la impresora y reintente'
       date_filter:
         start: 'Inicio'
         end: 'Fin'
@@ -279,6 +281,13 @@
         seller: 'Vendedor'
         sold: 'Ventas'
         percentage: 'Porcentaje'
+        quantity-total: 'Cant | Total'
+        abbr_quantity: 'Cant:'
+        money: 'Pesos'
+        daily: 'Diario'
+        days: 'Días'
+        seller_number: 'Vdor %{seller}'
+        print_payrolls: 'Imprimir Liquidación'
       sales_by_hours:
         title: 'Ventas por hora'
         for_day: 'Ventas por hora del día %{day}'

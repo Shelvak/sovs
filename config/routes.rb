@@ -1,6 +1,8 @@
 Sovs::Application.routes.draw do
 
   match 'daily_boxes' => 'daily_box#index', via: :get
+  match 'daily_boxes/print_daily_report' => 'daily_box#print_daily_report', 
+    as: 'print_daily_report', via: :put
 
   match 'stats(.:format)' => 'stats#index', as: 'stats', via: :get
   match 'stats/sales_by_seller(.:format)' => 'stats#sales_by_seller',
@@ -9,6 +11,8 @@ Sovs::Application.routes.draw do
     as: 'sales_earn_stats', via: :get
   match 'stats/payrolls(.:format)' => 'stats#payrolls',
     as: 'stats_payrolls', via: :get
+  match 'stats/print_payrolls' => 'stats#print_payrolls',
+    as: 'print_payrolls', via: :put
   match 'stats/sales_by_hours(.:format)' => 'stats#sales_by_hours',
     as: 'sales_by_hours_stats', via: :get
   match 'stats/products_day(.:format)' => 'stats#products_day_stats',

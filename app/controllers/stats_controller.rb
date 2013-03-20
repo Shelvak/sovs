@@ -34,12 +34,23 @@ class StatsController < ApplicationController
 
   def payrolls
     @title = t('view.stats.payrolls.title')
-    @payrolls = Sale.payrolls_of_month(params[:search][:date]) if params[:search]
+    @date = params[:search][:date] if params[:search]
+    @payrolls = Sale.payrolls_of_month(params[:search][:date]) if @date
 
     respond_to do |format|
       format.html
       format.json { render json: @payrolls }
     end
+  end
+
+  def print_payrolls
+    notice = if Printer.print_payrolls(Date.parse(params[:date]))
+      t('view.stats.send_to_print')
+    else
+      t('view.stats.print_error')
+    end
+
+    redirect_to :back, notice: notice
   end
 
   def sales_by_hours

@@ -32,6 +32,11 @@
           <%= link_to t('view.stats.payrolls.details'), '#stats', 
             data: { toggle: 'tab' } %>
         </li>
+          <%= link_to(
+            t('view.stats.payrolls.print_payrolls'), 
+            print_payrolls_path(date: @date),
+            class: 'btn', data: { method: :put }
+          ) %>
       </ul>
       
       <div class="tab-content">

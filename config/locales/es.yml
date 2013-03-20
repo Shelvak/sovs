@@ -6,6 +6,7 @@
       long: "%d de %B de %Y"
       for_report: "%A - %d/%m/%Y"
       month_and_year: "%B de %Y"
+      abbr_for_payrolls: '%a %-d'
 
     day_names:
       - domingo

@@ -7,12 +7,16 @@ class Sale < ActiveRecord::Base
     :product_lines, :place_id, :default_price_type
 
   scope :in_day, ->(day) { where(
-    "created_at > :from AND created_at < :to",
-    from: day.to_time, to: day.to_time.end_of_day
+    "created_at >= :from AND created_at < :to",
+    from: day.to_time.beginning_of_day, to: day.to_time.end_of_day
   ) }
   scope :between, ->(_from, _to) { where(
     "created_at >= :from AND created_at <= :to",
     from: _from.beginning_of_day, to: _to.end_of_day
+  ) }
+  scope :in_month, ->(month) { where(
+    "created_at >= :from AND created_at < :to",
+    from: month.to_time.beginning_of_month, to: month.to_time.end_of_month
   ) }
 
   before_validation :manual_validate
