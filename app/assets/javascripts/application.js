@@ -33,3 +33,4 @@
 //= require places
 //= require sales
 //= require sellers
+//= require transfer_products

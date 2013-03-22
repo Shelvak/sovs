@@ -34,6 +34,10 @@ Sovs::Application.routes.draw do
 
   resources :places, :customers, :sellers
 
+  resources :transfer_products, except: [:edit, :update] do
+    get :autocomplete_for_product_name, on: :collection
+  end
+
   resources :providers do
     get :add_increase, on: :member
     resources :products, on: :member

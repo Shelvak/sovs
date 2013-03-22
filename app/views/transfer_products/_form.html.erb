@@ -1,0 +1,33 @@
+<%= simple_form_for(@transfer_product) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= place_select_for_transfer_product(f) %>
+
+    <div class='row-fluid'>
+      <div class='span4'>
+        <h4><%= TransferLine.human_attribute_name('product_id') %></h4>
+      </div>
+      <div class='span2'>
+        <h4><%= TransferLine.human_attribute_name('quantity') %></h4>
+      </div>
+    </div>
+
+    <%= f.simple_fields_for :transfer_lines do |tl| %>
+      <%= render partial: 'transfer_line', locals: { f: tl } if tl.object %>
+    <% end %>
+
+    <%= link_to_add_fields(
+      t('view.transfer_products.new_transfer_line'), f, :transfer_lines
+    ) %>
+
+    <h2 id="total_price">
+      <%= number_to_currency @transfer_product.total_price %>
+    </h2>
+  </div>
+
+  <div class="form-actions">
+    <div class="pull-right"><%= yield :form_actions %></div>
+    <%= f.button :submit, class: 'btn-primary' %>
+  </div>
+<% end %>

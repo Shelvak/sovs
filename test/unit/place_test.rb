@@ -45,4 +45,20 @@ class PlaceTest < ActiveSupport::TestCase
     assert_equal [error_message_from_model(@place, :description, :taken)],
       @place.errors[:description]
   end
+
+  test 'keep only one transfer defalt' do
+    @place = Fabricate(:place, transfer_default: true)
+    
+    assert_not_nil Place.transfer_default
+    assert_equal Place.transfer_default, @place
+
+    new_default = nil
+    assert_difference 'Place.count' do
+      new_default = Fabricate(:place, transfer_default: true)
+    end
+
+    assert_not_nil Place.transfer_default
+    assert_not_equal Place.transfer_default, @place
+    assert_equal Place.transfer_default, new_default
+  end
 end

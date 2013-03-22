@@ -49,12 +49,9 @@ new Rule
       Sale.updateTotalPrice()
 
     @map.select_default_price_type ||= ->
-      console.log('rock!')
       if (value = $('input[name$="[default_price_type]"]').val())
-        console.log(value)
         $('.product_line').last().find('select[name$="[price_type]"]').val(value)
         
-
     @map.autocomplete_for_product_sale ||= ->
       if (input = $(this)).val().length > 0
         $.ajax

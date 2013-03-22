@@ -13,7 +13,7 @@
 
         <tbody>
           <% @places.each do |place| %>
-            <tr>
+            <tr class="<%= 'success' if place.transfer_default %>">
               <td><%= place.description %></td>
               <td><%= link_to_show place %></td>
               <td><%= link_to_edit edit_place_path(place) if can? :update, place %></td>

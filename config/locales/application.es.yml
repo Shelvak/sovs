@@ -13,6 +13,10 @@
           attributes:
             base:
               must_have_one_item: 'La venta tiene que tener almenos 1 item'
+        transfer_product:
+          attributes:
+            base:
+              must_have_one_item: 'La transferencia tiene que tener almenos 1 item'
     models:
       customer:
         one: 'Cliente'
@@ -32,6 +36,9 @@
       seller:
         one: 'Vendedor'
         other: 'Vendedores'
+      transfer_product:
+        one: 'Transferencia'
+        other: 'Transferencias'
       user:
         one: 'Usuario'
         other: 'Usuarios'
@@ -48,6 +55,7 @@
         default_price_type: 'Tipo de precio por defecto'
       place:
         description: 'Descripción'
+        transfer_default: 'Transferencia por defecto'
       product:
         code: 'Código'
         description: 'Descripción'
@@ -96,6 +104,13 @@
         name: 'Nombre'
         address: 'Dirección'
         phone: 'Teléfono'
+      transfer_line:
+        product_id: 'Producto'
+        quantity: 'Cantidad'
+        price: 'Precio Costo'
+      transfer_product:
+        place_id: 'Lugar a transferir'
+        total_price: 'Precio total'
       user:
         name: 'Nombre'
         lastname: 'Apellido'
@@ -139,6 +154,7 @@
     sales: 'Ventas'
     sellers: 'Vendedores'
     stats: 'Estadísticas'
+    transfer_products: 'Transferencia de stock'
     users: 'Usuarios'
     
   messages:
@@ -152,6 +168,7 @@
     items_count_with_net_price: '%{count} items  --------> Neto %{price}'
     daily_sales_report_for: 'Reporte diario de venta [%{day}]'
     total_sales_count: 'Total de [ Ventas: %{sales_count}, Recaudado: %{total_price} ]'
+    transfer_stock: "Transferencia de stock día %{day} \n a %{place}"
     
   view:
     generic:
@@ -299,6 +316,14 @@
         title: 'Stock vendido de Productos preferidos'
         for_day: 'Día: %{day}'
         date_label: 'Seleccione el día:'
+    transfer_products:
+      index_title: 'Productos transferidos'
+      show_title: 'Transferencia'
+      new_title: 'Nueva Transferencia'
+      new_transfer_line: 'Nueva linea'
+      correctly_created: 'Transferencia agregada correctamente.'
+      empty_index:
+        html: 'No se ha creado ninguna transferencia hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva Transferencia</span>'
     users:
       index_title: 'Listado de usuarios'
       show_title: 'Detalle de usuario'

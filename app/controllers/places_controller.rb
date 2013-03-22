@@ -8,7 +8,7 @@ class PlacesController < ApplicationController
   # GET /places.json
   def index
     @title = t('view.places.index_title')
-    @places = Place.page(params[:page])
+    @places = Place.order('transfer_default DESC, id ASC').page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

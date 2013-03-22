@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130316160614) do
+ActiveRecord::Schema.define(:version => 20130322025502) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -30,9 +30,10 @@ ActiveRecord::Schema.define(:version => 20130316160614) do
   add_index "customers", ["cuit"], :name => "index_customers_on_cuit", :unique => true
 
   create_table "places", :force => true do |t|
-    t.string   "description", :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.string   "description",                         :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.boolean  "transfer_default", :default => false
   end
 
   add_index "places", ["description"], :name => "index_places_on_description", :unique => true
@@ -121,6 +122,25 @@ ActiveRecord::Schema.define(:version => 20130316160614) do
 
   add_index "sellers", ["code"], :name => "index_sellers_on_code", :unique => true
   add_index "sellers", ["name"], :name => "index_sellers_on_name"
+
+  create_table "transfer_lines", :force => true do |t|
+    t.integer  "product_id",                                         :null => false
+    t.decimal  "quantity",            :precision => 10, :scale => 3, :null => false
+    t.integer  "transfer_product_id",                                :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+    t.decimal  "price",               :precision => 15, :scale => 2
+  end
+
+  add_index "transfer_lines", ["product_id"], :name => "index_transfer_lines_on_product_id"
+  add_index "transfer_lines", ["transfer_product_id"], :name => "index_transfer_lines_on_transfer_product_id"
+
+  create_table "transfer_products", :force => true do |t|
+    t.integer  "place_id"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.decimal  "total_price", :precision => 15, :scale => 2
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name",                                   :null => false

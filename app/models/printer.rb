@@ -196,6 +196,55 @@ class Printer
       send_to_print(file, landscape: true) if generated
     end
 
+    def print_transfer_report(transfer)
+      product_lines = [[
+        TransferLine.human_attribute_name('product_id'),
+        TransferLine.human_attribute_name('quantity'),
+        TransferLine.human_attribute_name('price')
+      ]]
+
+      transfer.transfer_lines.each do |tl| 
+        product_lines << [
+          tl.product.to_s, 
+          [tl.quantity, tl.product.retail_unit].join(' '),
+          tl.price.to_f.round(3)
+        ]
+      end
+
+      file_name = "transfer_report_#{I18n.l(Time.now, format: :for_file)}.pdf"
+      folders = ['private', 'to_print'].join('/')
+      file = [folders, file_name].join('/')
+      height = ((transfer.transfer_lines.count * 20 + 100) * 3).round
+      height = height > 612 ? height : 613
+      print_height = transfer.transfer_lines.count * 10 + 157
+
+      generated = Prawn::Document.generate(
+        file, page_size: [612, height], left_margin: 19
+      ) do |pdf|
+
+        pdf.text I18n.l(Time.now, format: :long), size: 12
+        pdf.move_down(5)
+
+        pdf.font_size 12
+        pdf.text "<i>#{I18n.t('printer.tax_worthless')}</i>", 
+          size: 32, inline_format: true
+        pdf.move_down(5)
+
+        pdf.text I18n.t(
+          'printer.transfer_stock', 
+          day: I18n.l(Date.today, format: :for_report),
+          place: transfer.place.to_s
+        )
+        pdf.move_down(20)
+        
+        pdf.table product_lines, width: 295
+        pdf.move_down(5)
+
+        pdf.text [I18n.t('label.total'), transfer.total_price].join(': ')
+      end
+
+      send_to_print(file, length: print_height) if generated
+    end
 
     def number_to_currency(number)
       ActionController::Base.helpers.number_to_currency(number)

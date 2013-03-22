@@ -1,0 +1,36 @@
+<div class="readonly-data">
+  <h2><%= @title %></h2>
+
+  <p>
+    <strong><%= TransferProduct.human_attribute_name 'place_id' %></strong>:
+    <%= @transfer_product.place %>
+  </p>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= TransferLine.human_attribute_name 'product_id' %></th>
+        <th><%= TransferLine.human_attribute_name 'quantity' %></th>
+        <th><%= TransferLine.human_attribute_name 'price' %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transfer_product.transfer_lines.each do |tl| %>
+        <tr>
+          <td><%= tl.product %></td>
+          <td><%= [tl.quantity, tl.product.retail_unit].join(' ') %></td>
+          <td><%= number_to_currency tl.price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h3>
+    <%= t('label.total') %>: 
+    <%= number_to_currency @transfer_product.total_price %>
+  </h3>
+</div>
+
+<div class="form-actions">
+  <%= link_to t('label.list'), transfer_products_path %>
+</div>

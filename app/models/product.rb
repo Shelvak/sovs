@@ -26,6 +26,7 @@ class Product < ActiveRecord::Base
 
   belongs_to :provider
   has_many :product_lines
+  has_many :transfer_lines
 
   def to_s
     "[#{self.code}] #{self.description}"
@@ -36,7 +37,10 @@ class Product < ActiveRecord::Base
   def as_json(options = nil)
     default_options = {
       only: [:id],
-      methods: [:label, :retail_price, :unit_price, :special_price]
+      methods: [
+        :label, :retail_price, :unit_price, :special_price, :retail_unit,
+        :iva_cost
+      ]
     }
 
     super(default_options.merge(options || {}))

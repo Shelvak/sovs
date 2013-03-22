@@ -1,0 +1,6 @@
+<%= content_for :form_actions do %>
+  <%= link_to t('label.show'), @transfer_product %> |
+  <%= link_to t('label.list'), transfer_products_path %>
+<% end %>
+
+<%= render 'form' %>

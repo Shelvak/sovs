@@ -47,3 +47,21 @@ jQuery ($)->
       ).appendTo(ul)
   .attr('data-observed', true)
 
+  $(document).on 'change', 'input.autocomplete-field-after-tab:not([data-observed])', ->
+    if (input = $(this)).val().length > 0
+      $.ajax
+        url: input.data('autocompleteUrl')
+        dataType: 'json'
+        data: { q: input.val() }
+        success: (item)->
+          if item
+            $(input.data('autocompleteIdTarget')).val(item.id)
+            $(input).val(item.label)
+
+            if item.retail_unit
+              $(input).parents('.row-fluid:first')
+                .find('span[data-retail-unit]').html(item.retail_unit)
+
+            if item.iva_cost
+              ivaCost = $(input).parents('.row-fluid:first').find('span[data-iva-cost]')
+              ivaCost.html(ivaCost.html().replace(/\d+[,|.]\d+/, item.iva_cost))
