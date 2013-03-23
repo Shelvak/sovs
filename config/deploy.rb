@@ -11,9 +11,9 @@ set :use_sudo, false
 set :scm, :git
 set :branch, 'master'
 
-role :web, 'torrent-fiambre.no-ip.org'
-role :app, 'torrent-fiambre.no-ip.org'
-role :db, 'torrent-fiambre.no-ip.org', primary: true
+role :web, '192.168.1.5'
+role :app, '192.168.1.5'
+role :db, '192.168.1.5', primary: true
 
 before 'deploy:finalize_update', 'deploy:create_shared_symlinks'
 
