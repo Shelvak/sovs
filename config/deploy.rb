@@ -8,7 +8,7 @@ set :deploy_via, :remote_cache
 set :user, 'deployer'
 set :group_writable, false
 set :shared_children, %w(log)
-set :use_sudo, false
+#set :use_sudo, false
 
 set :scm, :git
 set :branch, 'master'
