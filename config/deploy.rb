@@ -11,9 +11,9 @@ set :use_sudo, false
 set :scm, :git
 set :branch, 'master'
 
-role :web, '192.168.1.5'
-role :app, '192.168.1.5'
-role :db, '192.168.1.5', primary: true
+role :web, '192.168.0.4'
+role :app, '192.168.0.4'
+role :db, '192.168.0.4', primary: true
 
 before 'deploy:finalize_update', 'deploy:create_shared_symlinks'
 
@@ -22,7 +22,8 @@ namespace :deploy do
   task :stop do ; end
   
   task :restart, roles: :app, except: { no_release: true } do
-    run "touch #{File.join(current_path, 'tmp', 'restart.txt')}"
+    run "#{try_sudo} service thin restart"
+    run "#{try_sudo} service nginx restart"
   end
 
   desc 'Creates the symlinks for the shared folders'
