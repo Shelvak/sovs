@@ -22,8 +22,8 @@ namespace :deploy do
   task :stop do ; end
   
   task :restart, roles: :app, except: { no_release: true } do
-    run "#{try_sudo} service thin restart"
-    run "#{try_sudo} service nginx restart"
+    run "service thin restart"
+    run "service nginx restart"
   end
 
   desc 'Creates the symlinks for the shared folders'
