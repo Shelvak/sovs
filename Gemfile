@@ -19,7 +19,6 @@ gem 'prawn'
 gem 'cups'
 gem 'newrelic_rpm'
 
-
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
