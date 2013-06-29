@@ -2,7 +2,6 @@
 class AmdObserver < ActiveRecord::Observer
   observe :'ActiveRecord::Base'
 
-  # observe only #create actions here
   def after_create(record)
     table = table_name(record)
 
@@ -15,10 +14,6 @@ class AmdObserver < ActiveRecord::Observer
         values += ', '
       end
 
-      p key
-      p value
-
-      keys += key
       values += if value.is_a?(Numeric) 
                   value.to_s
                 else 
@@ -28,9 +23,7 @@ class AmdObserver < ActiveRecord::Observer
     end
 
     query = "INSERT INTO #{table} (#{keys}) VALUES (#{values});"
-
-    %x{echo "#{query}" >> #{Rails.root}/cont-bk}
-    true
+    push_to_bk(query)
   end
 
   def after_update(record)
@@ -50,12 +43,22 @@ class AmdObserver < ActiveRecord::Observer
     identifier = "#{table}.id = #{record.id}"
 
     query = "UPDATE \"#{table}\" SET #{set} WHERE #{identifier};"
+    push_to_bk(query)
+  end
 
-    %x{echo "#{query}" >> #{Rails.root}/cont-bk}
-    true
+  def after_destroy(record)
+    table = table_name(record)
+
+    query = "DELETE FROM #{table} WHERE #{table}.id = #{record.id};"
+    push_to_bk(query)
   end
 
   private
+
+  def push_to_bk(query)
+    %x{echo "#{query}" >> #{Rails.root}/cont-bk}
+    true
+  end
 
   def table_name(record)
     record.class.table_name
