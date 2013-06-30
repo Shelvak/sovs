@@ -8,14 +8,13 @@ set :deploy_via, :remote_cache
 set :user, 'deployer'
 set :group_writable, false
 set :shared_children, %w(log)
-#set :use_sudo, false
 
 set :scm, :git
 set :branch, 'master'
 
-role :web, '192.168.0.4'
-role :app, '192.168.0.4'
-role :db, '192.168.0.4', primary: true
+role :web, 'torrent-fiambre.no-ip.org'
+role :app, 'torrent-fiambre.no-ip.org'
+role :db, 'torrent-fiambre.no-ip.org', primary: true
 
 before 'deploy:finalize_update', 'deploy:create_shared_symlinks'
 
