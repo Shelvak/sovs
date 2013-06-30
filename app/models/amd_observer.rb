@@ -3,6 +3,7 @@ class AmdObserver < ActiveRecord::Observer
   observe :'ActiveRecord::Base'
 
   def after_create(record)
+    p record
     table = table_name(record)
 
     keys = values = ''
@@ -14,6 +15,7 @@ class AmdObserver < ActiveRecord::Observer
         values += ', '
       end
 
+      keys += key
       values += if value.is_a?(Numeric) 
                   value.to_s
                 else 
