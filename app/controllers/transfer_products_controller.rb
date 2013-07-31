@@ -8,7 +8,11 @@ class TransferProductsController < ApplicationController
   # GET /transfer_products.json
   def index
     @title = t('view.transfer_products.index_title')
-    @transfer_products = TransferProduct.order('id DESC').page(params[:page])
+    date = params[:date] ? Date.parse(params[:date]) : Time.zone.today
+    _start, _finish = date.beginning_of_month, date.end_of_month
+    @transfer_products = TransferProduct.where(
+      created_at: _start.._finish
+    ).order('created_at DESC')
 
     respond_to do |format|
       format.html # index.html.erb

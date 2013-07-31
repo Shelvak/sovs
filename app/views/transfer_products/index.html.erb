@@ -1,13 +1,14 @@
 <% if @transfer_products.empty? %>
   <%= render 'shared/empty_index' %>
 <% else %>
-  <div class="row">
+  <div class="row-fluid">
     <div class="span12">
       <table class="table resource-list">
         <thead>
           <tr>
             <th><%= TransferProduct.human_attribute_name 'place_id' %></th>
             <th><%= TransferProduct.human_attribute_name 'total_price' %></th>
+            <th><%= t('attributes.created_at') %></th>
             <th colspan="2"></th>
           </tr>
         </thead>
@@ -17,18 +18,24 @@
             <tr>
               <td><%= transfer_product.place %></td>
               <td><%= number_to_currency transfer_product.total_price %></td>
+              <td><%= l transfer_product.created_at, format: :long %></td>
               <td><%= link_to_show transfer_product %></td>
               <td><%= link_to_destroy(
                 transfer_product
               ) if can? :destroy, transfer_product %></td>
             </tr>
           <% end %>
+          <tr class="info">
+            <td><b><%= t('label.total') %>:</b></td>
+            <td><b><%= number_to_currency @transfer_products.sum(&:total_price) %></b></td>
+            <td></td>
+            <td></td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <%= pagination_links(@transfer_products) %>
 <% end %>
 
 <div class="form-actions">

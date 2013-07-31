@@ -4,6 +4,7 @@ gem 'rails', '3.2.13'
 
 gem 'pg'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'turbolinks'
 gem 'will_paginate'
 gem 'simple_form'
@@ -32,6 +33,7 @@ end
 
 group :test do
   gem 'turn', require: false
+  gem 'selenium-webdriver'
   gem 'capybara', require: false
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
