@@ -3,7 +3,6 @@ class AmdObserver < ActiveRecord::Observer
   observe :'ActiveRecord::Base'
 
   def after_create(record)
-    p record
     table = table_name(record)
 
     keys = values = ''

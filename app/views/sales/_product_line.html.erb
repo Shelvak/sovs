@@ -6,6 +6,7 @@
       value: f.object.product, autofocus: true,
       autocomplete: 'off', tabindex: 2,
       data: {
+        'enter-scape' => true,
         'autocomplete-id-target' => "#sale_product_lines_product_id_#{id}",
         'autocomplete-url' => autocomplete_for_product_name_sales_path(format: :json)
       }                                                                                    
@@ -16,7 +17,8 @@
   <div class='span2'>
     <%= f.input :quantity, label: false, as: :string,
       input_html: { value: f.object.quantity || 1, tabindex: 2,
-      class: 'price-modifier span8', autocomplete: 'off' } %>
+      class: 'price-modifier span8', autocomplete: 'off', 
+      data: { 'enter-scape' => true } } %>
   </div>
   <div class='span2'>
     <%= f.input :unit_price, label: false, as: :string,

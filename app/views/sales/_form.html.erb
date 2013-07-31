@@ -11,7 +11,8 @@
       <div class='span2'>
         <%= f.input :seller_code, input_html: {
           class: 'span6', autofocus: true, autocomplete: 'off',
-          value: @sale.seller.try(:code), tabindex: 1
+          value: @sale.seller.try(:code), tabindex: 1, 
+          data: { 'enter-scape' => true }
         } %>
       </div>
       <div class='span7'>
@@ -47,6 +48,7 @@
       </div>
     </div>
     <div id='product_lines'>
+      <% @sale.product_lines.build if @sale.product_lines.size == 0 %>
       <%= f.simple_fields_for :product_lines do |pl| %>
         <%= render partial: 'product_line', locals: { f: pl } if pl.object %>
       <% end %>

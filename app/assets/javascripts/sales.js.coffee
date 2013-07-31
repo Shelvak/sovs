@@ -45,6 +45,26 @@ new Rule
         e.preventDefault()
         add_nested_btn.click()
 
+      if key == 13 && !e.ctrlKey
+        input = $(document.activeElement)
+        input_id = input.attr('id')
+        
+        if input.data('enter-scape')
+
+          e.preventDefault()
+          e.stopPropagation()
+
+          if input_id.match(/(seller_code)/)
+            $('input[tabindex=2]:first').focus()
+          else if input_id.match(/(product_name)/)
+            input_number = input_id.match(/(\d+)/)[1]
+            $("input[name$=\"[#{input_number}][quantity]\"]").focus()
+          else if input_id.match(/(quantity)/)
+            add_nested_btn.focus()
+
+      else if key == 13 && e.ctrlKey
+        $('form').submit()
+
     @map.update_lines_price ||= ->
       Sale.updateTotalPrice()
 

@@ -24,6 +24,7 @@ window.TransferProduct =
     totalPrice.html(totalPrice.html().match(/(^\D+)/)[0] + total.toFixed(2))
 
 new Rule
+  condition: -> $('#c_transfer_products').length
   load: ->
     @map.calcTotalPrice ||= ->
       TransferProduct.calcTotalPrice()

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -32,7 +32,6 @@ end
 
 group :test do
   gem 'turn', require: false
-  gem 'minitest', require: false
   gem 'capybara', require: false
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
