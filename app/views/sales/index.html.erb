@@ -16,15 +16,18 @@
 
         <tbody>
           <% @sales.each do |sale| %>
-            <% cache ['sales', sale.id] do %>
-              <tr>
-                <td><%= sale.customer %></td>
-                <td><%= sale.seller %></td>
-                <td><%= sale.sale_kind %></td>
-                <td><%= number_to_currency sale.total_price %></td>
-                <td class='not-printable'><%= link_to_show sale %></td>
-              </tr>
-            <% end %>
+            <tr class="<%= 'error' if sale.revoked? %>">
+              <td><%= sale.customer %></td>
+              <td><%= sale.seller %></td>
+              <td><%= sale.sale_kind %></td>
+              <td><%= number_to_currency sale.total_price %></td>
+              <td class='not-printable'><%= link_to_show sale %></td>
+              <td><%= link_to(
+                '&#x26d4;'.html_safe, revoke_sale_path(sale.id), 
+                method: :put, class: 'iconic', title: t('view.sales.revoke'),
+                data: { 'show-tooltip' => true, confirm: t('messages.confirmation') }
+              ) unless sale.revoked? %></td>
+            </tr>
           <% end %>
         </tbody>
       </table>

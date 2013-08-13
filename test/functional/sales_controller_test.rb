@@ -54,4 +54,9 @@ class SalesControllerTest < ActionController::TestCase
     put :daily_report, to_print: { date: Date.today }
     assert_redirected_to sales_url
   end
+
+  test "should revoke" do
+    put :revoke, id: @sale
+    assert_redirected_to sales_url
+  end
 end

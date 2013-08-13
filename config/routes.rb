@@ -19,6 +19,7 @@ Sovs::Application.routes.draw do
     as: 'products_day_stats', via: :get
     
   resources :sales, except: [:edit, :update, :destroy] do
+    put :revoke, on: :member
     collection do
       get :autocomplete_for_customer_name
       get :autocomplete_for_product_name

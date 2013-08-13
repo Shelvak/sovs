@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322025502) do
+ActiveRecord::Schema.define(:version => 20130813040146) do
 
   create_table "customers", :force => true do |t|
     t.string   "name"
@@ -100,12 +100,13 @@ ActiveRecord::Schema.define(:version => 20130322025502) do
 
   create_table "sales", :force => true do |t|
     t.integer  "customer_id"
-    t.integer  "seller_id",                :null => false
+    t.integer  "seller_id",                                   :null => false
     t.string   "sale_kind",   :limit => 1
-    t.decimal  "total_price",              :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.decimal  "total_price",                                 :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.integer  "place_id"
+    t.boolean  "revoked",                  :default => false
   end
 
   add_index "sales", ["customer_id"], :name => "index_sales_on_customer_id"

@@ -260,6 +260,9 @@
       wait_for_customer: 'No se encontro el cliente, espere a las sugerencias de busqueda'
       daily_report: 'Informe diario'
       print_report_title: 'Imprimir informe diario'
+      revoke: 'Cancelar'
+      revoke_ok: 'Venta cancelada'
+      can_not_revoke: 'No se pudo cancelar la venta'
     sellers:
       index_title: 'Listado de vendedores'
       show_title: 'Detalle de vendedor'

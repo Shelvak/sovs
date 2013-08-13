@@ -83,4 +83,19 @@ class SaleTest < ActiveSupport::TestCase
     reloaded_stock = @sale.reload.product_lines.map { |pl| pl.product.total_stock }
     assert_equal reloaded_stock.sort, product_line_products_stock.sort
   end
+
+  test 'sum to stock when revoked' do
+    sale = Fabricate(:sale)
+
+    pl = sale.product_lines.first
+    product = pl.product
+    quantity = pl.quantity.to_f
+    stock_after_sale = product.total_stock.to_f
+
+    assert_no_difference ['Sale.count', 'Product.count'] do
+      assert sale.revoke!
+    end
+
+    assert_equal stock_after_sale + quantity, product.reload.total_stock
+  end
 end

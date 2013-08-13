@@ -123,4 +123,20 @@ class Sale < ActiveRecord::Base
       { stats: payrolls_pack, resume: payrolls_resume }
     end
   end
+
+  def revoke!
+    Sale.transaction do
+      self.product_lines.each do |p_l|
+        prod = p_l.product 
+        prod.total_stock += p_l.quantity
+        prod.save!
+      end
+
+      self.update_column(:revoked, true)
+    end
+  end
+
+  def revoked?
+    self.revoked
+  end
 end

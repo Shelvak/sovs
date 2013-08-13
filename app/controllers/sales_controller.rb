@@ -58,6 +58,17 @@ class SalesController < ApplicationController
     end
   end
 
+  # PUT /sales/1/revoke
+  def revoke
+    sale = Sale.find(params[:id])
+
+    if sale.revoke!
+      redirect_to sales_path, notice: t('view.sales.revoke_ok')
+    else
+      redirect_to sales_path, notice: t('view.sales.can_not_revoke')
+    end
+  end
+
   def daily_report
     if params[:to_print]
       if Printer.print_daily_report(params[:to_print][:date].to_date)
