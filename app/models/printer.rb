@@ -3,63 +3,42 @@ class Printer
 
   class << self
     def print_common_tax(sale)
-      file_name = "#{sale.id}_#{I18n.l(Time.now, format: :for_file)}.pdf"
-      folders = ['private', 'to_print'].join('/')
-      file = [folders, file_name].join('/')
-      # Lines count * 20mm + 100mm(title and footer) * 3(size)
-      doc_height = ((sale.product_lines.size * 20 + 150) * 3).round
-      print_height = sale.product_lines.size * 12 + 120
+      start_printer
 
-      generated = Prawn::Document.generate(
-        file, page_size: [612, doc_height], left_margin: 17
-      ) do |pdf|
+      title_print(I18n.t('printer.tax_worthless'))
 
-        pdf.font_size 10
-        pdf.text I18n.l(Time.now, format: :long)
-        pdf.move_down(5)
-        pdf.text "<i>#{I18n.t('printer.tax_worthless')}</i>", size: 30, inline_format: true
-        pdf.move_down(5)
-        
-        pdf.text I18n.t('printer.seller', seller: sale.seller.code)
-        pdf.move_down(20)
+      normal_print(
+        [
+          I18n.t('printer.seller', seller: sale.seller.code),
+          I18n.l(Time.zone.now, format: :minimal)
+        ].join('      ')
+      )
+     
+      separator_print
 
-        items = [[
-          ProductLine.human_attribute_name('product_id'),
-          ProductLine.human_attribute_name('quantity'),
-          ProductLine.human_attribute_name('unit_price_abbr'),
-          ProductLine.human_attribute_name('partial_price')
-        ]]
-
-        sale.product_lines.each do |pl|
-          items << [
-            pl.product.to_s,
-            "#{pl.quantity} #{pl.product.purchase_unit}",
-            number_to_currency(pl.product.retail_price),
-            number_to_currency(pl.price)
-          ]
-        end
-
-        pdf.table(items, cell_style: { align: :right }, width: 295) do
-          column(0).align = :left
-        end
-
-        pdf.move_down(5)
-        pdf.text I18n.t(
-          'printer.items_count_with_net_price', count: sale.product_lines.size,
-          price: number_to_currency(sale.total_price)
+      sale.product_lines.each do |pl|
+        compact_print(
+          [
+            [
+              suit_string_length(pl.quantity.round(3), 8),
+              suit_string_length(pl.product.purchase_unit, 2)
+            ].join(' '),
+            suit_string_length(pl.product.to_s.upcase, 38, true),
+            round_and_stringlify(pl.product.retail_price),
+            '->',
+            round_and_stringlify(pl.price)
+          ].join(' ')
         )
-        
-        pdf.move_down(10)
-        pdf.text I18n.t(
-          'printer.total_price', 
-          total: number_to_currency(sale.total_price)
-        ), size: 20
-        
-        pdf.move_down(25)
-        pdf.text I18n.t('printer.thinks'), size: 20
       end
 
-      send_to_print(file, length: print_height) if generated
+      separator_print
+
+      title_print I18n.t(
+        'printer.total_price',
+        total: number_to_currency(sale.total_price).to_s.gsub('$', '\$')
+      )
+
+      end_print
     end
 
     def print_daily_report(day)
@@ -253,12 +232,49 @@ class Printer
     def send_to_print(file, options={})
       options[:length] ||= 279
       options[:length] = (options[:length] > 220) ? options[:length] : 220
-      options[:width] ||= 216
+      options[:width] ||= 100
       size = [options[:width], options[:length]].join('x')
 
       land = '-o landscape' if options[:landscape]
 
       %x{lp -o media=Custom.#{size}mm #{land} #{file}}
+    end
+
+    def set_correct_spaces(string, length)
+      suit_string_length(string, length)
+    end
+
+    def suit_string_length(string, num, to_right = false)
+      sign = to_right ? '-' : nil
+      "%#{sign}#{num}.#{num}s" % string.to_s
+    end
+
+    def round_and_stringlify(int)
+      suit_string_length('%.02f' % int, 7)
+    end
+
+    def start_printer
+      %x{echo -en \"\e@\" > /dev/usb/lp1}
+    end
+
+    def compact_print(string)
+      %x{echo -en "\n\x1B\x21\x04  #{string}" > /dev/usb/lp1}
+    end
+
+    def title_print(string)
+      %x{echo -en "\n\x1B\x21\x20  #{string}" > /dev/usb/lp1}
+    end
+
+    def normal_print(string)
+      %x{echo -en "\n\x1B\x21\x01  #{string}" > /dev/usb/lp1}
+    end
+
+    def separator_print
+      normal_print '-' * 50
+    end
+
+    def end_print
+      14.times { %x{echo -en "\n" > /dev/usb/lp1}; sleep 0.1 }
     end
   end
 end

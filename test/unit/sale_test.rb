@@ -89,13 +89,13 @@ class SaleTest < ActiveSupport::TestCase
 
     pl = sale.product_lines.first
     product = pl.product
-    quantity = pl.quantity.to_f
-    stock_after_sale = product.total_stock.to_f
+    quantity = pl.quantity
+    stock_after_sale = product.total_stock
 
     assert_no_difference ['Sale.count', 'Product.count'] do
       assert sale.revoke!
     end
 
-    assert_equal stock_after_sale + quantity, product.reload.total_stock
+    assert_equal (stock_after_sale + quantity).to_f, product.reload.total_stock.to_f
   end
 end

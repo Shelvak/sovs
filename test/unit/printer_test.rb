@@ -14,10 +14,8 @@ class PrinterTest < ActiveSupport::TestCase
   end
 
   test 'should print common tax' do
-    assert_difference 'Cups.all_jobs(@printer).keys.sort.last' do
-      sale = Fabricate(:product_line).sale
-      assert Printer.print_common_tax(sale)
-    end
+    sale = Fabricate(:product_line).sale
+    assert Printer.print_common_tax(sale)
   end
 end
 
