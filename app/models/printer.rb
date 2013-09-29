@@ -255,19 +255,19 @@ class Printer
     end
 
     def start_printer
-      %x{echo -en \"\e@\" > /dev/usb/lp1}
+      %x{echo -en "\e@" > /dev/usb/lp0}
     end
 
     def compact_print(string)
-      %x{echo -en "\n\x1B\x21\x04  #{string}" > /dev/usb/lp1}
+      %x{echo -en "\n\x1B\x21\x04  #{string}" > /dev/usb/lp0}
     end
 
     def title_print(string)
-      %x{echo -en "\n\x1B\x21\x20  #{string}" > /dev/usb/lp1}
+      %x{echo -en "\n\x1B\x21\x20  #{string}" > /dev/usb/lp0}
     end
 
     def normal_print(string)
-      %x{echo -en "\n\x1B\x21\x01  #{string}" > /dev/usb/lp1}
+      %x{echo -en "\n\x1B\x21\x01  #{string}" > /dev/usb/lp0}
     end
 
     def separator_print
@@ -275,7 +275,7 @@ class Printer
     end
 
     def end_print
-      14.times { %x{echo -en "\n" > /dev/usb/lp1}; sleep 0.1 }
+      # Option => 14.times { %x{echo -en "\n" > /dev/usb/lp0}; sleep 0.1 }
     end
   end
 end
