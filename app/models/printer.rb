@@ -43,7 +43,7 @@ class Printer
 
     def print_daily_report(day)
       sellers = [[
-        Seller.human_attribute_name('code'),
+        Sale.human_attribute_name('seller_code'),
         ProductLine.human_attribute_name('quantity'),
         ProductLine.human_attribute_name('price')
       ]]
@@ -154,7 +154,7 @@ class Printer
       file = [folders, file_name].join('/')
 
       generated = Prawn::Document.generate(
-        file, page_size: [841.89, 595.28], margin: 15
+        file, page_size: 'A4', margin: 15
       ) do |pdf|
 
         pdf.font_size 9
@@ -175,6 +175,7 @@ class Printer
       send_to_print(file, landscape: true) if generated
     end
 
+    # Retocar con echo
     def print_transfer_report(transfer)
       product_lines = [[
         TransferLine.human_attribute_name('product_id'),
