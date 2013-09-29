@@ -17,7 +17,7 @@ gem 'validates_timeliness'
 gem 'sidekiq'
 gem 'capistrano'
 gem 'prawn'
-gem 'cups'
+#gem 'cups'
 gem 'newrelic_rpm'
 
 group :assets do
