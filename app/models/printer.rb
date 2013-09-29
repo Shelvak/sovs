@@ -279,7 +279,7 @@ class Printer
     end
 
     def end_print
-      # Option => 14.times { %x{echo -en "\n" > /dev/usb/lp0}; sleep 0.1 }
+      12.times { print_with_script "\n" }
     end
   end
 end
