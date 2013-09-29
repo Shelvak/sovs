@@ -271,7 +271,7 @@ class Printer
     end
 
     def print_with_script(esc_pos)
-      system(Rails.root.join('print_scaped_strings'), esc_pos)
+      system(Rails.root.join('print_scaped_strings').to_s, esc_pos)
     end
 
     def separator_print
