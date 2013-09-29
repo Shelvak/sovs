@@ -279,7 +279,7 @@ class Printer
     end
 
     def end_print
-      12.times { print_with_script "\n" }
+      14.times { print_with_script "\n" }
     end
   end
 end
