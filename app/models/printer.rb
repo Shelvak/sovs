@@ -255,19 +255,23 @@ class Printer
     end
 
     def start_printer
-      %x{echo -en "\e@" > /dev/usb/lp0}
+      print_with_script "\e@" 
     end
 
     def compact_print(string)
-      %x{echo -en "\n\x1B\x21\x04  #{string}" > /dev/usb/lp0}
+     print_with_script "\n\x1B\x21\x04  #{string}"
     end
 
     def title_print(string)
-      %x{echo -en "\n\x1B\x21\x20  #{string}" > /dev/usb/lp0}
+      print_with_script "\n\x1B\x21\x20  #{string}"
     end
 
     def normal_print(string)
-      %x{echo -en "\n\x1B\x21\x01  #{string}" > /dev/usb/lp0}
+      print_with_script "\n\x1B\x21\x01  #{string}"
+    end
+
+    def print_with_script(esc_pos)
+      system(Rails.root.join('print_scaped_strings'), esc_pos)
     end
 
     def separator_print
