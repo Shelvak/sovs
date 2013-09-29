@@ -35,7 +35,7 @@ class Printer
 
       title_print I18n.t(
         'printer.total_price',
-        total: number_to_currency(sale.total_price).to_s.gsub('$', '\$')
+        total: number_to_currency(sale.total_price).to_s #.gsub('$', '\$')
       )
 
       end_print
