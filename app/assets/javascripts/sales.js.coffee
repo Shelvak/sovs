@@ -2,13 +2,19 @@ window.Sale =
   updateLinePrice: (product_line)->
     quantity = parseFloat product_line.find('input[name$="[quantity]"]').val()
     price_type = product_line.find('select[name$="[price_type]"]').val()
+
+    kind = $('#sale_sale_kind').val()
+    divider = if kind == 'B' then 1 else 1.21
+
     unit_price = parseFloat(
       product_line.find("input[name$='[#{price_type}_tmp]']").val()
     )
 
-    line_price = ((quantity || 0) * (unit_price || 0)).toFixed(2)
     if unit_price
+      unit_price = (unit_price / divider).toFixed(2)
       product_line.find('input[name$="[unit_price]"]').val(unit_price)
+
+    line_price = ((quantity || 0) * (unit_price || 0)).toFixed(2)
     product_line.find('span.money').html("$ #{line_price}")
     product_line.attr('data-price', line_price)
     product_line.find('input[name$="[price]"]').val(line_price)
@@ -19,10 +25,20 @@ window.Sale =
       Sale.updateLinePrice($(this))
       totalPrice += parseFloat($(this).attr('data-price')) || 0
 
+    if $('#sale_sale_kind').val() == 'A'
+      $('#neto-price').find('span').html("$ #{totalPrice}")
+      totalPrice *= 1.21
+
     $('#sale_total_price').val(totalPrice.toFixed(2))
 
   add_nested_btn: '.btn.btn-small[data-dynamic-form-event="addNestedItem"]'
 
+  toggleNetoPrice: ()->
+    netoPriceDiv = $('div#neto-price')
+    if $('#sale_sale_kind').val() == 'A'
+      EffectHelper.show(netoPriceDiv)
+    else
+      EffectHelper.hide(netoPriceDiv)
 
 
 new Rule
@@ -101,11 +117,13 @@ new Rule
     $(document).on 'change', 'input.autocomplete-field-for-product-sale',
       @map.autocomplete_for_product_sale
     $(document).on 'click', Sale.add_nested_btn, @map.select_default_price_type
+    $(document).on 'change', '#sale_sale_kind', Sale.toggleNetoPrice
 
   unload: ->
     $(document).off 'keyup change focus', '.price-modifier', @map.update_lines_price
     $(document).off 'change', 'input.autocomplete-field-for-product-sale',
       @map.autocomplete_for_product_sale
     $(document).off 'click', Sale.add_nested_btn, @map.select_default_price_type
+    $(document).off 'change', '#sale_sale_kind', Sale.toggleNetoPrice
 
 

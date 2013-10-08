@@ -13,9 +13,9 @@ class PrinterTest < ActiveSupport::TestCase
     #end
   end
 
-  test 'should print common tax' do
+  test 'should print tax' do
     sale = Fabricate(:product_line).sale
-    assert Printer.print_common_tax(sale)
+    assert Printer.print_tax(sale)
   end
 end
 

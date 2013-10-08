@@ -8,7 +8,7 @@ class SalesController < ApplicationController
   # GET /sales.json
   def index
     @title = t('view.sales.index_title')
-    @sales = Sale.order(:id).page(params[:page])
+    @sales = Sale.order('id DESC').page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

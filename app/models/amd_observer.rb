@@ -57,8 +57,10 @@ class AmdObserver < ActiveRecord::Observer
   private
 
   def push_to_bk(query)
-    %x{echo "#{query}" >> /media/pendrive1/bk-continuo.sql}
-    %x{echo "#{query}" >> /media/pendrive2/bk-continuo.sql}
+    unless Rails.env.test?
+      %x{echo "#{query}" >> /media/pendrive1/bk-continuo.sql}
+      %x{echo "#{query}" >> /media/pendrive2/bk-continuo.sql}
+    end
     true
   end
 

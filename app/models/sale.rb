@@ -20,6 +20,7 @@ class Sale < ActiveRecord::Base
   ) }
 
   before_validation :manual_validate
+  before_save :recalc_price
   after_create :discount_sold_stock, :send_to_print
 
   validates :seller_code, :total_price, presence: true
@@ -66,11 +67,11 @@ class Sale < ActiveRecord::Base
   end
 
   def send_to_print
-    Printer.print_common_tax(self) if self.common_bill?
+    Printer.print_tax(self)
   end
 
   def common_bill?
-    self.sale_kind == 'B' || self.sale_kind == '-'
+    self.sale_kind == 'B'
   end
 
   def created_at_date
@@ -138,5 +139,15 @@ class Sale < ActiveRecord::Base
 
   def revoked?
     self.revoked
+  end
+
+  def recalc_price
+    self.total_price = self.product_lines.each do |pl|
+      price = pl.product.send(pl.price_type)
+      pl.unit_price = self.common_bill? ? price : (price / 1.21)
+      pl.price = pl.unit_price * pl.quantity
+    end.sum(&:price)
+
+    self.total_price *= 1.21 unless self.common_bill?
   end
 end

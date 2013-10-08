@@ -32,9 +32,9 @@
     <span class='money badge'>
       <%= number_to_currency(f.object.price || 0) %>
     </span>
-    <%= f.input :unit_price_tmp, as: :hidden %>
-    <%= f.input :retail_price_tmp, as: :hidden %>
-    <%= f.input :special_price_tmp, as: :hidden %>
+    <%= f.input :unit_price_tmp, as: :hidden, input_html: { disabled: true } %>
+    <%= f.input :retail_price_tmp, as: :hidden, input_html: { disabled: true } %>
+    <%= f.input :special_price_tmp, as: :hidden, input_html: { disabled: true } %>
     <%= f.input :price, as: :hidden %>
     <%= link_to_remove_nested_item(f) %>
   </div>

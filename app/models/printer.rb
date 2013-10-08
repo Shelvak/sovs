@@ -2,17 +2,12 @@ class Printer
   require 'prawn'
 
   class << self
-    def print_common_tax(sale)
+    def print_tax(sale)
       start_printer
 
       title_print(I18n.t('printer.tax_worthless'))
 
-      normal_print(
-        [
-          I18n.t('printer.seller', seller: sale.seller.code),
-          I18n.l(Time.zone.now, format: :minimal)
-        ].join('      ')
-      )
+      normal_print I18n.t('printer.seller', seller: sale.seller.code)
      
       separator_print
 
@@ -24,9 +19,29 @@ class Printer
               suit_string_length(pl.product.purchase_unit, 2)
             ].join(' '),
             suit_string_length(pl.product.to_s.upcase, 38, true),
-            round_and_stringlify(pl.product.retail_price),
+            round_and_stringlify(pl.unit_price),
             '->',
             round_and_stringlify(pl.price)
+          ].join(' ')
+        )
+      end
+
+      unless sale.common_bill?
+        neto = sale.total_price / 1.21
+        compact_print(
+          [
+            suit_string_length("#{sale.product_lines.size} Items", 10),
+            suit_string_length('------------------------------->> Neto $', 38),
+            suit_string_length('  ', 8),
+            round_and_stringlify(neto)
+          ].join(' ')
+        )
+        compact_print(
+          [
+            suit_string_length(' ', 15),
+            suit_string_length('I.V.A. 21.00 %   $', 30),
+            suit_string_length(' ', 12),
+            suit_string_length((sale.total_price - neto).round(2), 8)
           ].join(' ')
         )
       end
@@ -35,7 +50,7 @@ class Printer
 
       title_print I18n.t(
         'printer.total_price',
-        total: number_to_currency(sale.total_price).to_s #.gsub('$', '\$')
+        total: number_to_currency(sale.total_price).to_s  #.gsub('$', '\$')
       )
 
       end_print

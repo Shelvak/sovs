@@ -3,7 +3,7 @@ class CreateProductLines < ActiveRecord::Migration
     create_table :product_lines do |t|
       t.integer :product_id, null: false
       t.decimal :quantity, null: false
-      t.decimal :price, null: false
+      t.decimal :price, precision: 15, scale: 2, null: false
       t.integer :sale_id, null: false
 
       t.timestamps

@@ -1,12 +1,12 @@
 module SalesHelper
   def sale_kinds_array
-    ['-', 'A', 'B', 'C', 'X']
+    ['A', 'B']
   end
 
   def sale_kind_select_for_sale(form)
     form.input :sale_kind, collection: sale_kinds_array,
-      selected: 'B', prompt: false,
-      input_html: { class: 'span6' }
+      selected: form.object.try(:sale_kind) || 'B', prompt: false,
+      input_html: { class: 'span6 price-modifier' }
   end
 
   def price_type_select_for_product_line(form)

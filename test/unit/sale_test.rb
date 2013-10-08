@@ -8,7 +8,7 @@ class SaleTest < ActiveSupport::TestCase
   test 'create' do
     assert_difference 'Sale.count' do
       assert_difference 'Version.count', 5 do
-        @sale = Sale.create(Fabricate.attributes_for(
+        Sale.create!(Fabricate.attributes_for(
           :sale, customer_id: @sale.customer_id, 
           seller_id: @sale.seller_id, place_id: @sale.place_id
         ))
@@ -55,14 +55,16 @@ class SaleTest < ActiveSupport::TestCase
     @sale.total_price = -3.6
 
     assert @sale.invalid?
-    assert_equal [error_message_from_model(@sale, :total_price, :greater_than, count: 0)],
-      @sale.errors[:total_price]
+    assert_equal [
+      error_message_from_model(@sale, :total_price, :greater_than, count: 0)
+    ], @sale.errors[:total_price]
 
     @sale.reload
     @sale.sale_kind = 'rock'
     assert @sale.invalid?
-    assert_equal [error_message_from_model(@sale, :sale_kind, :too_long, count: 1)],
-      @sale.errors[:sale_kind]
+    assert_equal [
+      error_message_from_model(@sale, :sale_kind, :too_long, count: 1)
+    ], @sale.errors[:sale_kind]
   end
 
   test 'discount stock in all product_lines' do
@@ -96,6 +98,15 @@ class SaleTest < ActiveSupport::TestCase
       assert sale.revoke!
     end
 
-    assert_equal (stock_after_sale + quantity).to_f, product.reload.total_stock.to_f
+    assert_equal (stock_after_sale + quantity).to_f, 
+      product.reload.total_stock.to_f
+  end
+
+  test 'validate correct IVA discrimination' do
+    sale = Fabricate(:sale, sale_kind: 'A')
+
+    total_price = sale.product_lines.sum(&:price) * 1.21
+
+    assert_equal total_price.to_f, sale.reload.total_price.to_f
   end
 end
