@@ -56,11 +56,19 @@
       <%= link_to_add_fields t('view.sales.new_product_line'), f, :product_lines %>
     </div>
     <div class='row-fluid'>
+      <% total = neto = iva = 0.00 %>
+      <% unless f.object.try(:common_bill?) %>
+        <% total = f.object.total_price.to_f %>
+        <% neto = total / 1.21 %>
+        <% iva = total - neto %>
+      <% end %>
+
       <div class='pull-right'>
         <div id="neto-price" class="hide"><b>Neto: </b><span>
-          <% unless f.object.try(:common_bill?) %>
-            <%= number_to_currency(f.object.total_price.to_f / 1.21)  %>
-          <% end %>
+          <%= number_to_currency(neto)  %>
+        </span></div>
+        <div id="iva-price" class="hide"><b>I.V.A. 21% => </b><span>
+          <%= number_to_currency(iva)  %>
         </span></div>
         <%= f.input :total_price, required: false, input_html: { readonly: true } %> 
       </div>

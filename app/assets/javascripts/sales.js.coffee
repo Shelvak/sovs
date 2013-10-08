@@ -27,6 +27,8 @@ window.Sale =
 
     if $('#sale_sale_kind').val() == 'A'
       $('#neto-price').find('span').html("$ #{totalPrice}")
+      ivaPrice = (totalPrice * 1.21) - totalPrice
+      $('#iva-price').find('span').html("$ #{ivaPrice.toFixed(2)}")
       totalPrice *= 1.21
 
     $('#sale_total_price').val(totalPrice.toFixed(2))
@@ -35,10 +37,13 @@ window.Sale =
 
   toggleNetoPrice: ()->
     netoPriceDiv = $('div#neto-price')
+    ivaPriceDiv = $('div#iva-price')
     if $('#sale_sale_kind').val() == 'A'
       EffectHelper.show(netoPriceDiv)
+      EffectHelper.show(ivaPriceDiv)
     else
       EffectHelper.hide(netoPriceDiv)
+      EffectHelper.hide(ivaPriceDiv)
 
 
 new Rule
