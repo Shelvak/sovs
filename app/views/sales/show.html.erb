@@ -34,7 +34,15 @@
       <% end %>
     </tbody>
   </table>
-  
+
+  <% unless @sale.common_bill? %>
+    <% neto = @sale.total_price / 1.21 %>
+    <h5>
+      Neto: <%= number_to_currency(neto) %> | 
+      I.V.A. 21%  => <%= number_to_currency(@sale.total_price - neto) %>
+    </h5>
+  <% end %>
+
   <h3>
     <%= Sale.human_attribute_name 'total_price' %>:
     <%= number_to_currency @sale.total_price %>

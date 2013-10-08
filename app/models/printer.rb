@@ -32,7 +32,7 @@ class Printer
           [
             suit_string_length("#{sale.product_lines.size} Items", 10),
             suit_string_length('------------------------------->> Neto $', 38),
-            suit_string_length('  ', 8),
+            suit_string_length('  ', 11),
             round_and_stringlify(neto)
           ].join(' ')
         )
@@ -40,8 +40,8 @@ class Printer
           [
             suit_string_length(' ', 15),
             suit_string_length('I.V.A. 21.00 %   $', 30),
-            suit_string_length(' ', 12),
-            suit_string_length((sale.total_price - neto).round(2), 8)
+            suit_string_length(' ', 13),
+            suit_string_length('%.02f' % (sale.total_price - neto), 8)
           ].join(' ')
         )
       end
@@ -287,6 +287,7 @@ class Printer
 
     def print_with_script(esc_pos)
       system(Rails.root.join('print_escaped_strings').to_s, esc_pos)
+      #%x{echo -en "#{esc_pos}" >> impresiones}
     end
 
     def separator_print
