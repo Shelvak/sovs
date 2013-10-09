@@ -36,10 +36,12 @@ GEM
     bcrypt-ruby (3.1.2)
     builder (3.0.4)
     cancan (1.6.10)
-    capistrano (3.0.0)
-      i18n
-      rake (>= 10.0.0)
-      sshkit (>= 0.0.23)
+    capistrano (2.15.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     capybara (2.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -74,6 +76,7 @@ GEM
       i18n (~> 0.5)
     ffi (1.9.0)
     hashery (2.1.1)
+    highline (1.6.19)
     hike (1.2.3)
     i18n (0.6.1)
     journey (1.0.4)
@@ -94,7 +97,11 @@ GEM
     multi_json (1.8.1)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
     net-ssh (2.7.0)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
     newrelic_rpm (3.6.7.159)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -168,12 +175,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sshkit (0.0.34)
-      net-scp
-      net-ssh
-      term-ansicolor
-    term-ansicolor (1.2.2)
-      tins (~> 0.8)
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -184,7 +185,6 @@ GEM
     tilt (1.4.1)
     timeliness (0.3.7)
     timers (1.1.0)
-    tins (0.11.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -211,7 +211,7 @@ PLATFORMS
 
 DEPENDENCIES
   cancan
-  capistrano
+  capistrano (= 2.15.5)
   capybara
   coffee-rails
   database_cleaner
