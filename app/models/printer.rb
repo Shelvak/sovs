@@ -12,13 +12,16 @@ class Printer
       separator_print
 
       sale.product_lines.each do |pl|
+        descript = pl.product.to_s.upcase
+        descript += ' Pz' if pl.price_type == 'unit_price'
+        descript += ' Es' if pl.price_type == 'special_price'
         compact_print(
           [
             [
               suit_string_length(pl.quantity.round(3), 8),
               suit_string_length(pl.product.purchase_unit, 2)
             ].join(' '),
-            suit_string_length(pl.product.to_s.upcase, 38, true),
+            suit_string_length(descript, 38, true),
             round_and_stringlify(pl.unit_price),
             '->',
             round_and_stringlify(pl.price)
