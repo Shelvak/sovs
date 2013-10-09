@@ -34,6 +34,7 @@ window.Sale =
     $('#sale_total_price').val(totalPrice.toFixed(2))
 
   add_nested_btn: '.btn.btn-small[data-dynamic-form-event="addNestedItem"]'
+  delete_nested_link: 'a[data-dynamic-form-event="removeItem"]'
 
   toggleNetoPrice: ()->
     netoPriceDiv = $('div#neto-price')
@@ -95,10 +96,22 @@ new Rule
         
     @map.autocomplete_for_product_sale ||= ->
       if (input = $(this)).val().length > 0
+        matching = input.val().match(/(\d{1})(\d{3})/)
+        if matching
+          priceType = if parseInt(matching[1]) == 5
+            'unit_price'
+          else
+            'special_price'
+
+          data = matching[2]
+        else
+          data = input.val()
+
+        console.log(data)
         $.ajax
           url: input.data('autocompleteUrl')
           dataType: 'json'
-          data: { q: input.val() }
+          data: { q: data }
           success: (data)->
             if data.length
               item = data[0]
@@ -106,7 +119,7 @@ new Rule
               target.val(item.id)
               $(input).val(item.label)
 
-              parent = target.parents('.product_line')
+              parent = target.parents('.product_line:first')
               if item.retail_price
                 parent.find('input[name$="[retail_price_tmp]"]').val(item.retail_price)
 
@@ -115,14 +128,29 @@ new Rule
 
               if item.special_price
                 parent.find('input[name$="[special_price_tmp]"]').val(item.special_price)
+              if priceType
+                parent.find('select[name$="[price_type]"]').val(priceType).change()
 
               Sale.updateTotalPrice()
+
+            else
+              parent = input.parents('.product_line:first')
+              parent.find('input[name$="[unit_price]"]').val(0.00)
+              parent.find('input[name$="[retail_price_tmp]"]').val(0.00)
+              parent.find('input[name$="[unit_price_tmp]"]').val(0.00)
+              parent.find('input[name$="[special_price_tmp]"]').val(0.00)
+              Sale.updateTotalPrice()
+
+    @map.update_price_with_delay ||= ->
+      setTimeout (-> Sale.updateTotalPrice()), 1000
+
 
     $(document).on 'keyup change focus', '.price-modifier', @map.update_lines_price
     $(document).on 'change', 'input.autocomplete-field-for-product-sale',
       @map.autocomplete_for_product_sale
     $(document).on 'click', Sale.add_nested_btn, @map.select_default_price_type
     $(document).on 'change', '#sale_sale_kind', Sale.toggleNetoPrice
+    $(document).on 'click', Sale.delete_nested_link, @map.update_price_with_delay
 
   unload: ->
     $(document).off 'keyup change focus', '.price-modifier', @map.update_lines_price
@@ -130,5 +158,6 @@ new Rule
       @map.autocomplete_for_product_sale
     $(document).off 'click', Sale.add_nested_btn, @map.select_default_price_type
     $(document).off 'change', '#sale_sale_kind', Sale.toggleNetoPrice
+    $(document).off 'click', Sale.delete_nested_link, @map.update_price_with_delay
 
 
