@@ -107,7 +107,6 @@ new Rule
         else
           data = input.val()
 
-        console.log(data)
         $.ajax
           url: input.data('autocompleteUrl')
           dataType: 'json'

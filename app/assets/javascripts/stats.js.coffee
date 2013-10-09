@@ -42,7 +42,6 @@ jQuery ($)->
       )
 
       chart.hover ->
-        console.log(this.bar)
         $(
           "tr[data-row-id='#{this.bar.id}']"
         ).addClass('alert-success')
