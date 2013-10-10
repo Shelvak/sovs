@@ -153,6 +153,12 @@ new Rule
     @map.update_price_with_delay ||= ->
       setTimeout (-> Sale.updateTotalPrice()), 1000
 
+    @map.updatePriceTypeSpan ||= ->
+      parent = $(this).parents('.product_line:first')
+      parent.find('span[data-price-type]').html(
+        parent.find('select[name$="[price_type]"] option:selected').text()
+      )
+
 
     $(document).on 'keyup change focus', '.price-modifier', @map.update_lines_price
     $(document).on 'change', 'input.autocomplete-field-for-product-sale',
@@ -161,6 +167,7 @@ new Rule
     $(document).on 'change', '#sale_sale_kind', Sale.toggleNetoPrice
     $(document).on 'click', Sale.delete_nested_link, @map.update_price_with_delay
     $(document).on 'keyup', 'input.autocomplete-field-for-product-sale', @map.clearAutoComplete
+    $(document).on 'change', 'select[name$="[price_type]"]', @map.updatePriceTypeSpan
 
   unload: ->
     $(document).off 'keyup change focus', '.price-modifier', @map.update_lines_price
@@ -170,5 +177,6 @@ new Rule
     $(document).off 'change', '#sale_sale_kind', Sale.toggleNetoPrice
     $(document).off 'click', Sale.delete_nested_link, @map.update_price_with_delay
     $(document).off 'keyup', 'input.autocomplete-field-for-product-sale', @map.clearAutoComplete
+    $(document).off 'change', 'select[name$="[price_type]"]', @map.updatePriceTypeSpan
 
 

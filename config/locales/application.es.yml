@@ -199,6 +199,10 @@
         social_monot: 'MONOTRIBUTISTA SOCIAL'
         small_event_contributor: 'PEQUEÑO CONTRIBUYENTE EVENTUAL'
         social_small_event_contributor: 'PEQUEÑO CONTRIBUYENTE EVENTUAL SOCIAL'
+      price_types:
+        retail_price_abbr: ' '
+        unit_price_abbr: 'Pz.'
+        special_price_abbr: 'Esp.'
     daily_boxes:
       index_title: 'Caja diaria del último mes'
       day: 'Día'

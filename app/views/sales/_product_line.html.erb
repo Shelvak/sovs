@@ -25,10 +25,9 @@
       input_html: { class: 'price-modifier span8', readonly: true,
       value: f.object.unit_price, autocomplete: 'off' } %>
   </div>
-  <div class="span2">
+  <div class="span4 nested-actions">
     <%= price_type_select_for_product_line(f) %>
-  </div>
-  <div class="span2 nested-actions">
+    <span data-price-type="true"></span>
     <span class='money badge'>
       <%= number_to_currency(f.object.price || 0) %>
     </span>
