@@ -46,6 +46,13 @@ window.Sale =
       EffectHelper.hide(netoPriceDiv)
       EffectHelper.hide(ivaPriceDiv)
 
+  blankAllPrices: (product_line)->
+    product_line.find('input[name$="[unit_price]"]').val(0.00)
+    product_line.find('input[name$="[retail_price_tmp]"]').val(0.00)
+    product_line.find('input[name$="[unit_price_tmp]"]').val(0.00)
+    product_line.find('input[name$="[special_price_tmp]"]').val(0.00)
+    product_line.find('select[name$="[price_type]"]').val('retail_price').change()
+    Sale.updateTotalPrice()
 
 new Rule
   condition: -> $(Sale.add_nested_btn).length
@@ -95,6 +102,7 @@ new Rule
         $('.product_line').last().find('select[name$="[price_type]"]').val(value)
         
     @map.autocomplete_for_product_sale ||= ->
+      parent = $(this).parents('.product_line:first')
       if (input = $(this)).val().length > 0
         matching = input.val().match(/(\d{1})(\d{3})/)
         if matching
@@ -133,12 +141,14 @@ new Rule
               Sale.updateTotalPrice()
 
             else
-              parent = input.parents('.product_line:first')
-              parent.find('input[name$="[unit_price]"]').val(0.00)
-              parent.find('input[name$="[retail_price_tmp]"]').val(0.00)
-              parent.find('input[name$="[unit_price_tmp]"]').val(0.00)
-              parent.find('input[name$="[special_price_tmp]"]').val(0.00)
-              Sale.updateTotalPrice()
+              Sale.blankAllPrices(parent)
+      else
+        Sale.blankAllPrices(parent)
+
+    @map.clearAutoComplete ||= ->
+      input = $(this)
+      if /^\s*$/.test(input.val())
+        Sale.blankAllPrices(input.parents('.product_line:first'))
 
     @map.update_price_with_delay ||= ->
       setTimeout (-> Sale.updateTotalPrice()), 1000
@@ -150,6 +160,7 @@ new Rule
     $(document).on 'click', Sale.add_nested_btn, @map.select_default_price_type
     $(document).on 'change', '#sale_sale_kind', Sale.toggleNetoPrice
     $(document).on 'click', Sale.delete_nested_link, @map.update_price_with_delay
+    $(document).on 'keyup', 'input.autocomplete-field-for-product-sale', @map.clearAutoComplete
 
   unload: ->
     $(document).off 'keyup change focus', '.price-modifier', @map.update_lines_price
@@ -158,5 +169,6 @@ new Rule
     $(document).off 'click', Sale.add_nested_btn, @map.select_default_price_type
     $(document).off 'change', '#sale_sale_kind', Sale.toggleNetoPrice
     $(document).off 'click', Sale.delete_nested_link, @map.update_price_with_delay
+    $(document).off 'keyup', 'input.autocomplete-field-for-product-sale', @map.clearAutoComplete
 
 
