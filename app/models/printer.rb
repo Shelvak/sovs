@@ -4,7 +4,7 @@ class Printer
   class << self
     def print_tax(sale)
       start_printer
-      title_print(I18n.t('printer.tax_worthless'))
+      print_tax_worthless
       normal_print I18n.t('printer.seller', seller: sale.seller.code)
      
       separator_print
@@ -59,7 +59,7 @@ class Printer
 
     def print_daily_report(day)
       start_printer
-      title_print(I18n.t('printer.tax_worthless'))
+      print_tax_worthless
       title_print(I18n.t('view.sales.daily_report'))
       separator_print
 
@@ -77,7 +77,7 @@ class Printer
         sales_of_day = seller.sales.in_day(day)
         seller_day_sum = sales_of_day.sum(&:total_price)
         total_price += seller_day_sum
-        sales_count += sales_of_day.count
+        sales_count += sales_of_day.positives.count
         average = sales_of_day.count > 0 ? seller_day_sum / sales_of_day.count : 0
 
         compact_print [
@@ -189,10 +189,9 @@ class Printer
       send_to_print(file, landscape: true) if generated
     end
 
-    # Retocar con echo
     def print_transfer_report(transfer)
       start_printer
-      title_print I18n.t('printer.tax_worthless')
+      print_tax_worthless
       title_print I18n.t(
         'printer.transfer_stock', 
         day: I18n.l(Date.today, format: :for_report),
@@ -219,6 +218,33 @@ class Printer
       title_print [I18n.t('label.total'), transfer.total_price].join(': ')
       end_print
     end
+
+    def print_low_stock_products
+      start_printer
+      print_tax_worthless
+      compact_print [
+        I18n.t('view.products.low_stock'),
+        I18n.l(Date.today)
+      ].join('  ')
+
+      separator_print
+
+      compact_print [
+        suit_string_length(Product.human_attribute_name('code'), 20),
+        suit_string_length(Product.human_attribute_name('total_stock'), 20)
+      ].join(' | ')
+
+      Product.with_low_stock.each do |p|
+        compact_print [
+          suit_string_length(p.code, 20),
+          suit_string_length(p.total_stock, 20)
+        ].join(' | ')
+      end
+
+      end_print
+    end
+
+    private
 
     def number_to_currency(number)
       ActionController::Base.helpers.number_to_currency(number)
@@ -271,6 +297,10 @@ class Printer
 
     def end_print
       14.times { print_with_script "\n" }
+    end
+
+    def print_tax_worthless
+      title_print(I18n.t('printer.tax_worthless'))
     end
   end
 end

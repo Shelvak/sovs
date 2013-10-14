@@ -26,4 +26,11 @@ module ProductsHelper
     link_to raw(count_tag), products_path(status: 'low_stock'), 
       title: t('view.products.low_stock')
   end
+
+  def print_low_stock_button
+    text = t('view.products.print_low_stock')
+    link_to text, print_low_stock_path, title: text,
+      class: 'btn btn-mini', id: 'print_low_stock_button', 
+      data: { method: :put, remote: true, show_tooltip: true }
+  end
 end

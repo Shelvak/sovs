@@ -8,7 +8,7 @@ window.TransferProduct =
     )
     symbol = transferLine.find('[data-total-price]').html().match(/(^\D+)/)[0]
   
-    totalLinePrice = parseFloat (price || 0) * (quantity || 0)
+    totalLinePrice = parseFloat((price || 0) * (quantity || 0)).toFixed(2)
   
     transferLine.find('[data-total-price]').html(symbol + totalLinePrice)
     transferLine.data('price', totalLinePrice)

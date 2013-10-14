@@ -42,6 +42,14 @@ new Rule
     @map.put_to_stock ||= ->
       quantity = prompt(Message.quantity_to_put_in_stock)
       window.location = this.href + '?quantity=' + quantity
+    
+    $(document).keydown (e)->
+      key = e.which
+
+      # Imprimir stock faltante
+      if e.ctrlKey && e.altKey && (key == 73 || key == 105)
+        e.preventDefault()
+        $('#print_low_stock_button').click()
 
 
     $(document).on 'keyup', '#product_cost', @map.update_iva_cost

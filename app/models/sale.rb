@@ -15,6 +15,7 @@ class Sale < ActiveRecord::Base
   scope :in_month, ->(month) { between(
     month.to_time.beginning_of_month, month.to_time.end_of_month
   ) }
+  scope :positives, ->() { where("total_price > 0") }
 
   before_validation :manual_validate
   before_save :recalc_price

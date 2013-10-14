@@ -4,7 +4,7 @@
   <% if params[:provider_id] %>
     <h2><%= @provider %></h2>
   <% end %>
-  <div class="row">
+  <div class="row-fluid">
     <div class="span12">
       <table class="table resource-list">
         <thead>
@@ -22,7 +22,9 @@
               <th><%= Product.human_attribute_name 'total_stock' %></th>
               <th><%= Product.human_attribute_name 'provider_id' %></th>
             <% end %>
-            <th class='not-printable' colspan="4"></th>
+            <th class='not-printable' colspan="4">
+              <%= print_low_stock_button %>
+            </th>
           </tr>
         </thead>
 

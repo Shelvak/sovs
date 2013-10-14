@@ -3,6 +3,7 @@ Sovs::Application.routes.draw do
   match 'daily_boxes' => 'daily_box#index', via: :get
   match 'daily_boxes/print_daily_report' => 'daily_box#print_daily_report', 
     as: 'print_daily_report', via: :put
+  match 'print/low_stock' => 'print#low_stock', as: 'print_low_stock', via: :put
 
   match 'stats(.:format)' => 'stats#index', as: 'stats', via: :get
   match 'stats/sales_by_seller(.:format)' => 'stats#sales_by_seller',
