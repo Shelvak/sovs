@@ -107,7 +107,7 @@
       transfer_line:
         product_id: 'Producto'
         quantity: 'Cantidad'
-        price: 'Precio Costo'
+        price: 'Costo'
       transfer_product:
         place_id: 'Lugar a transferir'
         total_price: 'Precio total'
@@ -167,9 +167,12 @@
     total_price: 'Total: %{total}'
     items_count_with_net_price: '%{count} items  --------> Neto %{price}'
     daily_sales_report_for: 'Reporte diario de venta [%{day}]'
-    total_sales_count: 'Total de [ Ventas: %{sales_count}, Recaudado: %{total_price} ]'
+    total_sales_count: "Total  Ventas: %{sales_count}  Recaudado: %{total_price} "
     transfer_stock: "Transferencia de stock día %{day} \n a %{place}"
-    
+  
+  shared:
+    average: 'Promedio'
+
   view:
     generic:
       empty_index:

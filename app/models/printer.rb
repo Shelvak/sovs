@@ -4,9 +4,7 @@ class Printer
   class << self
     def print_tax(sale)
       start_printer
-
       title_print(I18n.t('printer.tax_worthless'))
-
       normal_print I18n.t('printer.seller', seller: sale.seller.code)
      
       separator_print
@@ -60,52 +58,50 @@ class Printer
     end
 
     def print_daily_report(day)
-      sellers = [[
-        Sale.human_attribute_name('seller_code'),
-        ProductLine.human_attribute_name('quantity'),
-        ProductLine.human_attribute_name('price')
-      ]]
+      start_printer
+      title_print(I18n.t('printer.tax_worthless'))
+      title_print(I18n.t('view.sales.daily_report'))
+      separator_print
+
+      compact_print [
+        suit_string_length(Sale.human_attribute_name('seller_code'), 3),
+        suit_string_length(ProductLine.human_attribute_name('quantity'), 18),
+        suit_string_length(ProductLine.human_attribute_name('price'), 18),
+        suit_string_length(I18n.t('shared.average'), 18)
+      ].join(' | ')
+
       total_price = 0.00
+      sales_count = 0
 
       Seller.order.each do |seller|
         sales_of_day = seller.sales.in_day(day)
-        total_price += sales_of_day.sum(&:total_price)
-        sellers << [
-          seller.code,
-          sales_of_day.count,
-          number_to_currency(sales_of_day.sum(&:total_price))
-        ]
+        seller_day_sum = sales_of_day.sum(&:total_price)
+        total_price += seller_day_sum
+        sales_count += sales_of_day.count
+        average = sales_of_day.count > 0 ? seller_day_sum / sales_of_day.count : 0
+
+        compact_print [
+          suit_string_length(seller.code, 3),
+          suit_string_length(sales_of_day.count, 18),
+          suit_string_length(number_to_currency(seller_day_sum), 18),
+          suit_string_length(number_to_currency(average), 18)
+        ].join(' | ')
       end
-      sales_count = sellers.drop(1).sum(&:second)
 
-      file_name = "sales_report_#{I18n.l(Time.now, format: :for_file)}.pdf"
-      folders = ['private', 'to_print'].join('/')
-      file = [folders, file_name].join('/')
-      height = ((Seller.count * 20 + 100) * 3).round
-      print_height = Seller.count * 10 + 157
+      separator_print
+      total_average = sales_count > 0 ? total_price / sales_count : 0
 
-      generated = Prawn::Document.generate(
-        file, page_size: [612, height], left_margin: 19
-      ) do |pdf|
-
-        pdf.font_size 15
-        pdf.text "<i>#{I18n.t('printer.tax_worthless')}</i>", size: 32, inline_format: true
-        pdf.move_down(5)
-
-        pdf.text I18n.t('printer.daily_sales_report_for', day: I18n.l(day, format: :for_report))
-        pdf.move_down(20)
-        
-        pdf.table sellers, width: 295
-        pdf.move_down(5)
-
-        pdf.text I18n.t(
+      title_print [
+        I18n.t(
           'printer.total_sales_count',
           sales_count: sales_count,
           total_price: number_to_currency(total_price)
-        )
-      end
+        ),
+        I18n.t('shared.average'),
+        number_to_currency(total_average)
+      ].join(' ')
 
-      send_to_print(file, length: print_height) if generated
+      end_print
     end
 
     def print_payrolls(date)
@@ -195,53 +191,33 @@ class Printer
 
     # Retocar con echo
     def print_transfer_report(transfer)
-      product_lines = [[
-        TransferLine.human_attribute_name('product_id'),
-        TransferLine.human_attribute_name('quantity'),
-        TransferLine.human_attribute_name('price')
-      ]]
+      start_printer
+      title_print I18n.t('printer.tax_worthless')
+      title_print I18n.t(
+        'printer.transfer_stock', 
+        day: I18n.l(Date.today, format: :for_report),
+        place: transfer.place.to_s
+      )
+
+      separator_print
+
+      compact_print [
+        suit_string_length(TransferLine.human_attribute_name('product_id'), 38, true),
+        suit_string_length(TransferLine.human_attribute_name('quantity'), 20),
+        suit_string_length(TransferLine.human_attribute_name('price'), 20)
+      ].join(' ')
 
       transfer.transfer_lines.each do |tl| 
-        product_lines << [
-          tl.product.to_s, 
-          [tl.quantity, tl.product.retail_unit].join(' '),
-          tl.price.to_f.round(3)
-        ]
+        compact_print [
+          suit_string_length(tl.product.to_s, 38), 
+          suit_string_length([tl.quantity, tl.product.retail_unit].join(' '), 20),
+          suit_string_length(tl.price.to_f.round(3), 20)
+        ].join(' ')
       end
 
-      file_name = "transfer_report_#{I18n.l(Time.now, format: :for_file)}.pdf"
-      folders = ['private', 'to_print'].join('/')
-      file = [folders, file_name].join('/')
-      height = ((transfer.transfer_lines.count * 20 + 100) * 3).round
-      height = height > 612 ? height : 613
-      print_height = transfer.transfer_lines.count * 10 + 157
 
-      generated = Prawn::Document.generate(
-        file, page_size: [612, height], left_margin: 19
-      ) do |pdf|
-
-        pdf.text I18n.l(Time.now, format: :long), size: 12
-        pdf.move_down(5)
-
-        pdf.font_size 12
-        pdf.text "<i>#{I18n.t('printer.tax_worthless')}</i>", 
-          size: 32, inline_format: true
-        pdf.move_down(5)
-
-        pdf.text I18n.t(
-          'printer.transfer_stock', 
-          day: I18n.l(Date.today, format: :for_report),
-          place: transfer.place.to_s
-        )
-        pdf.move_down(20)
-        
-        pdf.table product_lines, width: 295
-        pdf.move_down(5)
-
-        pdf.text [I18n.t('label.total'), transfer.total_price].join(': ')
-      end
-
-      send_to_print(file, length: print_height) if generated
+      title_print [I18n.t('label.total'), transfer.total_price].join(': ')
+      end_print
     end
 
     def number_to_currency(number)
@@ -257,10 +233,6 @@ class Printer
       land = '-o landscape' if options[:landscape]
 
       %x{lp -o media=Custom.#{size}mm #{land} #{file}}
-    end
-
-    def set_correct_spaces(string, length)
-      suit_string_length(string, length)
     end
 
     def suit_string_length(string, num, to_right = false)
