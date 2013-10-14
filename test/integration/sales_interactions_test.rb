@@ -30,8 +30,6 @@ class SalesInteractionsTest < ActionDispatch::IntegrationTest
     click_link(I18n.t('view.sales.new_product_line'))
     assert page.has_css?('.product_line', count: 4)
 
-    find('body').native.send_keys :left_control, :left_alt, 'a'
-    assert page.has_css?('.product_line', count: 5)
     assert_equal 10.0, find_field('sale_total_price').value.to_f
 
 

@@ -58,8 +58,6 @@ new Rule
   condition: -> $(Sale.add_nested_btn).length
   load: ->
     add_nested_btn = $(Sale.add_nested_btn)
-    new_title = add_nested_btn.attr('data-original-title') + ' (CTROL + ALT + A)'
-    add_nested_btn.attr('data-original-title', new_title)
 
     # Endless add nested =)
     add_nested_btn.attr('tabindex')
@@ -70,9 +68,14 @@ new Rule
     $(document).keydown (e)->
       key = e.which
 
-      if e.ctrlKey && e.altKey && (key == 65 || key == 97)
+      # Cambiar Venta
+      if e.ctrlKey && e.altKey && (key == 70 || key == 102)
         e.preventDefault()
-        add_nested_btn.click()
+        select = $('#sale_sale_kind')
+        if select.val() == 'B'
+          select.val('A').change()
+        else
+          select.val('B').change()
 
       if key == 13 && !e.ctrlKey
         input = $(document.activeElement)
