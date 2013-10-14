@@ -15,7 +15,10 @@ class ProductLine < ActiveRecord::Base
     :special_price_tmp
 
   validates :product_id, :quantity, :price, :unit_price, presence: true
-  validates :quantity, :price, :unit_price, numericality: { 
+  validates :quantity, :price, numericality: { 
+    allow_nil: true, allow_blank: true
+  }
+  validates :unit_price, numericality: {
     allow_nil: true, allow_blank: true, greater_than: 0
   }
 

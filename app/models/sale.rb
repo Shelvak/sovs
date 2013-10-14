@@ -6,17 +6,14 @@ class Sale < ActiveRecord::Base
     :seller_code, :auto_customer_name, :product_lines_attributes, 
     :product_lines, :place_id, :default_price_type
 
-  scope :in_day, ->(day) { where(
-    "created_at >= :from AND created_at < :to",
-    from: day.to_time.beginning_of_day, to: day.to_time.end_of_day
-  ) }
   scope :between, ->(_from, _to) { where(
-    "created_at >= :from AND created_at <= :to",
-    from: _from.beginning_of_day, to: _to.end_of_day
+    created_at: _from.._to
   ) }
-  scope :in_month, ->(month) { where(
-    "created_at >= :from AND created_at < :to",
-    from: month.to_time.beginning_of_month, to: month.to_time.end_of_month
+  scope :in_day, ->(day) { between(
+    day.to_time.beginning_of_day, day.to_time.end_of_day
+  ) }
+  scope :in_month, ->(month) { between(
+    month.to_time.beginning_of_month, month.to_time.end_of_month
   ) }
 
   before_validation :manual_validate
@@ -25,9 +22,7 @@ class Sale < ActiveRecord::Base
 
   validates :seller_code, :total_price, presence: true
   validates :sale_kind, length: { maximum: 1 }
-  validates :total_price, numericality: { 
-    allow_nil: true, allow_blank: true, greater_than: 0
-  }
+  validates :total_price, numericality: { allow_nil: true, allow_blank: true }
   validate :must_have_one_item
 
   belongs_to :seller
@@ -35,9 +30,7 @@ class Sale < ActiveRecord::Base
   has_many :product_lines, inverse_of: :sale, dependent: :destroy
 
   accepts_nested_attributes_for :product_lines, allow_destroy: true,
-    reject_if: ->(attributes) { 
-      attributes['quantity'].to_f <= 0 || attributes['product_id'].blank?
-    }
+    reject_if: ->(attributes) { attributes['product_id'].blank? }
 
   def manual_validate
     if self.auto_customer_name.present? && self.customer_id.blank?
@@ -80,7 +73,7 @@ class Sale < ActiveRecord::Base
 
   def self.stats_by_seller_between(from, to)
     stats = {}
-    between(from, to).group_by(&:seller_id).map do |seller, sales|
+    between(from, to).group_by(&:seller_id).each do |seller, sales|
       stats[Seller.find(seller).to_s] = [sales.size, sales.sum(&:total_price)]
     end
 
@@ -102,8 +95,7 @@ class Sale < ActiveRecord::Base
 
       (from..to).each do |d|
         payrolls_pack[d] = []
-        where(
-          'created_at >= ? AND created_at <= ?', 
+        between(
           d.beginning_of_day, d.end_of_day
         ).group_by(&:seller_id).each do |seller, sales|
           payrolls_pack[d] << [
@@ -113,8 +105,7 @@ class Sale < ActiveRecord::Base
         end
       end
 
-      where(
-        'created_at >= ? AND created_at <= ?', 
+      between(
         from.beginning_of_day, to.end_of_day
       ).group_by(&:seller_id).each do |seller, sales|
       

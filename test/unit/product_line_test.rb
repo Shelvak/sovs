@@ -62,19 +62,5 @@ class ProductLineTest < ActiveSupport::TestCase
       @product_line.errors[:price]
     assert_equal [error_message_from_model(@product_line, :unit_price, :not_a_number)],
       @product_line.errors[:unit_price]
-
-    @product_line.reload
-    @product_line.quantity = -2.5
-    @product_line.price = -1.3
-    @product_line.unit_price = -1.3
-
-    assert @product_line.invalid?
-    assert_equal 3, @product_line.errors.size
-    assert_equal [error_message_from_model(@product_line, :quantity, :greater_than, count: 0)],
-      @product_line.errors[:quantity]
-    assert_equal [error_message_from_model(@product_line, :price, :greater_than, count: 0)],
-      @product_line.errors[:price]
-    assert_equal [error_message_from_model(@product_line, :unit_price, :greater_than, count: 0)],
-      @product_line.errors[:unit_price]
   end
 end

@@ -52,14 +52,6 @@ class SaleTest < ActiveSupport::TestCase
       @sale.errors[:total_price]
 
     @sale.reload
-    @sale.total_price = -3.6
-
-    assert @sale.invalid?
-    assert_equal [
-      error_message_from_model(@sale, :total_price, :greater_than, count: 0)
-    ], @sale.errors[:total_price]
-
-    @sale.reload
     @sale.sale_kind = 'rock'
     assert @sale.invalid?
     assert_equal [
@@ -108,5 +100,21 @@ class SaleTest < ActiveSupport::TestCase
     total_price = sale.product_lines.sum(&:price) * 1.21
 
     assert_equal total_price.to_f, sale.reload.total_price.to_f
+  end
+
+  test 'probe correct stock agregation' do
+    sale = Fabricate(:sale, sale_kind: 'A')
+
+    product = sale.product_lines.first.product
+    old_stock = product.total_stock.to_f
+
+    new_sale = Fabricate(:sale, product_lines: [
+       ProductLine.new(Fabricate.attributes_for(:product_line,
+         product_id: product.id, quantity: -5, sale_id: nil
+       ))
+    ])
+
+    assert_equal (old_stock + 5).round(2),
+      product.reload.total_stock.round(2)
   end
 end

@@ -16,7 +16,7 @@
 
         <tbody>
           <% @sales.each do |sale| %>
-            <tr class="<%= 'error' if sale.revoked? %>">
+            <tr class="<%= 'error' if sale.revoked? || sale.total_price < 0 %>">
               <td><%= sale.customer %></td>
               <td><%= sale.seller %></td>
               <td><%= sale.sale_kind %></td>
