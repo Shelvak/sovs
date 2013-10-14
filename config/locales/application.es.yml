@@ -115,6 +115,8 @@
         name: 'Nombre'
         lastname: 'Apellido'
         email: 'Correo'
+        login: 'Usuario'
+        username: 'Usuario'
         password: 'Contraseña'
         password_confirmation: 'Confirmación'
         roles:

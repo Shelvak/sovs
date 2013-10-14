@@ -5,6 +5,10 @@
     <%= mail_to @user.email %>
   </p>
  
+  <p>
+    <%= @user.username %>
+  </p>
+ 
   <% if @user.place_id %>
     <p>
       <%= t('view.users.prefered_place') %>: 

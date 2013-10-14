@@ -114,7 +114,7 @@ class SaleTest < ActiveSupport::TestCase
        ))
     ])
 
-    assert_equal (old_stock + 5).round(2),
-      product.reload.total_stock.round(2)
+    assert_equal (old_stock + 5).round(2).to_f,
+      product.reload.total_stock.round(2).to_f
   end
 end

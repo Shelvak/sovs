@@ -9,7 +9,7 @@
       <div class="span12">
         <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="form-inputs">
-            <%= f.input :email, input_html: { autofocus: true, class: 'span12' } %>
+            <%= f.input :login, input_html: { autofocus: true, class: 'span12' } %>
             <%= f.input :password, input_html: { class: 'span12' } %>
             <%= f.input :remember_me, as: :boolean, wrapper: :checkbox if devise_mapping.rememberable? %>
           </div>
