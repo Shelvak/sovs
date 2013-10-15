@@ -1,5 +1,5 @@
-'es':
-  app_name: 'Sist. Org de Ventas y Stock'
+es:
+  app_name: 'Ventas y Stock'
   
   attributes:
     created_at: 'Creación'
@@ -145,7 +145,7 @@
     total: 'Total'
     
   menu:
-    admin: 'Administración'
+    admin: 'Otros'
     actions:
       logout: 'Salir de la aplicación'
     customers: 'Clientes'

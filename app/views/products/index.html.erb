@@ -18,7 +18,6 @@
               <th><%= Product.human_attribute_name 'packs' %></th>
             <% else %>
               <th><%= Product.human_attribute_name 'iva_cost' %></th>
-              <th><%= Product.human_attribute_name 'unit_price' %></th>
               <th><%= Product.human_attribute_name 'total_stock' %></th>
               <th><%= Product.human_attribute_name 'provider_id' %></th>
             <% end %>
@@ -40,10 +39,9 @@
                 <td><%= product.packs %></td>
               <% else %>
                 <td><%= number_to_currency product.iva_cost %></td>
-                <td><%= number_to_currency product.unit_price %></td>
                 <td><%= [product.total_stock, product.retail_unit].join(' ') %></td>
                 <td><%= link_to(
-                  product.provider, provider_path(product.provider)
+                  truncate(product.provider.to_s), provider_path(product.provider)
                 ) if product.provider %></td>
               <% end %>
               <td class='not-printable'>

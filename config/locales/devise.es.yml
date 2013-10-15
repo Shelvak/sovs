@@ -1,6 +1,6 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
-'es':
+es:
   errors:
     messages:
       expired: 'ha caducado, por favor pida uno nuevo'
