@@ -241,6 +241,7 @@ es:
       quantity_to_put_in_stock: 'Cantidad a poner en stock'
       low_stock: 'Stock bajo'
       print_low_stock: 'Imprimir Faltantes'
+      add_stock: 'Agregar stock'
     providers:
       index_title: 'Listado de proveedores'
       show_title: 'Detalle de proveedor'

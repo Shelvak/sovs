@@ -47,7 +47,8 @@
               <td class='not-printable'>
                 <%= link_to '&#xe03b;'.html_safe, 
                   put_to_stock_product_path(product), 
-                  class: 'put_to_stock iconic' %>
+                  title: t('view.products.add_stock'),
+                  class: 'put_to_stock iconic', data: { show_tooltip: true } %>
               </td>
               <td class='not-printable'><%= link_to_show product %></td>
               <td class='not-printable'><%= link_to_edit(

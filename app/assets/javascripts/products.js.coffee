@@ -39,9 +39,12 @@ new Rule
       State.gain_charged = true
     @map.update_total_stock ||= ->
       Product.updateTotalStock()
-    @map.put_to_stock ||= ->
+    @map.put_to_stock ||= (e)->
+      e.preventDefault()
       quantity = prompt(Message.quantity_to_put_in_stock)
-      window.location = this.href + '?quantity=' + quantity
+
+      if quantity?
+        window.location = this.href + '?quantity=' + parseFloat(quantity)
     
     $(document).keydown (e)->
       key = e.which

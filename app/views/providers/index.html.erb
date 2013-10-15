@@ -26,7 +26,8 @@
               <td class='not-printable'>
                 <%= link_to(
                   '&#xe055;'.html_safe, provider_products_path(provider),
-                  class: 'iconic'
+                  title: t('menu.products'), class: 'iconic',
+                  data: { show_tooltip: true }
                 ) %>
               </td>
               <td class='not-printable'><%= link_to_show provider %></td>
