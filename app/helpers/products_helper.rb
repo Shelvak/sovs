@@ -24,7 +24,8 @@ module ProductsHelper
     )
     
     link_to raw(count_tag), products_path(status: 'low_stock'), 
-      title: t('view.products.low_stock')
+      data: { placement: 'bottom', show_tooltip: true,
+      title: t('view.products.low_stock') }
   end
 
   def print_low_stock_button

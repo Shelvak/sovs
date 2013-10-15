@@ -16,13 +16,17 @@ class DailyBoxController < ApplicationController
   end
 
   def print_daily_report
-    notice = if Printer.print_daily_report(Date.parse(params[:date]))
-      t('view.stats.send_to_print')
+    date = Date.parse(params[:date])
+    flash.notice = if Printer.print_daily_report(date)
+      t('view.daily_boxes.send_to_print', day: l(date))
     else
       t('view.stats.print_error')
     end
-  
-    redirect_to daily_boxes_path, notice: notice
+
+    respond_to do |format|
+      format.html { redirect_to daily_boxes_path }
+      format.json { head :ok }
+    end
   end
 
   private

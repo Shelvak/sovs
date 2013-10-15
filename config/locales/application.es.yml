@@ -213,6 +213,7 @@ es:
       day: 'Día'
       total_sales_amount: 'Vendido'
       total_sales_count: 'Cant. Ventas'
+      send_to_print: "Enviado a imprimir reporte del %{day}"
       empty_index:
         html: 'No se ha creado ninguna venta hasta el momento'
     places:

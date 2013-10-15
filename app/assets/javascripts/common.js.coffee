@@ -2,6 +2,7 @@ new Rule
   load: ->
     # For browsers with no autofocus support
     $('[autofocus]:not([readonly]):not([disabled]):visible:first').focus()
+    $('input:visible:first').focus()
     $('[data-show-tooltip]').tooltip()
 
     timers = @map.timers = []
@@ -50,13 +51,37 @@ jQuery ($) ->
       $('.nav-collapse a.dropdown-toggle').focus().click()
       $('.dropdown-menu li:first a').focus()
 
+    # Flechas izq & arriba == ShiftTAB
     if (key == 37 || key == 38) && $(document.activeElement).parents('.nav').length
       e.preventDefault()
       $.emulateTab(-1)
 
+    # Flechas der & abajo == TAB
     if (key == 39 || key == 40) && $(document.activeElement).parents('.nav').length
       e.preventDefault()
       $.emulateTab()
+
+    # Click en Nuevo
+    if e.ctrlKey && e.altKey && (key == 46 || key == 78)
+      e.preventDefault()
+      href = $('.form-actions .btn.btn-primary').attr('href')
+
+      if href && href.match(/new$/)
+        window.location.href = href
+
+    if e.ctrlKey && e.altKey && (key == 68 || key == 100)
+      e.preventDefault()
+      date = new Date()
+      day = [date.getFullYear(), date.getMonth(), date.getDay()].join('-')
+      path = "daily_boxes/print_daily_report?date=#{day}"
+      
+      $.ajax
+        url: [root, path].join('/')
+        dataType: 'json'
+        type: 'put'
+
+      setTimeout((-> location.reload()), 3000)
+
 
   $('a').on
     focusin: -> $(this).trigger('mouseover')
