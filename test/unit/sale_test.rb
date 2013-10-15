@@ -99,7 +99,7 @@ class SaleTest < ActiveSupport::TestCase
 
     total_price = sale.product_lines.sum(&:price) * 1.21
 
-    assert_equal total_price.to_f.round(2), )ale.reload.total_price.to_f.round(2)
+    assert_equal total_price.to_f.round(2), sale.reload.total_price.to_f.round(2)
   end
 
   test 'probe correct stock agregation' do
