@@ -61,19 +61,20 @@ class Printer
       start_printer
       print_tax_worthless
       title_print(I18n.t('view.sales.daily_report'))
+      title_print I18n.l(Date.today)
       separator_print
 
       compact_print [
-        suit_string_length(Sale.human_attribute_name('seller_code'), 3),
-        suit_string_length(ProductLine.human_attribute_name('quantity'), 18),
-        suit_string_length(ProductLine.human_attribute_name('price'), 18),
-        suit_string_length(I18n.t('shared.average'), 18)
+        suit_string_length(Sale.human_attribute_name('seller_code'), 8),
+        suit_string_length(ProductLine.human_attribute_name('quantity'), 8),
+        suit_string_length(ProductLine.human_attribute_name('price'), 14),
+        suit_string_length(I18n.t('shared.average'), 14)
       ].join(' | ')
 
       total_price = 0.00
       sales_count = 0
 
-      Seller.order.each do |seller|
+      Seller.order(:code).each do |seller|
         sales_of_day = seller.sales.in_day(day)
         seller_day_sum = sales_of_day.sum(&:total_price)
         total_price += seller_day_sum
@@ -81,23 +82,23 @@ class Printer
         average = sales_of_day.count > 0 ? seller_day_sum / sales_of_day.count : 0
 
         compact_print [
-          suit_string_length(seller.code, 3),
-          suit_string_length(sales_of_day.count, 18),
-          suit_string_length(number_to_currency(seller_day_sum), 18),
-          suit_string_length(number_to_currency(average), 18)
+          suit_string_length(seller.code, 8),
+          suit_string_length(sales_of_day.count, 8),
+          suit_string_length(number_to_currency(seller_day_sum), 14),
+          suit_string_length(number_to_currency(average), 14)
         ].join(' | ')
       end
 
       separator_print
       total_average = sales_count > 0 ? total_price / sales_count : 0
 
-      title_print [
+      blank_print [
         I18n.t(
           'printer.total_sales_count',
           sales_count: sales_count,
           total_price: number_to_currency(total_price)
         ),
-        I18n.t('shared.average'),
+        "\n  #{I18n.t('shared.average')}:",
         number_to_currency(total_average)
       ].join(' ')
 
@@ -201,21 +202,27 @@ class Printer
       separator_print
 
       compact_print [
-        suit_string_length(TransferLine.human_attribute_name('product_id'), 38, true),
-        suit_string_length(TransferLine.human_attribute_name('quantity'), 20),
-        suit_string_length(TransferLine.human_attribute_name('price'), 20)
+        suit_string_length(' ', 5),
+        suit_string_length(TransferLine.human_attribute_name('product_id'), 28, true),
+        suit_string_length(TransferLine.human_attribute_name('quantity'), 15),
+        suit_string_length(TransferLine.human_attribute_name('price'), 15)
       ].join(' ')
 
       transfer.transfer_lines.each do |tl| 
         compact_print [
-          suit_string_length(tl.product.to_s, 38), 
-          suit_string_length([tl.quantity, tl.product.retail_unit].join(' '), 20),
-          suit_string_length(tl.price.to_f.round(3), 20)
+          suit_string_length(' ', 5),
+          suit_string_length(tl.product.to_s, 28, true), 
+          suit_string_length([tl.quantity, tl.product.retail_unit].join(' '), 15),
+          suit_string_length(number_to_currency(tl.price), 15)
         ].join(' ')
       end
 
+      separator_print
 
-      title_print [I18n.t('label.total'), transfer.total_price].join(': ')
+      title_print [
+        I18n.t('label.total'), number_to_currency(transfer.total_price)
+      ].join(': ')
+
       end_print
     end
 
@@ -240,6 +247,8 @@ class Printer
           suit_string_length(p.total_stock, 20)
         ].join(' | ')
       end
+
+      separator_print
 
       end_print
     end
@@ -275,11 +284,15 @@ class Printer
     end
 
     def compact_print(string)
-     print_with_script "\n\x1B\x21\x04  #{string}"
+      print_with_script "\n\x1B\x21\x04  #{string}"
     end
 
     def title_print(string)
       print_with_script "\n\x1B\x21\x20  #{string}"
+    end
+
+    def blank_print(string)
+      print_with_script "\n\x1B\x21\x08  #{string}"
     end
 
     def normal_print(string)

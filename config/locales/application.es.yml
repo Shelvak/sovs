@@ -169,8 +169,8 @@
     total_price: 'Total: %{total}'
     items_count_with_net_price: '%{count} items  --------> Neto %{price}'
     daily_sales_report_for: 'Reporte diario de venta [%{day}]'
-    total_sales_count: "Total  Ventas: %{sales_count}  Recaudado: %{total_price} "
-    transfer_stock: "Transferencia de stock día %{day} \n a %{place}"
+    total_sales_count: "TOTAL:  Ventas: %{sales_count}  \n  Recaudado: %{total_price} "
+    transfer_stock: "Transferencia \n  %{day} \n  A %{place}"
   
   shared:
     average: 'Promedio'
