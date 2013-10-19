@@ -7,6 +7,9 @@ class Product < ActiveRecord::Base
   scope :with_low_stock, ->() { where(
     "#{Product.table_name}.total_stock <= #{Product.table_name}.min_stock"
   ) }
+  scope :with_recent_sales, -> () { joins(:product_lines).where(
+    product_lines: { created_at: 15.days.ago..Date.today }
+  ) }
 
   before_save :recalc_packs_count
 

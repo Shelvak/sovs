@@ -61,11 +61,11 @@ class Printer
       start_printer
       print_tax_worthless
       title_print(I18n.t('view.sales.daily_report'))
-      title_print I18n.l(Date.today)
+      title_print I18n.l(day)
       separator_print
 
       compact_print [
-        suit_string_length(Sale.human_attribute_name('seller_code'), 8),
+        suit_string_length(Sale.human_attribute_name('seller_id'), 8),
         suit_string_length(ProductLine.human_attribute_name('quantity'), 8),
         suit_string_length(ProductLine.human_attribute_name('price'), 14),
         suit_string_length(I18n.t('shared.average'), 14)
@@ -195,7 +195,7 @@ class Printer
       print_tax_worthless
       title_print I18n.t(
         'printer.transfer_stock', 
-        day: I18n.l(Date.today, format: :for_report),
+        day: I18n.l(Date.today),
         place: transfer.place.to_s
       )
 
@@ -204,16 +204,18 @@ class Printer
       compact_print [
         suit_string_length(' ', 5),
         suit_string_length(TransferLine.human_attribute_name('product_id'), 28, true),
-        suit_string_length(TransferLine.human_attribute_name('quantity'), 15),
-        suit_string_length(TransferLine.human_attribute_name('price'), 15)
+        suit_string_length(TransferLine.human_attribute_name('quantity'), 10),
+        suit_string_length(ProductLine.human_attribute_name('unit_price_abbr'), 10),
+        suit_string_length(TransferLine.human_attribute_name('price'), 10)
       ].join(' ')
 
       transfer.transfer_lines.each do |tl| 
         compact_print [
           suit_string_length(' ', 5),
           suit_string_length(tl.product.to_s, 28, true), 
-          suit_string_length([tl.quantity, tl.product.retail_unit].join(' '), 15),
-          suit_string_length(number_to_currency(tl.price), 15)
+          suit_string_length([tl.quantity, tl.product.retail_unit].join(' '), 10),
+          suit_string_length(number_to_currency(tl.price), 10),
+          suit_string_length(number_to_currency(tl.price * tl.quantity), 10)
         ].join(' ')
       end
 
@@ -237,15 +239,25 @@ class Printer
       separator_print
 
       compact_print [
-        suit_string_length(Product.human_attribute_name('code'), 20),
+        suit_string_length(Product.human_attribute_name('description').gsub('ó', 'o'), 20),
         suit_string_length(Product.human_attribute_name('total_stock'), 20)
       ].join(' | ')
 
-      Product.with_low_stock.each do |p|
-        compact_print [
-          suit_string_length(p.code, 20),
-          suit_string_length(p.total_stock, 20)
-        ].join(' | ')
+      old_provider = nil
+      Product.with_low_stock.with_recent_sales.
+        group_by(&:provider_id).each do |provider, product|
+        
+        blank_print Provider.find(provider).name
+
+        product.order(:code).each do |p|
+          compact_print [
+            suit_string_length(p.to_s, 20),
+            suit_string_length(
+              [p.total_stock, p.retail_unit].join(' '), 20
+            )
+          ].join(' | ')
+
+        end
       end
 
       separator_print
@@ -300,8 +312,8 @@ class Printer
     end
 
     def print_with_script(esc_pos)
-      system(Rails.root.join('print_escaped_strings').to_s, esc_pos)
-      #%x{echo -en "#{esc_pos}" >> impresiones}
+      #system(Rails.root.join('print_escaped_strings').to_s, esc_pos)
+      %x{echo -en "#{esc_pos}" >> impresiones}
     end
 
     def separator_print

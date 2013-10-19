@@ -11,6 +11,7 @@
       <tr>
         <th><%= TransferLine.human_attribute_name 'product_id' %></th>
         <th><%= TransferLine.human_attribute_name 'quantity' %></th>
+        <th><%= ProductLine.human_attribute_name 'unit_price_abbr' %></th>
         <th><%= TransferLine.human_attribute_name 'price' %></th>
       </tr>
     </thead>
@@ -20,6 +21,7 @@
           <td><%= tl.product %></td>
           <td><%= [tl.quantity, tl.product.retail_unit].join(' ') %></td>
           <td><%= number_to_currency tl.price %></td>
+          <td><%= number_to_currency (tl.price * tl.quantity) %></td>
         </tr>
       <% end %>
     </tbody>

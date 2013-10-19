@@ -71,8 +71,8 @@ jQuery ($) ->
 
     if e.ctrlKey && e.altKey && (key == 68 || key == 100)
       e.preventDefault()
-      date = new Date()
-      day = [date.getFullYear(), date.getMonth(), date.getDay()].join('-')
+      date = new Date
+      day = [date.getFullYear(), (date.getMonth()+1), date.getDate()].join('-')
       path = "daily_boxes/print_daily_report?date=#{day}"
       
       $.ajax
