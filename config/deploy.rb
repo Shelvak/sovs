@@ -23,7 +23,9 @@ namespace :deploy do
   task :start do ; end
   task :stop do ; end
   
-  task :restart, roles: :app, except: { no_release: true } do; end
+  task :restart, roles: :app, except: { no_release: true } do
+    run "touch #{File.join(current_path, 'tmp', 'restart.txt')}"
+  end
 
   desc 'Creates the symlinks for the shared folders'
   task :create_shared_symlinks, roles: :app, except: { no_release: true } do
