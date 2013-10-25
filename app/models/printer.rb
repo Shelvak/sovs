@@ -252,7 +252,7 @@ class Printer
 
         products.sort_by { |p| p.code }.each do |p|
           compact_print [
-            suit_string_length(p.to_s, 20),
+            suit_string_length(p.to_s, 30),
             suit_string_length(
               [p.total_stock, p.retail_unit].join(' '), 20
             )
@@ -280,7 +280,7 @@ class Printer
 
           provider.products.order(:code).each do |p|
             compact_print [
-              suit_string_length(p.to_s, 20),
+              suit_string_length(p.to_s, 30),
               suit_string_length(
                 [p.total_stock, p.retail_unit].join(' '), 20
               )

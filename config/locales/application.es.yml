@@ -172,7 +172,7 @@ es:
     daily_sales_report_for: 'Reporte diario de venta [%{day}]'
     total_sales_count: "TOTAL:  Ventas: %{sales_count}  \n  Recaudado: %{total_price} "
     transfer_stock: "Transferencia \n  %{day} \n  A %{place}"
-    all_provider_products: 'Productos por Proveedor'
+    all_provider_products: 'Productos/Proveedor'
   
   shared:
     average: 'Promedio'

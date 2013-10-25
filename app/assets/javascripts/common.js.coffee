@@ -48,7 +48,7 @@ jQuery ($) ->
     # Focusear menu Otros
     if e.ctrlKey && e.altKey && (key == 47 || key == 79)
       e.preventDefault()
-      $('.nav-collapse a.dropdown-toggle').focus().click()
+      $('.nav a.dropdown-toggle').focus().click()
       $('.dropdown-menu li:first a').focus()
 
     # Flechas izq & arriba == ShiftTAB

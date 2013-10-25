@@ -1,14 +1,10 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="iconic">&#xe055;</span>
-      </a>
-      
       <%= link_to t('app_name'), root_path, class: 'brand' %>
       
       <% if user_signed_in? %>
-        <div class="nav-collapse">
+        <div class="nav">
           <ul class="nav">
             <%= render partial: 'shared/admin_menu' if can?(:read, :admin_menu) %>
           </ul>
