@@ -239,17 +239,18 @@ class Printer
       separator_print
 
       compact_print [
-        suit_string_length(Product.human_attribute_name('description').gsub('ó', 'o'), 20),
+        suit_string_length(
+          Product.human_attribute_name('description').gsub('ó', 'o'), 20
+        ),
         suit_string_length(Product.human_attribute_name('total_stock'), 20)
       ].join(' | ')
 
-      old_provider = nil
       Product.with_low_stock.with_recent_sales.
-        group_by(&:provider_id).each do |provider, product|
+        group_by(&:provider_id).each do |provider, products|
         
         black_print Provider.find(provider).name
 
-        product.order(:code).each do |p|
+        products.sort_by { |p| p.code }.each do |p|
           compact_print [
             suit_string_length(p.to_s, 20),
             suit_string_length(
