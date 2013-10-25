@@ -22,6 +22,7 @@
           class: 'autocomplete-field span9',
           value: @sale.customer,
           data: {
+            focus_target: '#sale_seller_code',
             'autocomplete-id-target' => '#sale_customer_id',
             'autocomplete-url' => autocomplete_for_customer_name_sales_path(format: :json)
           }

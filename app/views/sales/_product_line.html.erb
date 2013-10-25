@@ -16,7 +16,7 @@
   </div>
   <div class='span2'>
     <%= f.input :quantity, label: false, as: :string,
-      input_html: { value: f.object.quantity || 1, tabindex: 2,
+      input_html: { value: f.object.quantity || 0, tabindex: 2,
       class: 'price-modifier span8', autocomplete: 'off', 
       data: { 'enter-scape' => true } } %>
   </div>

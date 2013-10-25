@@ -92,7 +92,7 @@ class Printer
       separator_print
       total_average = sales_count > 0 ? total_price / sales_count : 0
 
-      blank_print [
+      black_print [
         I18n.t(
           'printer.total_sales_count',
           sales_count: sales_count,
@@ -247,7 +247,7 @@ class Printer
       Product.with_low_stock.with_recent_sales.
         group_by(&:provider_id).each do |provider, product|
         
-        blank_print Provider.find(provider).name
+        black_print Provider.find(provider).name
 
         product.order(:code).each do |p|
           compact_print [
@@ -256,7 +256,6 @@ class Printer
               [p.total_stock, p.retail_unit].join(' '), 20
             )
           ].join(' | ')
-
         end
       end
 
@@ -303,7 +302,7 @@ class Printer
       print_with_script "\n\x1B\x21\x20  #{string}"
     end
 
-    def blank_print(string)
+    def black_print(string)
       print_with_script "\n\x1B\x21\x08  #{string}"
     end
 

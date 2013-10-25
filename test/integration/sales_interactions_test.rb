@@ -15,6 +15,7 @@ class SalesInteractionsTest < ActionDispatch::IntegrationTest
     fill_in 'sale_seller_code', with: 3
     select 'B', from: 'sale_sale_kind'
     fill_in 'sale_product_lines_attributes_0_auto_product_name', with: '100'
+    fill_in 'sale_product_lines_attributes_0_quantity', with: '1'
     find(
       '#sale_product_lines_attributes_0_auto_product_name'
     ).native.send_keys :tab

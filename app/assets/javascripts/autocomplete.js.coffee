@@ -35,13 +35,18 @@ jQuery ($)->
           target.parents('.row-fluid').
             find('input[name$="[default_price_type]"]').val(value)
           $('.product_line').last().find('select[name$="[price_type]"]').val(value)
+        if (bill_kind = selected.item.bill_kind)
+          $('#sale_sale_kind').val(bill_kind).change()
 
         input.trigger 'autocomplete:update', input
+
+        if focusTarget = input.data('focus-target')
+          $(focusTarget).focus()
 
         false
       open: -> $('.ui-menu').css('width', input.width())
 
-    input.data('autocomplete')._renderItem = (ul, item)->
+    input.data('ui-autocomplete')._renderItem = (ul, item)->
       $('<li></li>').data('item.autocomplete', item).append(
         $('<a></a>').html(item.label)
       ).appendTo(ul)

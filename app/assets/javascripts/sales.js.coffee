@@ -77,6 +77,10 @@ new Rule
         else
           select.val('B').change()
 
+      if e.ctrlKey && e.altKey && (key == 67 || key == 99)
+        e.preventDefault()
+        $('#sale_auto_customer_name').focus()
+
       if key == 13 && !e.ctrlKey
         input = $(document.activeElement)
         input_id = input.attr('id')

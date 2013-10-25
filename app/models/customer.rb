@@ -17,7 +17,7 @@ class Customer < ActiveRecord::Base
     social_small_event_contributor: 'V'
   }.with_indifferent_access.freeze
 
-  BILL_KINDS = ['A', 'B', 'C', 'X']
+  BILL_KINDS = ['A', 'B']
 
   attr_accessible :name, :business_name, :iva_kind, :bill_kind, :address,
     :cuit, :phone, :default_price_type
@@ -40,7 +40,7 @@ class Customer < ActiveRecord::Base
 
   def as_json(options = nil)
     default_options = {
-      only: [:id],
+      only: [:id, :bill_kind],
       methods: [:label, :default_price_type]
     }
 
