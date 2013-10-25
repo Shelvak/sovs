@@ -313,7 +313,7 @@ class Printer
 
     def print_with_script(esc_pos)
       system(Rails.root.join('print_escaped_strings').to_s, esc_pos)
-      #%x{echo -en "#{esc_pos}" >> impresiones}
+      %x{echo -en "#{esc_pos}" >> impresiones}
     end
 
     def separator_print

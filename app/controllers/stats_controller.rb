@@ -23,7 +23,7 @@ class StatsController < ApplicationController
     @title = t('view.stats.sales_earn.title')
     @sales_earn = {}
     
-    Sale.earn_between(@from_date, @to_date).each do |s, earn|
+    Sale.positives.earn_between(@from_date, @to_date).each do |s, earn|
       @sales_earn[s] = earn
     end
 
@@ -67,14 +67,11 @@ class StatsController < ApplicationController
     (8..21).each do |i|
       hour = Time.zone.parse("#{@day} #{i}:00:00")
       
-      sales = Sale.where(
-        "created_at >= :start AND  created_at <= :final",
-        start: hour, final: (hour + 59.minutes + 59.seconds)
-      )
+      sales = Sale.between(hour, hour + 59.minutes + 59.seconds)
 
       @day_stats[i] = {
         hour_total_sold: sales.sum(&:total_price), 
-        hour_total_count: sales.count 
+        hour_total_count: sales.positives.count 
       }
       @stats[:total_count] += @day_stats[i][:hour_total_count]
       @stats[:total_sold] += @day_stats[i][:hour_total_sold]

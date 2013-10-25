@@ -75,7 +75,12 @@ class Sale < ActiveRecord::Base
   def self.stats_by_seller_between(from, to)
     stats = {}
     between(from, to).group_by(&:seller_id).each do |seller, sales|
-      stats[Seller.find(seller).to_s] = [sales.size, sales.sum(&:total_price)]
+      sales_sum = sales.sum(&:total_price)
+
+      stats[Seller.find(seller).to_s] = [
+        sales.delete_if { |s| s.revoked || s.total_price <= 0 }.size,
+        sales_sum
+      ]
     end
 
     stats
@@ -99,9 +104,11 @@ class Sale < ActiveRecord::Base
         between(
           d.beginning_of_day, d.end_of_day
         ).group_by(&:seller_id).each do |seller, sales|
+          sales_sum = sales.sum(&:total_price)
           payrolls_pack[d] << [
-            Seller.find(seller).code, sales.count, 
-            sales.sum(&:total_price)
+            Seller.find(seller).code,
+            sales.delete_if { |s| s.revoked || s.total_price <= 0 }.count, 
+            sales_sum
           ]
         end
       end
