@@ -46,6 +46,11 @@
 <% end %>
 
 <div class="form-actions">
+  <div class="pull-right">
+  <%= link_to t('view.providers.list_for_print'),
+    list_for_print_providers_path, class: 'btn btn-info',
+    data: { list_for_print: true } %>
+  </div>
   <%= link_to(
     t('view.providers.new', default: 'label.new'),
     new_provider_path, class: 'btn btn-primary'

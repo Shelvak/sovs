@@ -33,6 +33,7 @@ $.fn.extend
       target_select.append(new Option(element))
   
 new Rule
+  condition: -> $('#c_providers').length
   load: ->
     @map.increase_provider_prices ||= ->
       increase = prompt('Ingrese el % de aumento')
@@ -44,9 +45,13 @@ new Rule
     @map.activate_province_select ||= ->
       $(this).linkToStates('#provider_city')
 
+    @map.focusLastAutoProvider ||= ->
+      $('[data-provider]:last input').focus()
+
 
     $(document).on 'click', '#add_provider_increase', @map.increase_provider_prices
     $(document).on 'change', '#provider_province', @map.activate_province_select
+    $(document).on 'click focus', Sale.add_nested_btn, @map.focusLastAutoProvider
 
   unload: ->
     $(document).off 'click', '#add_provider_increase', @map.increase_provider_prices

@@ -41,8 +41,15 @@ Sovs::Application.routes.draw do
   end
 
   resources :providers do
-    get :add_increase, on: :member
-    resources :products, on: :member
+    member do
+      get :add_increase
+      resources :products, as: :provider_products
+    end
+
+    collection do
+      get :list_for_print
+      post :print_list
+    end
   end
 
   devise_for :users

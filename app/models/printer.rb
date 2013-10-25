@@ -265,6 +265,35 @@ class Printer
       end_print
     end
 
+    def print_products_for_providers(provider_ids)
+      start_printer
+
+      print_tax_worthless
+      title_print I18n.t('printer.all_provider_products')
+      title_print I18n.l(Date.today)
+      separator_print
+
+      provider_ids.each do |id|
+
+        if (provider = Provider.find(id))
+          black_print provider.name
+
+          provider.products.order(:code).each do |p|
+            compact_print [
+              suit_string_length(p.to_s, 20),
+              suit_string_length(
+                [p.total_stock, p.retail_unit].join(' '), 20
+              )
+            ].join(' | ')
+          end
+        end # if provider
+        
+        separator_print
+      end
+      
+      end_print
+    end
+
     private
 
     def number_to_currency(number)
@@ -313,7 +342,7 @@ class Printer
 
     def print_with_script(esc_pos)
       system(Rails.root.join('print_escaped_strings').to_s, esc_pos)
-      %x{echo -en "#{esc_pos}" >> impresiones}
+      #%x{echo -en "#{esc_pos}" >> impresiones}
     end
 
     def separator_print

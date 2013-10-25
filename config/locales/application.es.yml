@@ -163,6 +163,7 @@ es:
     confirmation: '¿Está seguro?'
 
   printer:
+    print: 'Imprimir'
     tax_worthless: 'Sin valor fiscal'
     seller: 'Vendedor Nro: %{seller}'
     thinks: "Gracias!! \n Lo esperamos nuevamente"
@@ -171,6 +172,7 @@ es:
     daily_sales_report_for: 'Reporte diario de venta [%{day}]'
     total_sales_count: "TOTAL:  Ventas: %{sales_count}  \n  Recaudado: %{total_price} "
     transfer_stock: "Transferencia \n  %{day} \n  A %{place}"
+    all_provider_products: 'Productos por Proveedor'
   
   shared:
     average: 'Promedio'
@@ -256,6 +258,7 @@ es:
       new: 'Nuevo Proveedor'
       add_increase: 'Agregar aumento (%)'
       products: 'Productos del proveedor'
+      list_for_print: 'Lista de proveedores para imprimir productos'
     sales:
       index_title: 'Listado de ventas'
       show_title: 'Detalle de venta'

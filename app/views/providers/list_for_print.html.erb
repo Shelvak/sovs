@@ -1,0 +1,15 @@
+<h2><%= t('view.providers.list_for_print') %></h2>
+
+<%= simple_form_for :list, url: print_list_providers_path do |f| %>
+  <div class="form-inputs">
+    <%= f.simple_fields_for :providers do |pr| %>
+      <%= render partial: 'provider', locals: { f: pr } %>
+    <% end %>
+
+    <%= link_to_add_field_tags t('view.providers.new'), f, :providers %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit t('printer.print'), class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+<div data-provider="true">
+  
+  <%= f.input :auto_provider_name, label: false, input_html: {
+    class: 'autocomplete-field span9',
+    value: f.object, tabindex: 2,
+    data: {
+      'enter-scape' => true,
+      'autocomplete-class-target' => '.autocomplete-ids',
+      'autocomplete-parent' => '[data-provider]:first',
+      'autocomplete-url' => autocomplete_for_provider_name_products_path(format: :json)
+    }
+  } %>
+  <%= f.hidden_field :provider_ids, name: 'list[provider_ids][]',
+    id: 'list_providers_ids[]', class: 'autocomplete-ids' %>
+</div>

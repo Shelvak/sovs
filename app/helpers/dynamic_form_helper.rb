@@ -33,4 +33,19 @@ module DynamicFormHelper
 
     raw out
   end
+
+  def link_to_add_field_tags(name, form, association)
+    fields = form.fields_for(association) do |f|
+      render(association.to_s.singularize, f: f)
+    end
+
+    link_to(
+      name, '#', class: 'btn btn-small', title: name, data: {
+        id: nil,
+        'dynamic-form-event' => 'addNestedItem',
+        'dynamic-template' => fields.gsub("\n", ""),
+        'show-tooltip' => true
+      }
+    )
+  end
 end

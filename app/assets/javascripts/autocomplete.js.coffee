@@ -31,6 +31,10 @@ jQuery ($)->
         target = $(input.data('autocompleteIdTarget'))
         target.val(selected.item.id)
 
+        if classTarget = input.data('autocompleteClassTarget')
+          input.parents(input.data('autocompleteParent'))
+            .find(classTarget).val(selected.item.id)
+
         if value = selected.item.default_price_type
           target.parents('.row-fluid').
             find('input[name$="[default_price_type]"]').val(value)

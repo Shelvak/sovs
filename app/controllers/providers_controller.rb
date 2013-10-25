@@ -95,17 +95,34 @@ class ProvidersController < ApplicationController
     end
   end
 
+  # PUT /providers/1/add_increase
   def add_increase
     @provider = Provider.find(params[:id])
-
     all_ok = @provider.increase_all_products!(params[:add].to_f)
     
     respond_to do |format|
       if all_ok
         format.html { redirect_to @provider, notice: 'Todo actualizado' }
       else
-        format.html { redirect_to @provider, error: 'Algo flasho' }
+        format.html { redirect_to @provider, error: 'Hubo algún error' }
       end
     end
+  end
+
+  # GET /providers/list_for_print
+  def list_for_print
+  end
+
+  # POST /providers/print_list
+  def print_list
+    list = params[:list]
+
+    if list && list[:provider_ids]
+      Printer.print_products_for_providers(
+        list[:provider_ids].uniq.reject { |i| i.blank? }
+      )
+    end
+
+    redirect_to :back
   end
 end

@@ -69,6 +69,7 @@ jQuery ($) ->
       if href && href.match(/new$/)
         window.location.href = href
 
+    # Imprimir resumen diario
     if e.ctrlKey && e.altKey && (key == 68 || key == 100)
       e.preventDefault()
       date = new Date
@@ -82,6 +83,10 @@ jQuery ($) ->
 
       setTimeout((-> location.reload()), 3000)
 
+    # Ir a lista de proveedores
+    if e.ctrlKey && e.altKey && (key == 76 || key == 108)
+      e.preventDefault()
+      window.location = $('[data-list-for-print]').attr('href')
 
   $('a').on
     focusin: -> $(this).trigger('mouseover')

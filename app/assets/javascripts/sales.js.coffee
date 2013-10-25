@@ -95,7 +95,7 @@ new Rule
           else if input_id.match(/(product_name)/)
             input_number = input_id.match(/(\d+)/)[1]
             $("input[name$=\"[#{input_number}][quantity]\"]").focus()
-          else if input_id.match(/(quantity)/)
+          else if input_id.match(/(quantity)|(provider)/)
             add_nested_btn.focus()
 
       else if key == 13 && e.ctrlKey
