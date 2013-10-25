@@ -240,7 +240,7 @@ class Printer
 
       compact_print [
         suit_string_length(
-          Product.human_attribute_name('description').gsub('ó', 'o'), 20
+          Product.human_attribute_name('description').gsub('ó', 'o'), 30
         ),
         suit_string_length(Product.human_attribute_name('total_stock'), 20)
       ].join(' | ')
