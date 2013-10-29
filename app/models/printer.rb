@@ -78,12 +78,13 @@ class Printer
         sales_of_day = seller.sales.in_day(day)
         seller_day_sum = sales_of_day.sum(&:total_price)
         total_price += seller_day_sum
-        sales_count += sales_of_day.positives.count
-        average = sales_of_day.count > 0 ? seller_day_sum / sales_of_day.count : 0
+        seller_day_count = sales_of_day.positives.count
+        sales_count += seller_day_count
+          average = seller_day_count > 0 ? seller_day_sum / seller_day_count : 0
 
         compact_print [
           suit_string_length(seller.code, 8),
-          suit_string_length(sales_of_day.count, 8),
+          suit_string_length(seller_day_count, 8),
           suit_string_length(number_to_currency(seller_day_sum), 14),
           suit_string_length(number_to_currency(average), 14)
         ].join(' | ')
@@ -281,8 +282,12 @@ class Printer
           provider.products.order(:code).each do |p|
             compact_print [
               suit_string_length(p.to_s, 30),
+              suit_string_length(number_to_currency(p.cost), 10),
               suit_string_length(
-                [p.total_stock, p.retail_unit].join(' '), 20
+                [p.total_stock, p.retail_unit].join(' '), 10
+              ),
+              suit_string_length(
+                (p.total_stock / p.unity_relation).try(:to_i), 6
               )
             ].join(' | ')
           end
@@ -341,8 +346,8 @@ class Printer
     end
 
     def print_with_script(esc_pos)
-      system(Rails.root.join('print_escaped_strings').to_s, esc_pos)
-      #%x{echo -en "#{esc_pos}" >> impresiones}
+      #system(Rails.root.join('print_escaped_strings').to_s, esc_pos)
+      %x{echo -en "#{esc_pos}" >> impresiones}
     end
 
     def separator_print
