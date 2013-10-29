@@ -6,6 +6,11 @@ class Printer
       start_printer
       print_tax_worthless
       normal_print I18n.t('printer.seller', seller: sale.seller.code)
+
+      unless sale.common_bill? && sale.customer
+        normal_print sale.customer.business_name
+        normal_print sale.customer.cuit
+      end
      
       separator_print
 
@@ -282,9 +287,9 @@ class Printer
           provider.products.order(:code).each do |p|
             compact_print [
               suit_string_length(p.to_s, 30),
-              suit_string_length(number_to_currency(p.cost), 10),
+              suit_string_length(number_to_currency(p.cost), 12),
               suit_string_length(
-                [p.total_stock, p.retail_unit].join(' '), 10
+                [p.total_stock, p.retail_unit].join(' '), 12
               ),
               suit_string_length(
                 (p.total_stock / p.unity_relation).try(:to_i), 6
