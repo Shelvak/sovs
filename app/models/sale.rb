@@ -16,6 +16,7 @@ class Sale < ActiveRecord::Base
 
   before_validation :manual_validate
   before_save :calc_total_price
+  before_create :agroup_the_same_products
   after_create :discount_sold_stock, :send_to_print
 
   validates :seller_code, :total_price, presence: true
@@ -145,5 +146,20 @@ class Sale < ActiveRecord::Base
 
   def total_without_taxes
     self.product_lines.map(&:price_without_taxes).sum
+  end
+
+  def agroup_the_same_products
+    return if product_lines.map(&:product_id).uniq == product_lines.size
+
+    new_lines = {}
+
+    product_lines.each do |pl|
+      if new_lines[pl.product_id]
+        new_lines[pl.product_id].quantity += pl.quantity
+      else
+        new_lines[pl.product_id] = pl
+      end
+    end
+    self.product_lines = new_lines.values
   end
 end
