@@ -1,9 +1,9 @@
 class SalesController < ApplicationController
   before_filter :authenticate_user!
-  
+
   check_authorization
   load_and_authorize_resource
-  
+
   # GET /sales
   # GET /sales.json
   def index
@@ -91,5 +91,13 @@ class SalesController < ApplicationController
     respond_to do |format|
       format.json { render json: products }
     end
+  end
+
+  def sales_params
+    params.require(:sale).permit(
+      :customer_id, :seller_id, :sale_kind, :total_price,
+      :seller_code, :auto_customer_name,
+      :place_id, :default_price_type, product_lines_attributes: []
+    )
   end
 end

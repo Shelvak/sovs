@@ -1,7 +1,7 @@
 class TransferProduct < ActiveRecord::Base
   has_paper_trail
 
-  attr_accessible :place_id, :transfer_lines_attributes, :transfer_lines
+  #attr_accessible :place_id, :transfer_lines_attributes, :transfer_lines
 
   validate :must_have_one_item
 
@@ -13,16 +13,16 @@ class TransferProduct < ActiveRecord::Base
   accepts_nested_attributes_for :transfer_lines, allow_destroy: true,
     reject_if: ->(attrs) { attrs['product_id'].blank? }
 
-  def initialize(attributes = nil, options = {})
-    super(attributes, options)
-    
+  def initialize(attributes = {})
+    super(attributes)
+
     self.transfer_lines.build if self.transfer_lines.empty?
   end
 
-  def must_have_one_item                                                        
+  def must_have_one_item
     if self.transfer_lines.empty?
-      self.errors.add :base, :must_have_one_item                                
-    end                                                                         
+      self.errors.add :base, :must_have_one_item
+    end
   end
 
   def total_price

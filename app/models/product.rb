@@ -1,6 +1,5 @@
 class Product < ActiveRecord::Base
   has_paper_trail
-  has_magick_columns code: :integer, description: :string
 
   scope :with_code, ->(code) { where("code = :code", code: code.to_i) }
   scope :with_preference, ->() { where(preference: true).order(:code) }
@@ -15,10 +14,10 @@ class Product < ActiveRecord::Base
 
   attr_accessor :auto_provider_name
 
-  attr_accessible :code, :description, :retail_unit, :purchase_unit,
-    :unity_relation, :total_stock, :min_stock, :packs, :preference,
-    :cost, :iva_cost, :gain, :retail_price, :unit_price, :special_price,
-    :provider_id, :auto_provider_name, :unit_gain, :special_gain
+  #attr_accessible :code, :description, :retail_unit, :purchase_unit,
+  #  :unity_relation, :total_stock, :min_stock, :packs, :preference,
+  #  :cost, :iva_cost, :gain, :retail_price, :unit_price, :special_price,
+  #  :provider_id, :auto_provider_name, :unit_gain, :special_gain
 
   validates :code, :description, presence: true
   validates :code, uniqueness: true
@@ -50,7 +49,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.filtered_list(query)
-    query.present? ? magick_search(query) : scoped
+    all
   end
 
   def increase_prices_with_percentage!(percentage)

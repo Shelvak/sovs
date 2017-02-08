@@ -30,9 +30,7 @@ module ApplicationHelper
   end
 
   def pagination_links(objects, params = nil)
-    result = paginate objects,
-      inner_window: 1, outer_window: 1, params: params,
-      class: 'pagination pagination-right'
+    result = paginate objects, class: 'pagination pagination-right'
     page_entries = content_tag(
       :blockquote,
       content_tag(

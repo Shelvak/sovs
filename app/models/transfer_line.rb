@@ -2,8 +2,8 @@ class TransferLine < ActiveRecord::Base
   has_paper_trail
 
   attr_accessor :auto_product_name
-  attr_accessible :product_id, :transfer_product_id, :quantity, 
-    :auto_product_name, :price
+  #attr_accessible :product_id, :transfer_product_id, :quantity,
+  #  :auto_product_name, :price
 
   validates :product_id, :quantity, presence: true
 
@@ -12,8 +12,8 @@ class TransferLine < ActiveRecord::Base
   belongs_to :product
   belongs_to :transfer_product
 
-  def initialize(attributes = nil, options = {})
-    super(attributes, options)
+  def initialize(attributes = {})
+    super(attributes)
 
     self.price = self.product.try(:iva_cost) || 0
   end

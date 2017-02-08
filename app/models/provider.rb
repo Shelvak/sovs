@@ -1,9 +1,8 @@
 class Provider < ActiveRecord::Base
   has_paper_trail
-  has_magick_columns name: :string, cuit: :string
 
-  attr_accessible :name, :contact, :address, :cuit, :phone, :other_phone,
-    :locality, :city, :province, :fax, :postal_code
+  #attr_accessible :name, :contact, :address, :cuit, :phone, :other_phone,
+  #  :locality, :city, :province, :fax, :postal_code
 
   validates :name, :cuit, presence: true
   validates :cuit, uniqueness: true
@@ -26,7 +25,7 @@ class Provider < ActiveRecord::Base
   end
 
   def self.filtered_list(query)
-    query.present? ? magick_search(query) : scoped
+    all
   end
 
   def increase_all_products!(percentage)

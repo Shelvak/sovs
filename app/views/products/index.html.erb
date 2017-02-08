@@ -45,8 +45,8 @@
                 ) if product.provider %></td>
               <% end %>
               <td class='not-printable'>
-                <%= link_to '&#xe03b;'.html_safe, 
-                  put_to_stock_product_path(product), 
+                <%= link_to '&#xe03b;'.html_safe,
+                  put_to_stock_product_path(product),
                   title: t('view.products.add_stock'),
                   class: 'put_to_stock iconic', data: { show_tooltip: true } %>
               </td>
@@ -75,6 +75,6 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  Message.quantity_to_put_in_stock = 
+  Message.quantity_to_put_in_stock =
     '<%= t("view.products.quantity_to_put_in_stock") %>';
 </script>

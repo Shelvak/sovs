@@ -1,6 +1,5 @@
 class Customer < ActiveRecord::Base
   has_paper_trail
-  has_magick_columns name: :string, business_name: :string, cuit: :string
 
   PRICE_TYPE = ['retail_price', 'unit_price', 'special_price']
 
@@ -19,8 +18,8 @@ class Customer < ActiveRecord::Base
 
   BILL_KINDS = ['A', 'B']
 
-  attr_accessible :name, :business_name, :iva_kind, :bill_kind, :address,
-    :cuit, :phone, :default_price_type
+  #attr_accessible :name, :business_name, :iva_kind, :bill_kind, :address,
+  #  :cuit, :phone, :default_price_type
 
   validate :validate_customer_kind
   validates :iva_kind, :bill_kind, presence: true
@@ -30,7 +29,7 @@ class Customer < ActiveRecord::Base
 
   def to_s
     if self.business_name.present?
-      [self.business_name, self.cuit].join(' - ') 
+      [self.business_name, self.cuit].join(' - ')
     else
       self.name
     end
@@ -57,6 +56,6 @@ class Customer < ActiveRecord::Base
   end
 
   def self.filtered_list(query)
-    query.present? ? magick_search(query) : scoped
+    all
   end
 end

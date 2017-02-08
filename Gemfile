@@ -22,6 +22,7 @@ gem 'capistrano'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
+gem 'awesome_print'
 
 group :development do
   gem 'thin'

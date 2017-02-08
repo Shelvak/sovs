@@ -1,9 +1,9 @@
 class ProductsController < ApplicationController
   before_filter :authenticate_user!
-  
+
   check_authorization
   load_and_authorize_resource
-  
+
   # GET /products
   # GET /products.json
   def index
@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
                elsif params[:status] == 'low_stock'
                  Product.with_low_stock
                else
-                 Product.scoped
+                 Product.all
                end
 
     @products = products.filtered_list(params[:q]).order(:code).page(params[:page])
@@ -115,7 +115,7 @@ class ProductsController < ApplicationController
   def put_to_stock
     product = Product.find(params[:id])
 
-    notice = product.put_to_stock(params[:quantity].to_f) ? 
+    notice = product.put_to_stock(params[:quantity].to_f) ?
       t('view.products.stock_correctly_updated') :
       t('view.products.stale_object_error')
 

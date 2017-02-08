@@ -11,7 +11,7 @@ class Printer
         normal_print sale.customer.business_name
         normal_print sale.customer.cuit
       end
-     
+
       separator_print
 
       sale.product_lines.each do |pl|
@@ -114,13 +114,13 @@ class Printer
     def print_payrolls(date)
       payrolls = [[
         I18n.t('view.stats.payrolls.days'),
-        Seller.scoped.map { |s| I18n.t('view.stats.payrolls.seller_number', seller: s.code) },
+        Seller.all.map { |s| I18n.t('view.stats.payrolls.seller_number', seller: s.code) },
         I18n.t('label.total')
       ].flatten]
 
       payrolls << [
         '  ',
-        ([ 
+        ([
           I18n.t('view.stats.payrolls.quantity-total')
         ] * (Seller.count + 1)),
       ].flatten
@@ -183,12 +183,12 @@ class Printer
           I18n.t('view.stats.payrolls.title'),
           I18n.t('view.stats.payrolls.for_month', month: date)
         ].join(' '), size: 14
-        
-        pdf.table payrolls, width: 800, cell_style: { 
-          padding: [1, 3], height: 15, borders: [:right]
-        } 
 
-        pdf.table total_table, width: 800, cell_style: { 
+        pdf.table payrolls, width: 800, cell_style: {
+          padding: [1, 3], height: 15, borders: [:right]
+        }
+
+        pdf.table total_table, width: 800, cell_style: {
           padding: [1, 3], height: 15, borders: [:right, :top, :bottom]
         }
       end
@@ -200,7 +200,7 @@ class Printer
       start_printer
       print_tax_worthless
       title_print I18n.t(
-        'printer.transfer_stock', 
+        'printer.transfer_stock',
         day: I18n.l(Date.today),
         place: transfer.place.to_s
       )
@@ -215,10 +215,10 @@ class Printer
         suit_string_length(TransferLine.human_attribute_name('price'), 10)
       ].join(' ')
 
-      transfer.transfer_lines.each do |tl| 
+      transfer.transfer_lines.each do |tl|
         compact_print [
           suit_string_length(' ', 5),
-          suit_string_length(tl.product.to_s, 28, true), 
+          suit_string_length(tl.product.to_s, 28, true),
           suit_string_length([tl.quantity, tl.product.retail_unit].join(' '), 10),
           suit_string_length(number_to_currency(tl.price), 10),
           suit_string_length(number_to_currency(tl.price * tl.quantity), 10)
@@ -253,7 +253,7 @@ class Printer
 
       Product.with_low_stock.with_recent_sales.
         group_by(&:provider_id).each do |provider, products|
-        
+
         black_print Provider.find(provider).name
 
         products.sort_by { |p| p.code }.each do |p|
@@ -297,10 +297,10 @@ class Printer
             ].join(' | ')
           end
         end # if provider
-        
+
         separator_print
       end
-      
+
       end_print
     end
 
@@ -331,7 +331,7 @@ class Printer
     end
 
     def start_printer
-      print_with_script "\e@" 
+      print_with_script "\e@"
     end
 
     def compact_print(string)
