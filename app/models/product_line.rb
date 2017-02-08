@@ -14,8 +14,8 @@ class ProductLine < ActiveRecord::Base
   #  :unit_price, :price_type, :unit_price_tmp, :retail_price_tmp,
   #  :special_price_tmp
 
-  validates :product_id, :quantity, :price, :unit_price, presence: true
-  validates :quantity, :price, numericality: {
+  validates :product_id, :quantity, :unit_price, presence: true
+  validates :quantity, numericality: {
     allow_nil: true, allow_blank: true
   }
   validates :unit_price, numericality: {
@@ -34,5 +34,15 @@ class ProductLine < ActiveRecord::Base
     ].each do |attr|
       self[attr] = self.product[attr]
     end
+    self.price = self.send(self.price_type)
+  end
+
+  def final_price
+    self.send(self.price_type) * self.quantity
+  end
+
+  def price_without_taxes
+    tax = (self.iva_cost / self.cost).round(2)
+    (self.final_price / tax)
   end
 end

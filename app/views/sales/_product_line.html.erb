@@ -9,7 +9,7 @@
         'enter-scape' => true,
         'autocomplete-id-target' => "#sale_product_lines_product_id_#{id}",
         'autocomplete-url' => autocomplete_for_product_name_sales_path(format: :json)
-      }                                                                                    
+      }
     }  %>
     <%= f.input :product_id, as: :hidden, input_html: {
       class: 'autocomplete-id', id: "sale_product_lines_product_id_#{id}" } %>
@@ -17,7 +17,7 @@
   <div class='span2'>
     <%= f.input :quantity, label: false, as: :string,
       input_html: { value: f.object.quantity || 0, tabindex: 2,
-      class: 'price-modifier span8', autocomplete: 'off', 
+      class: 'price-modifier span8', autocomplete: 'off',
       data: { 'enter-scape' => true } } %>
   </div>
   <div class='span2'>
@@ -34,7 +34,7 @@
     <%= f.input :unit_price_tmp, as: :hidden, input_html: { disabled: true } %>
     <%= f.input :retail_price_tmp, as: :hidden, input_html: { disabled: true } %>
     <%= f.input :special_price_tmp, as: :hidden, input_html: { disabled: true } %>
-    <%= f.input :price, as: :hidden %>
+    <%= f.input :price, as: :hidden, input_html: { disabled: true }  %>
     <%= link_to_remove_nested_item(f) %>
   </div>
 </fieldset>

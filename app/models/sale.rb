@@ -15,7 +15,7 @@ class Sale < ActiveRecord::Base
   scope :positives, ->() { where("total_price > 0") }
 
   before_validation :manual_validate
-  before_save :recalc_price
+  before_save :calc_total_price
   after_create :discount_sold_stock, :send_to_print
 
   validates :seller_code, :total_price, presence: true
@@ -62,7 +62,7 @@ class Sale < ActiveRecord::Base
   end
 
   def common_bill?
-    self.sale_kind == 'B'
+    ['-', 'B'].include?(self.sale_kind)
   end
 
   def created_at_date
@@ -137,13 +137,13 @@ class Sale < ActiveRecord::Base
     self.revoked
   end
 
-  def recalc_price
-    self.total_price = self.product_lines.each do |pl|
-      price = pl.product.send(pl.price_type)
-      pl.unit_price = self.common_bill? ? price : (price / 1.21)
-      pl.price = pl.unit_price * pl.quantity
-    end.sum(&:price)
+  def calc_total_price
+    self.total_price = self.product_lines.map do |pl|
+      pl.product.send(pl.price_type) * pl.quantity
+    end.sum
+  end
 
-    self.total_price *= 1.21 unless self.common_bill?
+  def total_without_taxes
+    self.product_lines.map(&:price_without_taxes).sum
   end
 end

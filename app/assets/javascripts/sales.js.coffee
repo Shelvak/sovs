@@ -4,7 +4,7 @@ window.Sale =
     price_type = product_line.find('select[name$="[price_type]"]').val()
 
     kind = $('#sale_sale_kind').val()
-    divider = if kind == 'B' then 1 else 1.21
+    divider = if kind == 'A' then 1.21 else 1
 
     unit_price = parseFloat(
       product_line.find("input[name$='[#{price_type}_tmp]']").val()
@@ -26,7 +26,7 @@ window.Sale =
       totalPrice += parseFloat($(this).attr('data-price')) || 0
 
     if $('#sale_sale_kind').val() == 'A'
-      $('#neto-price').find('span').html("$ #{totalPrice}")
+      $('#neto-price').find('span').html("$ #{totalPrice.toFixed(2)}")
       ivaPrice = (totalPrice * 1.21) - totalPrice
       $('#iva-price').find('span').html("$ #{ivaPrice.toFixed(2)}")
       totalPrice *= 1.21
@@ -37,14 +37,8 @@ window.Sale =
   delete_nested_link: 'a[data-dynamic-form-event="removeItem"]'
 
   toggleNetoPrice: ()->
-    netoPriceDiv = $('div#neto-price')
-    ivaPriceDiv = $('div#iva-price')
-    if $('#sale_sale_kind').val() == 'A'
-      EffectHelper.show(netoPriceDiv)
-      EffectHelper.show(ivaPriceDiv)
-    else
-      EffectHelper.hide(netoPriceDiv)
-      EffectHelper.hide(ivaPriceDiv)
+    action = if $('#sale_sale_kind').val() == 'A' then 'show' else 'hide'
+    EffectHelper[action]($('div#neto-price, div#iva-price'))
 
   blankAllPrices: (product_line)->
     product_line.find('input[name$="[unit_price]"]').val(0.00)
@@ -84,7 +78,7 @@ new Rule
       if key == 13 && !e.ctrlKey
         input = $(document.activeElement)
         input_id = input.attr('id')
-        
+
         if input.data('enter-scape')
 
           e.preventDefault()
@@ -107,7 +101,7 @@ new Rule
     @map.select_default_price_type ||= ->
       if (value = $('input[name$="[default_price_type]"]').val())
         $('.product_line').last().find('select[name$="[price_type]"]').val(value)
-        
+
     @map.autocomplete_for_product_sale ||= ->
       parent = $(this).parents('.product_line:first')
       if (input = $(this)).val().length > 0

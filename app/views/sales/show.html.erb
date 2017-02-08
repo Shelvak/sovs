@@ -29,19 +29,19 @@
         <tr>
           <td><%= pl.product %></td>
           <td><%= pl.quantity %></td>
-          <td><%= number_to_currency pl.unit_price %></td>
+          <td><%= number_to_currency pl.final_price %></td>
           <td><%= Product.human_attribute_name pl.price_type %></td>
-          <td><%= number_to_currency pl.price %></td>
+          <td><%= number_to_currency pl.final_price %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
   <% unless @sale.common_bill? %>
-    <% neto = @sale.total_price / 1.21 %>
+    <% without_taxes = @sale.total_without_taxes %>
     <h5>
-      Neto: <%= number_to_currency(neto) %> | 
-      I.V.A. 21%  => <%= number_to_currency(@sale.total_price - neto) %>
+      Neto:  => <%= number_to_currency(without_taxes) %> |
+      I.V.A. => <%= number_to_currency(@sale.total_price - without_taxes) %>
     </h5>
   <% end %>
 
@@ -49,7 +49,7 @@
     <%= Sale.human_attribute_name 'total_price' %>:
     <%= number_to_currency @sale.total_price %>
   </h3>
-  
+
 </div>
 <div class="form-actions">
   <%= link_to t('label.list'), sales_path %>
