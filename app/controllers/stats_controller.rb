@@ -1,5 +1,5 @@
 class StatsController < ApplicationController
-  before_filter :authenticate_user!, :load_date_range, :authorize_stats!
+  before_action :authenticate_user!, :load_date_range, :authorize_stats!
   respond_to :html, :json, :csv
 
   def index

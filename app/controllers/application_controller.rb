@@ -1,14 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  after_filter -> { expires_now if user_signed_in? }
-  
+  before_action :permit_all
+  after_action -> { expires_now if user_signed_in? }
+
   rescue_from Exception do |exception|
     begin
       if exception.kind_of? CanCan::AccessDenied
         redirect_to root_url, alert: t('errors.access_denied')
       else
         @title = t('errors.title')
-        
+
         if response.redirect_url.blank?
           render template: 'shared/show_error', locals: { error: exception }
         end
@@ -25,13 +26,13 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do
     redirect_to new_sale_url, alert: t('errors.access_denied')
   end
-  
+
   def user_for_paper_trail
     current_user.try(:id)
   end
-  
+
   private
-  
+
   # Overwriting the sign_out redirect path method
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
@@ -55,5 +56,9 @@ class ApplicationController < ActionController::Base
     to_datetime ||= Time.now
 
     [from_datetime.to_datetime, to_datetime.to_datetime].sort
+  end
+
+  def permit_all
+    params.permit!
   end
 end

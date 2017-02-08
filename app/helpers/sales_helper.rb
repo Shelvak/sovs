@@ -1,6 +1,6 @@
 module SalesHelper
   def sale_kinds_array
-    ['A', 'B']
+    Customer::BILL_KINDS
   end
 
   def sale_kind_select_for_sale(form)
@@ -15,7 +15,7 @@ module SalesHelper
     end
 
     form.input :price_type, collection: price_type_select,
-      selected: form.object.price_type || :retail_price, prompt: false, 
+      selected: form.object.price_type || :retail_price, prompt: false,
       label: false, input_html: { class: 'span10 price-modifier hide' }
   end
 end

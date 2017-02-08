@@ -24,4 +24,15 @@ class ProductLine < ActiveRecord::Base
 
   belongs_to :product
   belongs_to :sale
+
+  before_create :assign_prices_snapshot
+
+  def assign_prices_snapshot
+    [
+      :cost, :gain, :iva_cost, :retail_price, :special_gain, :special_price,
+      :unit_gain, :unit_price
+    ].each do |attr|
+      self[attr] = self.product[attr]
+    end
+  end
 end

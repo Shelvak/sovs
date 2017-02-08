@@ -16,7 +16,7 @@ class Customer < ActiveRecord::Base
     social_small_event_contributor: 'V'
   }.with_indifferent_access.freeze
 
-  BILL_KINDS = ['--', 'A', 'B', 'C']
+  BILL_KINDS = ['-', 'A', 'B', 'C']
 
   #attr_accessible :name, :business_name, :iva_kind, :bill_kind, :address,
   #  :cuit, :phone, :default_price_type

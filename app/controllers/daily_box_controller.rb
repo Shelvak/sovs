@@ -1,5 +1,5 @@
 class DailyBoxController < ApplicationController
-  before_filter :authenticate_user!, :authorize_daily_box!
+  before_action :authenticate_user!, :authorize_daily_box!
   
   # GET /daily_boxes
   # GET /daily_boxes.json
