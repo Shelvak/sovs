@@ -1,11 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0'
+gem 'rails', '~> 4.2'
 
 gem 'pg'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'turbolinks'
 gem 'will_paginate'
 gem 'simple_form'
 gem 'devise'
