@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '~> 4.0'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -15,7 +15,7 @@ gem 'paper_trail'
 gem 'magick_columns'
 gem 'validates_timeliness'
 gem 'sidekiq'
-gem 'capistrano', '2.15.5'
+gem 'capistrano'
 gem 'prawn'
 #gem 'cups'
 gem 'newrelic_rpm'

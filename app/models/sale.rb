@@ -3,7 +3,7 @@ class Sale < ActiveRecord::Base
 
   attr_accessor :seller_code, :auto_customer_name, :default_price_type
   attr_accessible :customer_id, :seller_id, :sale_kind, :total_price,
-    :seller_code, :auto_customer_name, :product_lines_attributes, 
+    :seller_code, :auto_customer_name, :product_lines_attributes,
     :product_lines, :place_id, :default_price_type
 
   scope :between, ->(_from, _to) { where(
@@ -61,7 +61,7 @@ class Sale < ActiveRecord::Base
   end
 
   def send_to_print
-    Printer.print_tax(self)
+    #Printer.print_tax(self)
   end
 
   def common_bill?
@@ -107,7 +107,7 @@ class Sale < ActiveRecord::Base
           sales_sum = sales.sum(&:total_price)
           payrolls_pack[d] << [
             Seller.find(seller).code,
-            sales.delete_if { |s| s.revoked || s.total_price <= 0 }.count, 
+            sales.delete_if { |s| s.revoked || s.total_price <= 0 }.count,
             sales_sum
           ]
         end
@@ -116,7 +116,7 @@ class Sale < ActiveRecord::Base
       between(
         from.beginning_of_day, to.end_of_day
       ).group_by(&:seller_id).each do |seller, sales|
-      
+
         payrolls_resume[Seller.find(seller).code] = sales.sum(&:total_price)
       end
 
@@ -127,7 +127,7 @@ class Sale < ActiveRecord::Base
   def revoke!
     Sale.transaction do
       self.product_lines.each do |p_l|
-        prod = p_l.product 
+        prod = p_l.product
         prod.total_stock += p_l.quantity
         prod.save!
       end
