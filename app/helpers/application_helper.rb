@@ -29,37 +29,10 @@ module ApplicationHelper
     end
   end
 
-  def pagination_links(objects, params = nil)
-    result = paginate objects, class: 'pagination pagination-right'
-    page_entries = content_tag(
-      :blockquote,
-      content_tag(
-        :small,
-        page_entries_info(objects),
-        class: 'page-entries hidden-desktop pull-right'
-      )
-    )
+  def paginate(objects, options = {})
+    options.reverse_merge!(theme: 'twitter-bootstrap')
 
-    unless result
-      previous_tag = content_tag(
-        :li,
-        content_tag(:a, t('will_paginate.previous_label').html_safe),
-        class: 'previous_page disabled'
-      )
-      next_tag = content_tag(
-        :li,
-        content_tag(:a, t('will_paginate.next_label').html_safe),
-        class: 'next disabled'
-      )
-
-      result = content_tag(
-        :div,
-        content_tag(:ul, previous_tag + next_tag),
-        class: 'pagination pagination-right'
-      )
-    end
-
-    content_tag :div, result + page_entries, class: 'pagination-container'
+    super(objects, options)
   end
 
   def link_to_show(*args)

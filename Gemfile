@@ -23,6 +23,7 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'awesome_print'
+gem 'bootstrap-kaminari-views'
 
 group :development do
   gem 'thin'
