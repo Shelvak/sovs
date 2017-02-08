@@ -40,9 +40,9 @@ Rails.application.routes.draw do
   end
 
   resources :providers do
+    resources :products
     member do
       get :add_increase
-      resources :products
     end
 
     collection do
