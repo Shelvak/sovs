@@ -1,6 +1,6 @@
 class RemovePresentsInCustomers < ActiveRecord::Migration
   def change
-    execute 'ALTER TABLE customers ALTER COLUMN business_name DROP NOT NULL;'
-    execute 'ALTER TABLE customers ALTER COLUMN cuit DROP NOT NULL;'
+    change_column :customers, :business_name, :string, null: true
+    change_column :customers, :cuit, :string, null: true
   end
 end
