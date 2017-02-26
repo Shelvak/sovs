@@ -13,7 +13,6 @@ gem 'role_model'
 gem 'paper_trail'
 gem 'validates_timeliness'
 gem 'sidekiq'
-gem 'capistrano'
 
 # gem 'prawn'
 # gem 'cups'
@@ -24,10 +23,15 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'awesome_print'
 gem 'bootstrap-kaminari-views'
+gem 'puma'
 
 group :development do
   gem 'thin'
   #gem 'virb'
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano3-puma'
 end
 
 group :test do
