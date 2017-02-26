@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0'
 
-gem 'pg'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'kaminari'
@@ -24,6 +23,10 @@ gem 'uglifier'
 gem 'awesome_print'
 gem 'bootstrap-kaminari-views'
 gem 'puma'
+gem 'sqlite3'
+unless ENV['SKIP_POSTGRES']
+  gem 'pg'
+end
 
 group :development do
   gem 'thin'
