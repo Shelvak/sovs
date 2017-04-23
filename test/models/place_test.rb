@@ -6,13 +6,13 @@ class PlaceTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Place.count', 'Version.count'] do
+    assert_difference ['Place.count', 'PaperTrail::Version.count'] do
       @place = Place.create(Fabricate.attributes_for(:place))
     end 
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Place.count' do
         assert @place.update_attributes(description: 'Updated')
       end
@@ -22,7 +22,7 @@ class PlaceTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Place.count', -1) { @place.destroy }
     end
   end

@@ -2,7 +2,7 @@ jQuery ($)->
   $(document).on 'change', 'input.autocomplete-field', ->
     if /^\s*$/.test($(this).val())
       $(this).next('input.autocomplete-id:first').val('')
-      
+
   $(document).on 'focus', 'input.autocomplete-field:not([data-observed])', ->
     input = $(this)
 
@@ -58,6 +58,7 @@ jQuery ($)->
 
   $(document).on 'change', 'input.autocomplete-field-after-tab:not([data-observed])', ->
     if (input = $(this)).val().length > 0
+      console.log(input.val())
       $.ajax
         url: input.data('autocompleteUrl')
         dataType: 'json'

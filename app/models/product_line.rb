@@ -25,6 +25,7 @@ class ProductLine < ActiveRecord::Base
   belongs_to :product
   belongs_to :sale
 
+  before_validation :assign_prices_snapshot
   before_create :assign_prices_snapshot
 
   def assign_prices_snapshot
@@ -37,8 +38,12 @@ class ProductLine < ActiveRecord::Base
     self.price = self.send(self.price_type)
   end
 
+  def price_type_or_default
+    self.price_type || 'retail_price'
+  end
+
   def final_price
-    self.send(self.price_type) * self.quantity
+    (self.try(self.price_type_or_default) || 0.0) * (self.quantity || 1)
   end
 
   def price_without_taxes

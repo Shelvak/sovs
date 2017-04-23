@@ -87,8 +87,10 @@ new Rule
           if input_id.match(/(seller_code)/)
             $('input[tabindex=2]:first').focus()
           else if input_id.match(/(product_name)/)
-            input_number = input_id.match(/(\d+)/)[1]
-            $("input[name$=\"[#{input_number}][quantity]\"]").focus()
+            add_nested_btn.focus()
+            # input_number = input_id.match(/(\d+)/)[1]
+
+            #$("input[name$=\"[#{input_number}][quantity]\"]").focus()
           else if input_id.match(/(quantity)|(provider)/)
             add_nested_btn.focus()
 
@@ -105,16 +107,8 @@ new Rule
     @map.autocomplete_for_product_sale ||= ->
       parent = $(this).parents('.product_line:first')
       if (input = $(this)).val().length > 0
-        matching = input.val().match(/(\d{1})(\d{3})/)
-        if matching
-          priceType = if parseInt(matching[1]) == 5
-            'unit_price'
-          else
-            'special_price'
-
-          data = matching[2]
-        else
-          data = input.val()
+        priceType = 'retail_price'
+        data = input.val()
 
         $.ajax
           url: input.data('autocompleteUrl')

@@ -23,18 +23,24 @@
   <div class='span2'>
     <%= f.input :unit_price, label: false, as: :string,
       input_html: { class: 'price-modifier span8', readonly: true,
-      value: f.object.unit_price, autocomplete: 'off' } %>
+      value: f.object.try(:retail_price), autocomplete: 'off' } %>
   </div>
   <div class="span4 nested-actions">
-    <%= price_type_select_for_product_line(f) %>
-    <span data-price-type="true"></span>
-    <span class='money badge'>
-      <%= number_to_currency(f.object.price || 0) %>
-    </span>
-    <%= f.input :unit_price_tmp, as: :hidden, input_html: { disabled: true } %>
-    <%= f.input :retail_price_tmp, as: :hidden, input_html: { disabled: true } %>
-    <%= f.input :special_price_tmp, as: :hidden, input_html: { disabled: true } %>
-    <%= f.input :price, as: :hidden, input_html: { disabled: true }  %>
-    <%= link_to_remove_nested_item(f) %>
-  </div>
+    <div class="row-fluid">
+      <div class="span4">
+        <%= price_type_select_for_product_line(f) %>
+      </div>
+      <%# '<span data-price-type="true"></span>' %>
+      <div class="span4">
+        <span class='money badge'>
+          <%= number_to_currency(f.object.final_price || 0) %>
+        </span>
+      </div>
+      <%= product_price_inputs(f) %>
+      <%= f.input :price, as: :hidden, input_html: { disabled: true }  %>
+      <div class="span2">
+        <%= link_to_remove_nested_item(f) %>
+      </div>
+    </div>
+    </div>
 </fieldset>

@@ -6,13 +6,13 @@ class ProviderTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Provider.count', 'Version.count'] do
+    assert_difference ['Provider.count', 'PaperTrail::Version.count'] do
       @provider = Provider.create(Fabricate.attributes_for(:provider))
     end 
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Provider.count' do
         assert @provider.update_attributes(name: 'Updated')
       end
@@ -22,7 +22,7 @@ class ProviderTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Provider.count', -1) { @provider.destroy }
     end
   end
@@ -62,7 +62,7 @@ class ProviderTest < ActiveSupport::TestCase
       )
     end
   
-    assert_difference 'Version.count', 3 do
+    assert_difference 'PaperTrail::Version.count', 3 do
       assert_no_difference ['Provider.count', 'Product.count'] do
         @provider.increase_all_products!(10)
       end

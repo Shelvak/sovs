@@ -7,7 +7,7 @@ class TransferLineTest < ActiveSupport::TestCase
 
   test 'create' do
     assert_difference 'TransferLine.count' do
-      assert_difference 'Version.count', 2 do
+      assert_difference 'PaperTrail::Version.count', 2 do
         TransferLine.create(
           Fabricate.attributes_for(
             :transfer_line,
@@ -20,7 +20,7 @@ class TransferLineTest < ActiveSupport::TestCase
   end
     
   test 'update' do
-    assert_difference 'Version.count', 2 do
+    assert_difference 'PaperTrail::Version.count', 2 do
       assert_no_difference 'TransferLine.count' do
         assert @transfer_line.update_attributes(quantity: 3)
       end
@@ -30,7 +30,7 @@ class TransferLineTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('TransferLine.count', -1) { @transfer_line.destroy }
     end
   end

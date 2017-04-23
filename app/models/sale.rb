@@ -154,10 +154,11 @@ class Sale < ActiveRecord::Base
     new_lines = {}
 
     product_lines.each do |pl|
-      if new_lines[pl.product_id]
-        new_lines[pl.product_id].quantity += pl.quantity
+      key = [pl.product_id, pl.price_type].join('-')
+      if new_lines[key]
+        new_lines[key].quantity += pl.quantity
       else
-        new_lines[pl.product_id] = pl
+        new_lines[key] = pl
       end
     end
     self.product_lines = new_lines.values

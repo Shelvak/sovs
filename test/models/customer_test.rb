@@ -6,13 +6,13 @@ class CustomerTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Customer.count', 'Version.count'] do
+    assert_difference ['Customer.count', 'PaperTrail::Version.count'] do
       @customer = Customer.create(Fabricate.attributes_for(:customer))
     end 
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Customer.count' do
         assert @customer.update_attributes(name: 'Updated')
       end
@@ -22,7 +22,7 @@ class CustomerTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Customer.count', -1) { @customer.destroy }
     end
   end

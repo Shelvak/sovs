@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208040918) do
+ActiveRecord::Schema.define(version: 20170302003644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20170208040918) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.integer  "code",                                                                null: false
+    t.string   "code",                                                                null: false
     t.string   "description",    limit: 255,                                          null: false
     t.string   "retail_unit",    limit: 2
     t.string   "purchase_unit",  limit: 2
@@ -104,13 +104,14 @@ ActiveRecord::Schema.define(version: 20170208040918) do
 
   create_table "sales", force: :cascade do |t|
     t.integer  "customer_id"
-    t.integer  "seller_id",                                                      null: false
-    t.string   "sale_kind",   limit: 1
-    t.decimal  "total_price",           precision: 15, scale: 2,                 null: false
-    t.datetime "created_at",                                                     null: false
-    t.datetime "updated_at",                                                     null: false
+    t.integer  "seller_id",                                                       null: false
+    t.string   "sale_kind",    limit: 1
+    t.decimal  "total_price",            precision: 15, scale: 2,                 null: false
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
     t.integer  "place_id"
-    t.boolean  "revoked",                                        default: false
+    t.boolean  "revoked",                                         default: false
+    t.string   "payment_type",                                    default: "C"
     t.index ["customer_id"], name: "index_sales_on_customer_id", using: :btree
     t.index ["seller_id"], name: "index_sales_on_seller_id", using: :btree
   end

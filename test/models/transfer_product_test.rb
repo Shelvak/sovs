@@ -7,7 +7,7 @@ class TransferProductTest < ActiveSupport::TestCase
 
   test 'create' do
     assert_difference 'TransferProduct.count' do
-      assert_difference 'Version.count', 3 do
+      assert_difference 'PaperTrail::Version.count', 3 do
         TransferProduct.create(Fabricate.attributes_for(
           :transfer_product,
           place_id: @transfer_product.place_id,
@@ -18,7 +18,7 @@ class TransferProductTest < ActiveSupport::TestCase
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'TransferProduct.count' do
         assert @transfer_product.update_attributes(place_id: 1)
       end
@@ -28,7 +28,7 @@ class TransferProductTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('TransferProduct.count', -1) { @transfer_product.destroy }
     end
   end

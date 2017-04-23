@@ -24,6 +24,8 @@ gem 'awesome_print'
 gem 'bootstrap-kaminari-views'
 gem 'puma'
 gem 'sqlite3'
+gem 'byebug'
+
 unless ENV['SKIP_POSTGRES']
   gem 'pg'
 end
@@ -44,4 +46,5 @@ group :test do
   gem 'database_cleaner' # For Capybara
   gem 'fabrication'
   gem 'faker'
+  gem 'rails-controller-testing'
 end

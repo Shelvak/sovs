@@ -6,7 +6,7 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Product.count', 'Version.count'] do
+    assert_difference ['Product.count', 'PaperTrail::Version.count'] do
       @product = Product.create(
         Fabricate.attributes_for(:product, provider_id: @product.provider_id)
       )
@@ -14,7 +14,7 @@ class ProductTest < ActiveSupport::TestCase
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Product.count' do
         assert @product.update_attributes(description: 'Updated')
       end
@@ -24,7 +24,7 @@ class ProductTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Product.count', -1) { @product.destroy }
     end
   end
@@ -118,7 +118,7 @@ class ProductTest < ActiveSupport::TestCase
       special_price: 11
     )
   
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Product.count' do
         # Have to pass with number not percentage
         @product.increase_prices_with_percentage!(1.10)
@@ -135,7 +135,7 @@ class ProductTest < ActiveSupport::TestCase
   test 'put to stock' do
     total_stock = @product.total_stock
 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Product.count' do
         assert @product.put_to_stock(-1.11)
       end
@@ -145,7 +145,7 @@ class ProductTest < ActiveSupport::TestCase
 
     total_stock = @product.reload.total_stock
 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Product.count' do
         assert @product.put_to_stock(3.33)
       end

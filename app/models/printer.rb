@@ -1,4 +1,4 @@
-# class Printer
+class Printer
 #   require 'prawn'
 #
 #   class << self
@@ -367,4 +367,4 @@
 #       title_print(I18n.t('printer.tax_worthless'))
 #     end
 #   end
-# end
+end

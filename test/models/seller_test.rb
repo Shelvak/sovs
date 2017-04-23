@@ -6,13 +6,13 @@ class SellerTest < ActiveSupport::TestCase
   end
 
   test 'create' do
-    assert_difference ['Seller.count', 'Version.count'] do
+    assert_difference ['Seller.count', 'PaperTrail::Version.count'] do
       @seller = Seller.create(Fabricate.attributes_for(:seller))
     end 
   end
     
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Seller.count' do
         assert @seller.update_attributes(name: 'Updated')
       end
@@ -22,7 +22,7 @@ class SellerTest < ActiveSupport::TestCase
   end
     
   test 'destroy' do 
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_difference('Seller.count', -1) { @seller.destroy }
     end
   end

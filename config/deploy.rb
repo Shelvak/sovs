@@ -10,6 +10,13 @@ set :deploy_via, :remote_cache
 set :format, :pretty
 set :log_level, ENV['log_level'] || :info
 
-set :linked_files, %w(config/app_config.yml config/secrets.yml config/database.yml)
+set :linked_files, %w(config/app_config.yml config/secrets.yml config/database.yml config/puma.rb)
 set :linked_dirs, %w(log private)
 set :keep_releases, 2
+
+task :restart_server do
+  on roles(:web) do
+    execute :touch, release_path.join('tmp/restart.txt')
+  end
+end
+after "deploy:published", "restart_server"

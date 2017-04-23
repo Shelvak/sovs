@@ -7,17 +7,17 @@ class SaleTest < ActiveSupport::TestCase
 
   test 'create' do
     assert_difference 'Sale.count' do
-      assert_difference 'Version.count', 5 do
+      assert_difference 'PaperTrail::Version.count', 5 do
         Sale.create!(Fabricate.attributes_for(
-          :sale, customer_id: @sale.customer_id, 
+          :sale, customer_id: @sale.customer_id,
           seller_id: @sale.seller_id, place_id: @sale.place_id
         ))
-      end 
-    end 
+      end
+    end
   end
-    
+
   test 'update' do
-    assert_difference 'Version.count' do
+    assert_difference 'PaperTrail::Version.count' do
       assert_no_difference 'Sale.count' do
         assert @sale.update_attributes(sale_kind: 'U')
       end
@@ -25,17 +25,17 @@ class SaleTest < ActiveSupport::TestCase
 
     assert_equal 'U', @sale.reload.sale_kind
   end
-    
-  test 'destroy' do 
-    assert_difference 'Version.count', 2 do
+
+  test 'destroy' do
+    assert_difference 'PaperTrail::Version.count', 2 do
       assert_difference('Sale.count', -1) { @sale.destroy }
     end
   end
-    
+
   test 'validates blank attributes' do
     @sale.seller_code = ''
     @sale.total_price = ''
-    
+
     assert @sale.invalid?
     assert_equal 2, @sale.errors.size
     assert_equal [error_message_from_model(@sale, :seller_code, :blank)],
@@ -62,8 +62,8 @@ class SaleTest < ActiveSupport::TestCase
   test 'discount stock in all product_lines' do
     sale_attrs = Fabricate.attributes_for(:sale, product_lines: nil)
     sale_attrs.delete(:product_lines)
-    
-    @sale = Sale.new(sale_attrs.merge(product_lines_attributes: { 
+
+    @sale = Sale.new(sale_attrs.merge(product_lines_attributes: {
         new_1: Fabricate.attributes_for(:product_line, quantity: 1),
         new_2: Fabricate.attributes_for(:product_line, quantity: 1)
       }
@@ -90,14 +90,17 @@ class SaleTest < ActiveSupport::TestCase
       assert sale.revoke!
     end
 
-    assert_equal (stock_after_sale + quantity).to_f, 
-      product.reload.total_stock.to_f
+    assert_equal (stock_after_sale + quantity).to_f.round(2),
+      product.reload.total_stock.to_f.round(2)
   end
 
   test 'validate correct IVA discrimination' do
     sale = Fabricate(:sale, sale_kind: 'A')
+    sale.save!  # trigger callbacks
 
-    total_price = sale.product_lines.sum(&:price) * 1.21
+    total_price = sale.product_lines.to_a.map do |pl|
+      pl.price * pl.quantity
+    end.sum
 
     assert_equal total_price.to_f.round(2), sale.reload.total_price.to_f.round(2)
   end

@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   has_paper_trail
 
-  scope :with_code, ->(code) { where("code = :code", code: code.to_i) }
+  scope :with_code, ->(code) { where(code: code) }
   scope :with_preference, ->() { where(preference: true).order(:code) }
   scope :with_low_stock, ->() { where(
     "#{Product.table_name}.total_stock <= #{Product.table_name}.min_stock"
