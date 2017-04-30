@@ -22,6 +22,7 @@ class Product < ActiveRecord::Base
   validates :code, :description, presence: true
   validates :code, uniqueness: true
   validates :retail_unit, :purchase_unit, length: { maximum: 2 }
+  validates :cost, presence: true
   validates :unity_relation, :total_stock, :min_stock, :cost, :packs,
     :iva_cost, :retail_price, :unit_price, :special_price, :gain, :unit_gain,
     :special_gain, numericality: { allow_nil: true, allow_blank: true }
