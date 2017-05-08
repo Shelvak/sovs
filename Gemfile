@@ -26,6 +26,8 @@ gem 'puma'
 gem 'sqlite3'
 gem 'byebug'
 
+gem 'bugsnag'
+
 unless ENV['SKIP_POSTGRES']
   gem 'pg'
 end
