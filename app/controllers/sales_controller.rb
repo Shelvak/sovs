@@ -71,7 +71,7 @@ class SalesController < ApplicationController
 
   def daily_report
     if params[:to_print]
-      if Printer.print_daily_report(params[:to_print][:date].to_date)
+      if true # Printer.print_daily_report(params[:to_print][:date].to_date)
         redirect_to sales_url, notice: 'Se imprimio el informe'
       end
     end
@@ -86,7 +86,7 @@ class SalesController < ApplicationController
   end
 
   def autocomplete_for_product_name
-    products = Product.with_code(params[:q]).limit(1)
+    products = Product.filtered_list(params[:q]).limit(5)
 
     respond_to do |format|
       format.json { render json: products }
@@ -97,7 +97,9 @@ class SalesController < ApplicationController
     params.require(:sale).permit(
       :customer_id, :seller_id, :sale_kind, :total_price,
       :seller_code, :auto_customer_name,
-      :place_id, :default_price_type, product_lines_attributes: []
+      :place_id, :default_price_type, product_lines_attributes: [
+        :product_id, :quantity, :unit_price, :price_type
+      ]
     )
   end
 end

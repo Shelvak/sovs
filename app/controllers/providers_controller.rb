@@ -1,9 +1,9 @@
 class ProvidersController < ApplicationController
   before_action :authenticate_user!
-      
+
   check_authorization
   load_and_authorize_resource
-  
+
   # GET /providers
   # GET /providers.json
   def index
@@ -99,7 +99,7 @@ class ProvidersController < ApplicationController
   def add_increase
     @provider = Provider.find(params[:id])
     all_ok = @provider.increase_all_products!(params[:add].to_f)
-    
+
     respond_to do |format|
       if all_ok
         format.html { redirect_to @provider, notice: 'Todo actualizado' }
@@ -118,9 +118,9 @@ class ProvidersController < ApplicationController
     list = params[:list]
 
     if list && list[:provider_ids]
-      Printer.print_products_for_providers(
-        list[:provider_ids].uniq.reject { |i| i.blank? }
-      )
+      # Printer.print_products_for_providers(
+      #   list[:provider_ids].uniq.reject { |i| i.blank? }
+      # )
     end
 
     redirect_to :back

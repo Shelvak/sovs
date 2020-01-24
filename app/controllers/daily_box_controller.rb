@@ -1,6 +1,6 @@
 class DailyBoxController < ApplicationController
   before_action :authenticate_user!, :authorize_daily_box!
-  
+
   # GET /daily_boxes
   # GET /daily_boxes.json
   def index
@@ -17,7 +17,7 @@ class DailyBoxController < ApplicationController
 
   def print_daily_report
     date = Date.parse(params[:date])
-    flash.notice = if Printer.print_daily_report(date)
+    flash.notice = if false #Printer.print_daily_report(date)
       t('view.daily_boxes.send_to_print', day: l(date))
     else
       t('view.stats.print_error')

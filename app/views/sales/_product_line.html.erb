@@ -2,7 +2,8 @@
   <% id = f.object.object_id %>
   <div class="span4">
     <%= f.input :auto_product_name, label: false, input_html: {
-      class: 'autocomplete-field-for-product-sale price-modifier span11',
+      class: 'autocomplete-field-for-product-sale price-modifier span11 autocomplete-field price-modifier',
+      # class: "autocomplete-field price-modifier span11",
       value: f.object.product, autofocus: true,
       autocomplete: 'off', tabindex: 2,
       data: {

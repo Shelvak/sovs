@@ -63,6 +63,7 @@ class Product < ActiveRecord::Base
   end
 
   def put_to_stock(quantity)
+    self.total_stock ||= 0
     self.total_stock += quantity
     recalc_packs_count # Product method
     self.save!
@@ -70,5 +71,10 @@ class Product < ActiveRecord::Base
 
   def recalc_packs_count
     self.packs = (self.total_stock.to_f / self.unity_relation.to_f).round(2)
+  end
+
+
+  def self.filtered_list(query)
+    where(code: query).or(where("description ILIKE '%#{query}%'"))
   end
 end

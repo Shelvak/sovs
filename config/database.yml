@@ -3,16 +3,18 @@ development:
   encoding: unicode
   database: sovs_development
   pool: 5
-  username: sovs
-  password: sovs
+  username: docker
+  password: docker
+  host: 127.0.0.1
+  port: 5432
 
 test:
   adapter: postgresql
   encoding: unicode
   database: sovs_test
   pool: 5
-  username: <%= ENV['TRAVIS'] ? 'postgres' : 'sovs' %>
-  password: <%= ENV['TRAVIS'] ? '' : 'sovs' %>
+  username: docker
+  password: docker
 
 production:
   adapter: postgresql
@@ -22,9 +24,9 @@ production:
   username: sovs
   password: sovs
 
-filomena:
-  adapter: sqlite3
-  encoding: unicode
-  database: db/filomena.sqlite3
-  timeout: 5000
-  pool: 5
+# filomena:
+#   adapter: sqlite3
+#   encoding: unicode
+#   database: db/filomena.sqlite3
+#   timeout: 5000
+#   pool: 5

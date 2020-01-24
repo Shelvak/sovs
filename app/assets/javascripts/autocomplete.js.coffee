@@ -25,21 +25,26 @@ jQuery ($)->
       type: 'get'
       select: (event, ui)->
         selected = ui.item
+        item     = selected.item
 
         input.val(selected.value)
         input.data('item', selected.item)
         target = $(input.data('autocompleteIdTarget'))
         target.val(selected.item.id)
 
+        if item.retail_price || item.unit_price || item.special_price
+          Sale.fillProductPrices(input, item)
+          $(Sale.add_nested_btn).focus()
+
         if classTarget = input.data('autocompleteClassTarget')
           input.parents(input.data('autocompleteParent'))
-            .find(classTarget).val(selected.item.id)
+            .find(classTarget).val(item.id)
 
-        if value = selected.item.default_price_type
+        if value = item.default_price_type
           target.parents('.row-fluid').
             find('input[name$="[default_price_type]"]').val(value)
           $('.product_line').last().find('select[name$="[price_type]"]').val(value)
-        if (bill_kind = selected.item.bill_kind)
+        if (bill_kind = item.bill_kind)
           $('#sale_sale_kind').val(bill_kind).change()
 
         input.trigger 'autocomplete:update', input
@@ -56,22 +61,22 @@ jQuery ($)->
       ).appendTo(ul)
   .attr('data-observed', true)
 
-  $(document).on 'change', 'input.autocomplete-field-after-tab:not([data-observed])', ->
-    if (input = $(this)).val().length > 0
-      console.log(input.val())
-      $.ajax
-        url: input.data('autocompleteUrl')
-        dataType: 'json'
-        data: { q: input.val() }
-        success: (item)->
-          if item
-            $(input.data('autocompleteIdTarget')).val(item.id)
-            $(input).val(item.label)
-
-            if item.retail_unit
-              $(input).parents('.row-fluid:first')
-                .find('span[data-retail-unit]').html(item.retail_unit)
-
-            if item.iva_cost
-              ivaCost = $(input).parents('.row-fluid:first').find('span[data-iva-cost]')
-              ivaCost.html(ivaCost.html().replace(/\d+[,|.]\d+/, item.iva_cost))
+#   $(document).on 'change', 'input.autocomplete-field-after-tab:not([data-observed])', ->
+#     if (input = $(this)).val().length > 0
+#       console.log(input.val())
+#       $.ajax
+#         url: input.data('autocompleteUrl')
+#         dataType: 'json'
+#         data: { q: input.val() }
+#         success: (item)->
+#           if item
+#             $(input.data('autocompleteIdTarget')).val(item.id)
+#             $(input).val(item.label)
+#
+#             if item.retail_unit
+#               $(input).parents('.row-fluid:first')
+#                 .find('span[data-retail-unit]').html(item.retail_unit)
+#
+#             if item.iva_cost
+#               ivaCost = $(input).parents('.row-fluid:first').find('span[data-iva-cost]')
+#               ivaCost.html(ivaCost.html().replace(/\d+[,|.]\d+/, item.iva_cost))

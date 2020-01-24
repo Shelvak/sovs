@@ -1,4 +1,23 @@
 window.Sale =
+  fillProductPrices: (input, item) ->
+    target = $(input.data('autocompleteIdTarget'))
+    target.val(item.id)
+    $(input).val(item.label)
+
+    parent = target.parents('.product_line:first')
+    if item.retail_price
+      parent.find('input[name$="[retail_price_tmp]"]').val(item.retail_price)
+
+    if item.unit_price
+      parent.find('input[name$="[unit_price_tmp]"]').val(item.unit_price)
+
+    if item.special_price
+      parent.find('input[name$="[special_price_tmp]"]').val(item.special_price)
+
+    parent.find('select[name$="[price_type]"]').val('retail_price').change()
+
+    Sale.updateTotalPrice()
+
   updateLinePrice: (product_line)->
     quantity = parseFloat product_line.find('input[name$="[quantity]"]').val()
     price_type = product_line.find('select[name$="[price_type]"]').val()
@@ -105,9 +124,15 @@ new Rule
         $('.product_line').last().find('select[name$="[price_type]"]').val(value)
 
     @map.autocomplete_for_product_sale ||= ->
-      parent = $(this).parents('.product_line:first')
-      if (input = $(this)).val().length > 0
-        priceType = 'retail_price'
+      input = $(this)
+      value = input.val()
+      parent = input.parents('.product_line:first')
+
+      if value.length > 0
+        # Skip ajax call on common-autocomplete
+        if /^\[\d+\] \w+/.test(value)
+          return
+
         data = input.val()
 
         $.ajax
@@ -116,27 +141,9 @@ new Rule
           data: { q: data }
           success: (data)->
             if data.length
-              item = data[0]
-              target = $(input.data('autocompleteIdTarget'))
-              target.val(item.id)
-              $(input).val(item.label)
-
-              parent = target.parents('.product_line:first')
-              if item.retail_price
-                parent.find('input[name$="[retail_price_tmp]"]').val(item.retail_price)
-
-              if item.unit_price
-                parent.find('input[name$="[unit_price_tmp]"]').val(item.unit_price)
-
-              if item.special_price
-                parent.find('input[name$="[special_price_tmp]"]').val(item.special_price)
-              if priceType
-                parent.find('select[name$="[price_type]"]').val(priceType).change()
-
-              Sale.updateTotalPrice()
-
-            else
-              Sale.blankAllPrices(parent)
+              Sale.fillProductPrices(input, data[0])
+            # else
+            #   Sale.blankAllPrices(parent)
       else
         Sale.blankAllPrices(parent)
 

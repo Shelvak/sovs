@@ -1,9 +1,9 @@
 class TransferProductsController < ApplicationController
   before_action :authenticate_user!
-      
+
   check_authorization
   load_and_authorize_resource
-  
+
   # GET /transfer_products
   # GET /transfer_products.json
   def index
@@ -52,7 +52,7 @@ class TransferProductsController < ApplicationController
 
     respond_to do |format|
       if @transfer_product.save
-        Printer.print_transfer_report(@transfer_product)
+        # Printer.print_transfer_report(@transfer_product)
         format.html { redirect_to @transfer_product, notice: t('view.transfer_products.correctly_created') }
         format.json { render json: @transfer_product, status: :created, location: @transfer_product }
       else
