@@ -24,6 +24,7 @@ RUN gem update --system && \
     apk del build-dependencies
 
 ADD . ./
+COPY config/app_config.example.yml config/app_config.yml
 RUN bundle exec rails assets:precompile
 
 EXPOSE 3000
