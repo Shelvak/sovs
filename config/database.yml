@@ -1,32 +1,21 @@
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
   database: sovs_development
   pool: 5
   username: docker
   password: docker
-  host: 127.0.0.1
+  host: <%= ENV['DB_HOST'] || '127.0.0.1' %>
   port: 5432
 
+development:
+  <<: *default
+  database: sovs_development
+
 test:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: sovs_test
-  pool: 5
-  username: docker
-  password: docker
 
 production:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   database: sovs_production
-  pool: 5
-  username: sovs
-  password: sovs
-
-# filomena:
-#   adapter: sqlite3
-#   encoding: unicode
-#   database: db/filomena.sqlite3
-#   timeout: 5000
-#   pool: 5

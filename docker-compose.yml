@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:11.1
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    volumes:
+      # - ./postgres/initialize.sh:/initialize.sh
+      - ./volumes/logs/postgres:/var/log/postgresql/:rw
+      - ./volumes/postgres/data-11:/var/lib/postgresql/data:rw
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: docker
+      POSTGRES_DBUSER: docker
+      POSTGRES_DBPASS: docker
+
+  redis:
+    image: redis:4
+    command: "redis-server /etc/redis/redis.conf"
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    environment:
+      DB_HOST: postgres
+    volumes:
+      - ./volumes/logs:/logs:rw
+      - ./volumes/redis:/etc/redis/data:rw
+      - ./docker/redis.conf:/etc/redis/redis.conf
+
+  sovs:
+    build: .
+    restart: unless-stopped
+    ports:
+      - 80:3000
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - ./volumes/logs/sovs/:/app/log/:rw

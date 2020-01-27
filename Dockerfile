@@ -13,7 +13,7 @@ RUN echo "gem: --no-rdoc --no-ri" >> ~/.gemrc \
                         nodejs npm vim \
     && gem install bundler
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
 
