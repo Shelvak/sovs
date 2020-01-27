@@ -82,6 +82,7 @@ new Rule
       key = e.which
 
       # Cambiar Venta
+      # Ctrol + Alt + F
       if e.ctrlKey && e.altKey && (key == 70 || key == 102)
         e.preventDefault()
         select = $('#sale_sale_kind')
@@ -90,10 +91,12 @@ new Rule
         else
           select.val('B').change()
 
+      # Ctrol + Alt + C
       if e.ctrlKey && e.altKey && (key == 67 || key == 99)
         e.preventDefault()
         $('#sale_auto_customer_name').focus()
 
+      # Enter without Ctrol
       if key == 13 && !e.ctrlKey
         input = $(document.activeElement)
         input_id = input.attr('id')
@@ -113,6 +116,7 @@ new Rule
           else if input_id.match(/(quantity)|(provider)/)
             add_nested_btn.focus()
 
+      # Ctrol + Enter
       else if key == 13 && e.ctrlKey
         $('form').submit()
 
