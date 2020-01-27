@@ -2,45 +2,43 @@
   <div class="navbar-inner">
     <div class="container">
       <%= link_to t('app_name'), root_path, class: 'brand' %>
-      
+
       <% if user_signed_in? %>
-        <div class="nav">
-          <ul class="nav">
-            <%= render partial: 'shared/admin_menu' if can?(:read, :admin_menu) %>
-          </ul>
-          <ul class='nav'>
-            <%= show_menu_link(
-              name: 'products', controllers: 'products', path: products_path
-            ) if can?(:read, Product) %>
-            <%= show_menu_link(
-              name: 'sales', controllers: 'sales', path: sales_path
-            ) if can?(:read, Sale) %>
-            <%= show_menu_link(
-              name: 'daily_boxes', controllers: 'daily_box', path: daily_boxes_path
-            ) if can?(:read, :daily_box) %>
-            <%= render partial: 'shared/nav_search' %>
-          </ul>
-          <ul class="nav pull-right">
-            <li>
-              <%= link_to_low_stock_products if can?(:read, Product) %>
-            </li>
-            <li>
-              <%= link_to(
-                current_user.username, edit_profile_user_path(current_user),
-                'title' => t('view.users.edit_profile'),
-                'data-show-tooltip' => true, 'data-placement' => 'bottom'
-              ) %>
-            </li>
-            <li>
-              <%= link_to(
-                '&#x2192;'.html_safe, destroy_user_session_path,
-                'title' => t('menu.actions.logout'), 'class' => 'iconic',
-                'id' => 'logout', 'data-show-tooltip' => true,
-                'data-placement' => 'bottom', 'method' => :delete
-              ) %>
-            </li>
-          </ul>
-        </div>
+        <ul class="nav">
+          <%= render partial: 'shared/admin_menu' if can?(:read, :admin_menu) %>
+        </ul>
+        <ul class='nav'>
+          <%= show_menu_link(
+            name: 'products', controllers: 'products', path: products_path
+          ) if can?(:read, Product) %>
+          <%= show_menu_link(
+            name: 'sales', controllers: 'sales', path: sales_path
+          ) if can?(:read, Sale) %>
+          <%= show_menu_link(
+            name: 'daily_boxes', controllers: 'daily_box', path: daily_boxes_path
+          ) if can?(:read, :daily_box) %>
+          <%= render partial: 'shared/nav_search' %>
+        </ul>
+        <ul class="nav pull-right">
+          <li>
+            <%= link_to_low_stock_products if can?(:read, Product) %>
+          </li>
+          <li>
+            <%= link_to(
+              current_user.username, edit_profile_user_path(current_user),
+              'title' => t('view.users.edit_profile'),
+              'data-show-tooltip' => true, 'data-placement' => 'bottom'
+            ) %>
+          </li>
+          <li>
+            <%= link_to(
+              '&#x2192;'.html_safe, destroy_user_session_path,
+              'title' => t('menu.actions.logout'), 'class' => 'iconic',
+              'id' => 'logout', 'data-show-tooltip' => true,
+              'data-placement' => 'bottom', 'method' => :delete
+            ) %>
+          </li>
+        </ul>
       <% end %>
     </div>
   </div>

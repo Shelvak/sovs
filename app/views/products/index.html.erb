@@ -15,7 +15,6 @@
               <th><%= Product.human_attribute_name 'min_stock' %></th>
               <th><%= Product.human_attribute_name 'cost' %></th>
               <th><%= Product.human_attribute_name 'total_stock' %></th>
-              <th><%= Product.human_attribute_name 'packs' %></th>
             <% else %>
               <th><%= Product.human_attribute_name 'iva_cost' %></th>
               <th><%= Product.human_attribute_name 'total_stock' %></th>
@@ -36,7 +35,6 @@
                 <td><%= product.min_stock %></td>
                 <td><%= number_to_currency product.cost %></td>
                 <td><%= [product.total_stock, product.retail_unit].join(' ') %></td>
-                <td><%= product.packs %></td>
               <% else %>
                 <td><%= number_to_currency product.iva_cost %></td>
                 <td><%= [product.total_stock, product.retail_unit].join(' ') %></td>

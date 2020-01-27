@@ -10,20 +10,19 @@ class Product < ActiveRecord::Base
     product_lines: { created_at: 15.days.ago..Date.today }
   ).uniq }
 
-  before_save :recalc_packs_count
+  after_initialize :assign_defaults
+
+  def assign_defaults
+    self.total_stock    = 0 if total_stock.blank?
+  end
 
   attr_accessor :auto_provider_name
-
-  #attr_accessible :code, :description, :retail_unit, :purchase_unit,
-  #  :unity_relation, :total_stock, :min_stock, :packs, :preference,
-  #  :cost, :iva_cost, :gain, :retail_price, :unit_price, :special_price,
-  #  :provider_id, :auto_provider_name, :unit_gain, :special_gain
 
   validates :code, :description, presence: true
   validates :code, uniqueness: true
   validates :retail_unit, :purchase_unit, length: { maximum: 2 }
   validates :cost, presence: true
-  validates :unity_relation, :total_stock, :min_stock, :cost, :packs,
+  validates :total_stock, :min_stock, :cost,
     :iva_cost, :retail_price, :unit_price, :special_price, :gain, :unit_gain,
     :special_gain, numericality: { allow_nil: true, allow_blank: true }
 
@@ -65,14 +64,8 @@ class Product < ActiveRecord::Base
   def put_to_stock(quantity)
     self.total_stock ||= 0
     self.total_stock += quantity
-    recalc_packs_count # Product method
     self.save!
   end
-
-  def recalc_packs_count
-    self.packs = (self.total_stock.to_f / self.unity_relation.to_f).round(2)
-  end
-
 
   def self.filtered_list(query)
     where(code: query).or(where("description ILIKE '%#{query}%'"))

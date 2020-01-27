@@ -16,7 +16,7 @@
     <div class='row-fluid'>
       <div class='span4'>
         <%= f.label :provider_id %>
-        <%= f.input :auto_provider_name, label: false, input_html: { 
+        <%= f.input :auto_provider_name, label: false, input_html: {
           value: @product.provider, class: 'autocomplete-field span10',
           data: {
             'autocomplete-id-target' => '#product_provider_id',
@@ -32,21 +32,16 @@
       <div class='span2'>
         <%= purchase_unit_select_for_product(f) %>
       </div>
+    </div>
+    <div class='row-fluid'>
+      <div class='span4'>
+        <%= f.input :total_stock,  input_html: { class: 'span6 stock-modifier' } %>
+      </div>
       <div class='span3'>
         <%= f.input :min_stock %>
       </div>
     </div>
-    <div class='row-fluid'>
-      <div class='span4'>
-        <%= f.input :unity_relation, input_html: { class: 'span6 stock-modifier' } %>
-      </div>
-      <div class='span4'>
-        <%= f.input :total_stock,  input_html: { class: 'span6 stock-modifier' } %>
-      </div>
-      <div class='span4'>
-        <%= f.input :packs, input_html: { readonly: true } %>
-      </div>
-    </div>
+    <hr>
     <div class='row-fluid'>
       <div class='span4'>
         <%= f.input :cost %>
