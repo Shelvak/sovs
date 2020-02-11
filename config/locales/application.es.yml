@@ -1,363 +1,363 @@
+---
 es:
-  app_name: 'Ventas y Stock'
-
-  attributes:
-    created_at: 'Creación'
-    updated_at: 'Actualización'
-    date: 'Fecha'
-
   activerecord:
+    attributes:
+      customer:
+        address: "Dirección"
+        bill_kind: "Tipo de factura"
+        business_name: "Razón social"
+        cuit: "CUIT"
+        default_price_type: "Tipo de precio por defecto"
+        iva_kind: "Condición frente al IVA"
+        name: "Nombre"
+        phone: "Teléfono"
+      place:
+        description: "Descripción"
+        transfer_default: "Transferencia por defecto"
+      product:
+        code: "Código"
+        cost: "Costo sin IVA"
+        description: "Descripción"
+        gain: "Porcentaje (%)"
+        iva_cost: "Costo con IVA"
+        min_stock: "Punto pedido"
+        packs: "Packs"
+        preference: "Preferencia"
+        provider_id: "Proveedor"
+        purchase_unit: "Unidad compra"
+        retail_price: "Precio de venta"
+        retail_unit: "Unidad venta"
+        special_gain: "Porcentaje Especial (%)"
+        special_price: "Precio especial"
+        total_stock: "Stock total"
+        unit_gain: "Porcentaje Unidad (%)"
+        unit_price: "Precio por unidad"
+        unity_relation: "Relación Compra/Venta"
+      product_line:
+        partial_price: "Parcial"
+        price: "Precio"
+        product_id: "Producto"
+        quantity: "Cantidad"
+        unit_price_abbr: "Precio/u"
+      provider:
+        address: "Dirección"
+        city: "Departamento"
+        contact: "Persona de contacto"
+        cuit: "CUIT"
+        fax: "Fax"
+        locality: "Localidad"
+        name: "Nombre"
+        other_phone: "Otro teléfono"
+        phone: "Teléfono"
+        postal_code: "Código postal"
+        province: "Provincia"
+      sale:
+        customer_id: "Cliente"
+        sale_kind: "Tipo venta"
+        seller_code: "Código del vendedor"
+        seller_id: "Vendedor"
+        total_price: "Precio total"
+      seller:
+        address: "Dirección"
+        code: "Código"
+        name: "Nombre"
+        phone: "Teléfono"
+      transfer_line:
+        price: "Costo"
+        product_id: "Producto"
+        quantity: "Cantidad"
+      transfer_product:
+        place_id: "Lugar a transferir"
+        total_price: "Precio total"
+      user:
+        email: "Correo"
+        lastname: "Apellido"
+        login: "Usuario"
+        name: "Nombre"
+        password: "Contraseña"
+        password_confirmation: "Confirmación"
+        place_id: "Lugar de preferencia"
+        remember_me: "Recordarme"
+        roles:
+          one: "Perfil"
+          other: "Perfiles"
+        username: "Usuario"
     errors:
       models:
         sale:
           attributes:
             base:
-              must_have_one_item: 'La venta tiene que tener almenos 1 item'
+              must_have_one_item: "La venta tiene que tener almenos 1 item"
         transfer_product:
           attributes:
             base:
-              must_have_one_item: 'La transferencia tiene que tener almenos 1 item'
+              must_have_one_item: "La transferencia tiene que tener almenos 1 item"
     models:
       customer:
-        one: 'Cliente'
-        other: 'Clientes'
+        one: "Cliente"
+        other: "Clientes"
       place:
-        one: 'Local comercial'
-        other: 'Locales comerciales'
+        one: "Local comercial"
+        other: "Locales comerciales"
       product:
-        one: 'Producto'
-        other: 'Productos'
+        one: "Producto"
+        other: "Productos"
       provider:
-        one: 'Proveedor'
-        other: 'Proveedores'
+        one: "Proveedor"
+        other: "Proveedores"
       sale:
-        one: 'Venta'
-        other: 'Ventas'
+        one: "Venta"
+        other: "Ventas"
       seller:
-        one: 'Vendedor'
-        other: 'Vendedores'
+        one: "Vendedor"
+        other: "Vendedores"
       transfer_product:
-        one: 'Transferencia'
-        other: 'Transferencias'
+        one: "Transferencia"
+        other: "Transferencias"
       user:
-        one: 'Usuario'
-        other: 'Usuarios'
-
-    attributes:
-      customer:
-        name: 'Nombre'
-        business_name: 'Razón social'
-        address: 'Dirección'
-        cuit: 'CUIT'
-        phone: 'Teléfono'
-        iva_kind: 'Condición frente al IVA'
-        bill_kind: 'Tipo de factura'
-        default_price_type: 'Tipo de precio por defecto'
-      place:
-        description: 'Descripción'
-        transfer_default: 'Transferencia por defecto'
-      product:
-        code: 'Código'
-        description: 'Descripción'
-        retail_unit: 'Unidad venta'
-        purchase_unit: 'Unidad compra'
-        unity_relation: 'Relación Compra/Venta'
-        total_stock: 'Stock total'
-        min_stock: 'Punto pedido'
-        packs: 'Packs'
-        cost: 'Costo sin IVA'
-        iva_cost: 'Costo con IVA'
-        gain: 'Porcentaje (%)'
-        unit_gain: 'Porcentaje Unidad (%)'
-        special_gain: 'Porcentaje Especial (%)'
-        retail_price: 'Precio de venta'
-        unit_price: 'Precio por unidad'
-        special_price: 'Precio especial'
-        provider_id: 'Proveedor'
-        preference: 'Preferencia'
-      product_line:
-        product_id: 'Producto'
-        quantity: 'Cantidad'
-        unit_price_abbr: 'Precio/u'
-        price: 'Precio'
-        partial_price: 'Parcial'
-      provider:
-        name: 'Nombre'
-        contact: 'Persona de contacto'
-        address: 'Dirección'
-        cuit: 'CUIT'
-        phone: 'Teléfono'
-        other_phone: 'Otro teléfono'
-        fax: 'Fax'
-        locality: 'Localidad'
-        city: 'Departamento'
-        province: 'Provincia'
-        postal_code: 'Código postal'
-      sale:
-        seller_code: 'Código del vendedor'
-        seller_id: 'Vendedor'
-        customer_id: 'Cliente'
-        sale_kind: 'Tipo venta'
-        total_price: 'Precio total'
-      seller:
-        code: 'Código'
-        name: 'Nombre'
-        address: 'Dirección'
-        phone: 'Teléfono'
-      transfer_line:
-        product_id: 'Producto'
-        quantity: 'Cantidad'
-        price: 'Costo'
-      transfer_product:
-        place_id: 'Lugar a transferir'
-        total_price: 'Precio total'
-      user:
-        name: 'Nombre'
-        lastname: 'Apellido'
-        email: 'Correo'
-        login: 'Usuario'
-        username: 'Usuario'
-        password: 'Contraseña'
-        password_confirmation: 'Confirmación'
-        roles:
-          one: 'Perfil'
-          other: 'Perfiles'
-        remember_me: 'Recordarme'
-        place_id: 'Lugar de preferencia'
-
+        one: "Usuario"
+        other: "Usuarios"
+  app_name: "Ventas y Stock"
+  attributes:
+    created_at: "Creación"
+    date: "Fecha"
+    updated_at: "Actualización"
   errors:
-    title: 'Error'
-    access_denied: 'No tiene permisos para acceder al contenido'
-
+    access_denied: "No tiene permisos para acceder al contenido"
+    title: "Error"
   label:
-    'yes': 'Si'
-    'no': 'No'
-    close: 'Cerrar'
-    delete: 'Eliminar'
-    edit: 'Editar'
-    list: 'Listado'
-    loading: 'Cargando...'
-    new: 'Nuevo'
-    search: 'Buscar'
-    show: 'Ver'
-    generate: 'Generar'
-    others: 'Otros'
-    total: 'Total'
-
+    close: "Cerrar"
+    delete: "Eliminar"
+    edit: "Editar"
+    generate: "Generar"
+    list: "Listado"
+    loading: "Cargando..."
+    new: "Nuevo"
+    "no": "No"
+    others: "Otros"
+    search: "Buscar"
+    show: "Ver"
+    total: "Total"
+    "yes": "Si"
   menu:
-    admin: 'Otros'
     actions:
-      logout: 'Salir de la aplicación'
-    customers: 'Clientes'
-    daily_boxes: 'Caja Diaria'
-    places: 'Locales'
-    products: 'Productos'
-    providers: 'Proveedores'
-    sales: 'Ventas'
-    sellers: 'Vendedores'
-    stats: 'Estadísticas'
-    transfer_products: 'Transferencia de stock'
-    users: 'Usuarios'
-
+      logout: "Salir de la aplicación"
+    admin: "Otros"
+    customers: "Clientes"
+    daily_boxes: "Caja Diaria"
+    places: "Locales"
+    products: "Productos"
+    providers: "Proveedores"
+    sales: "Ventas"
+    sellers: "Vendedores"
+    stats: "Estadísticas"
+    transfer_products: "Transferencia de stock"
+    users: "Usuarios"
   messages:
-    confirmation: '¿Está seguro?'
-
+    confirmation: "¿Está seguro?"
   printer:
-    print: 'Imprimir'
-    tax_worthless: 'Sin valor fiscal'
-    seller: 'Vendedor Nro: %{seller}'
-    thinks: "Gracias!! \n Lo esperamos nuevamente"
-    total_price: 'Total: %{total}'
-    items_count_with_net_price: '%{count} items  --------> Neto %{price}'
-    daily_sales_report_for: 'Reporte diario de venta [%{day}]'
-    total_sales_count: "TOTAL:  Ventas: %{sales_count}  \n  Recaudado: %{total_price} "
-    transfer_stock: "Transferencia \n  %{day} \n  A %{place}"
-    all_provider_products: 'Productos/Proveedor'
-
+    all_provider_products: "Productos/Proveedor"
+    daily_sales_report_for: "Reporte diario de venta [%{day}]"
+    items_count_with_net_price: "%{count} items  --------> Neto %{price}"
+    print: "Imprimir"
+    seller: "Vendedor Nro: %{seller}"
+    tax_worthless: "Sin valor fiscal"
+    thinks: |-
+        Gracias!!
+         Lo esperamos nuevamente
+    total_price: "Total: %{total}"
+    total_sales_count: |-
+        TOTAL:  Ventas: %{sales_count}
+          Recaudado: %{total_price}
+    transfer_stock: |-
+        Transferencia
+          %{day}
+          A %{place}
   shared:
-    average: 'Promedio'
-
+    average: "Promedio"
   view:
-    generic:
-      empty_index:
-        html: 'No hay ningún elemento por el momento'
-      empty_search:
-        title:
-          html: 'La búsqueda de <span class="label label-inverse">%{search}</span> no obtuvo ningún resultado.'
     customers:
-      index_title: 'Listado de clientees'
-      show_title: 'Detalle de cliente'
-      new_title: 'Nuevo cliente'
-      edit_title: 'Modificar cliente'
-      correctly_created: 'Cliente agregado correctamente.'
-      correctly_updated: 'Cliente actualizado correctamente.'
-      stale_object_error: 'El cliente no pudo ser actualizado, intente nuevamente.'
+      correctly_created: "Cliente agregado correctamente."
+      correctly_updated: "Cliente actualizado correctamente."
+      edit_title: "Modificar cliente"
       empty_index:
         html: 'No se ha creado ningún cliente hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Cliente</span>'
-      new: 'Nuevo Cliente'
+      index_title: "Listado de clientees"
       kinds:
-        iva_resp_insc: 'IVA RESPONSABLE INSCRIPTO'
-        iva_resp_not_insc: 'IVA RESPONSABLE NO INSCRIPTO'
-        not_resp: 'NO RESPONSABLE'
-        exempt_iva: 'IVA EXENTO'
-        resp_monot: 'RESPONSABLE MONOTRIBUTO'
-        final_consumer: 'CONSUMIDOR FINAL'
-        not_categoriced: 'SUJETO NO CATEGORIZADO'
-        social_monot: 'MONOTRIBUTISTA SOCIAL'
-        small_event_contributor: 'PEQUEÑO CONTRIBUYENTE EVENTUAL'
-        social_small_event_contributor: 'PEQUEÑO CONTRIBUYENTE EVENTUAL SOCIAL'
+        exempt_iva: "IVA EXENTO"
+        final_consumer: "CONSUMIDOR FINAL"
+        iva_resp_insc: "IVA RESPONSABLE INSCRIPTO"
+        iva_resp_not_insc: "IVA RESPONSABLE NO INSCRIPTO"
+        not_categoriced: "SUJETO NO CATEGORIZADO"
+        not_resp: "NO RESPONSABLE"
+        resp_monot: "RESPONSABLE MONOTRIBUTO"
+        small_event_contributor: "PEQUEÑO CONTRIBUYENTE EVENTUAL"
+        social_monot: "MONOTRIBUTISTA SOCIAL"
+        social_small_event_contributor: "PEQUEÑO CONTRIBUYENTE EVENTUAL SOCIAL"
+      new: "Nuevo Cliente"
+      new_title: "Nuevo cliente"
       price_types:
-        retail_price_abbr: 'Normal'
-        unit_price_abbr: 'Unidad'
-        special_price_abbr: 'Especial'
+        retail_price_abbr: "Normal"
+        special_price_abbr: "Especial"
+        unit_price_abbr: "Unidad"
+      show_title: "Detalle de cliente"
+      stale_object_error: "El cliente no pudo ser actualizado, intente nuevamente."
     daily_boxes:
-      index_title: 'Caja diaria del último mes'
-      day: 'Día'
-      total_sales_amount: 'Vendido'
-      total_sales_count: 'Cant. Ventas'
-      send_to_print: "Enviado a imprimir reporte del %{day}"
+      day: "Día"
       empty_index:
-        html: 'No se ha creado ninguna venta hasta el momento'
+        html: "No se ha creado ninguna venta hasta el momento"
+      index_title: "Caja diaria del último mes"
+      send_to_print: "Enviado a imprimir reporte del %{day}"
+      total_sales_amount: "Vendido"
+      total_sales_count: "Cant. Ventas"
+    generic:
+      empty_index:
+        html: "No hay ningún elemento por el momento"
+      empty_search:
+        title:
+          html: "La búsqueda de <span class=\"label label-inverse\">%{search}</span> no obtuvo ningún resultado."
     places:
-      index_title: 'Listado de locales'
-      show_title: 'Detalle de local'
-      new_title: 'Nuevo local'
-      edit_title: 'Modificar local'
-      correctly_created: 'Local agregado correctamente.'
-      correctly_updated: 'Local actualizado correctamente.'
-      stale_object_error: 'El local no pudo ser actualizado, intente nuevamente.'
+      correctly_created: "Local agregado correctamente."
+      correctly_updated: "Local actualizado correctamente."
+      edit_title: "Modificar local"
       empty_index:
         html: 'No se ha creado ningún local hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Local</span>'
-      new: 'Nuevo Local'
+      index_title: "Listado de locales"
+      new: "Nuevo Local"
+      new_title: "Nuevo local"
+      show_title: "Detalle de local"
+      stale_object_error: "El local no pudo ser actualizado, intente nuevamente."
     products:
-      index_title: 'Listado de productos'
-      show_title: 'Detalle de producto'
-      new_title: 'Nuevo producto'
-      edit_title: 'Modificar producto'
-      correctly_created: 'Producto agregado correctamente.'
-      correctly_updated: 'Producto actualizado correctamente.'
-      stale_object_error: 'El producto no pudo ser actualizado, intente nuevamente.'
-      stock_correctly_updated: 'Stock actualizado correctamente.'
+      add_stock: "Agregar stock"
+      correctly_created: "Producto agregado correctamente."
+      correctly_updated: "Producto actualizado correctamente."
+      edit_title: "Modificar producto"
       empty_index:
         html: 'No se ha creado ningún producto hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Producto</span>'
-      new: 'Nuevo Producto'
-      quantity_to_put_in_stock: 'Cantidad a poner en stock'
-      low_stock: 'Stock bajo'
-      print_low_stock: 'Imprimir Faltantes'
-      add_stock: 'Agregar stock'
+      index_title: "Listado de productos"
+      low_stock: "Stock bajo"
+      new: "Nuevo Producto"
+      new_title: "Nuevo producto"
+      print_low_stock: "Imprimir Faltantes"
+      quantity_to_put_in_stock: "Cantidad a poner en stock"
+      show_title: "Detalle de producto"
+      stale_object_error: "El producto no pudo ser actualizado, intente nuevamente."
+      stock_correctly_updated: "Stock actualizado correctamente."
     providers:
-      index_title: 'Listado de proveedores'
-      show_title: 'Detalle de proveedor'
-      new_title: 'Nuevo proveedor'
-      edit_title: 'Modificar proveedor'
-      correctly_created: 'Proveedor agregado correctamente.'
-      correctly_updated: 'Proveedor actualizado correctamente.'
-      stale_object_error: 'El proveedor no pudo ser actualizado, intente nuevamente.'
+      add_increase: "Agregar aumento (%)"
+      correctly_created: "Proveedor agregado correctamente."
+      correctly_updated: "Proveedor actualizado correctamente."
+      edit_title: "Modificar proveedor"
       empty_index:
         html: 'No se ha creado ningún proveedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Proveedor</span>'
-      new: 'Nuevo Proveedor'
-      add_increase: 'Agregar aumento (%)'
-      products: 'Productos del proveedor'
-      list_for_print: 'Lista de proveedores para imprimir productos'
+      index_title: "Listado de proveedores"
+      list_for_print: "Lista de proveedores para imprimir productos"
+      new: "Nuevo Proveedor"
+      new_title: "Nuevo proveedor"
+      products: "Productos del proveedor"
+      show_title: "Detalle de proveedor"
+      stale_object_error: "El proveedor no pudo ser actualizado, intente nuevamente."
     sales:
-      index_title: 'Listado de ventas'
-      show_title: 'Detalle de venta'
-      new_title: 'Nueva venta'
-      edit_title: 'Modificar venta'
-      correctly_created: 'Venta agregada correctamente.'
-      correctly_updated: 'Venta actualizada correctamente.'
-      stale_object_error: 'La venta no pudo ser actualizado, intente nuevamente.'
+      can_not_revoke: "No se pudo cancelar la venta"
+      correctly_created: "Venta agregada correctamente."
+      correctly_updated: "Venta actualizada correctamente."
+      daily_report: "Informe diario"
+      edit_title: "Modificar venta"
       empty_index:
         html: 'No se ha creado ninguna venta hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva Venta</span>'
-      new: 'Nueva Venta'
-      new_product_line: 'Nuevo producto'
-      seller_not_found: 'Vendedor no encontrado'
-      wait_for_customer: 'No se encontro el cliente, espere a las sugerencias de busqueda'
-      daily_report: 'Informe diario'
-      print_report_title: 'Imprimir informe diario'
-      revoke: 'Cancelar'
-      revoke_ok: 'Venta cancelada'
-      can_not_revoke: 'No se pudo cancelar la venta'
+      index_title: "Listado de ventas"
+      new: "Nueva Venta"
+      new_product_line: "Nuevo producto"
+      new_title: "Nueva venta"
+      print_report_title: "Imprimir informe diario"
+      revoke: "Cancelar"
+      revoke_ok: "Venta cancelada"
+      seller_not_found: "Vendedor no encontrado"
+      show_title: "Detalle de venta"
+      stale_object_error: "La venta no pudo ser actualizado, intente nuevamente."
+      wait_for_customer: "No se encontro el cliente, espere a las sugerencias de busqueda"
     sellers:
-      index_title: 'Listado de vendedores'
-      show_title: 'Detalle de vendedor'
-      new_title: 'Nuevo vendedor'
-      edit_title: 'Modificar vendedor'
-      correctly_created: 'Vendedor agregado correctamente.'
-      correctly_updated: 'Vendedor actualizado correctamente.'
-      stale_object_error: 'El vendedor no pudo ser actualizado, intente nuevamente.'
+      seller_code: "Código del vendedor a cambiar"
+      change_current: "Cambiar vendor"
+      correctly_created: "Vendedor agregado correctamente."
+      correctly_updated: "Vendedor actualizado correctamente."
+      edit_title: "Modificar vendedor"
       empty_index:
         html: 'No se ha creado ningún vendedor hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo Vendedor</span>'
-      new: 'Nuevo Vendedor'
-      seller: 'Vendedor'
-      sales_count: 'Ventas'
+      index_title: "Listado de vendedores"
+      new: "Nuevo Vendedor"
+      new_title: "Nuevo vendedor"
+      sales_count: "Ventas"
+      seller: "Vendedor"
+      show_title: "Detalle de vendedor"
+      stale_object_error: "El vendedor no pudo ser actualizado, intente nuevamente."
     stats:
-      index_title: 'Estadísticas'
-      date: 'Fecha'
-      sold: 'Vendido'
-      empty_result: 'La busqueda no dio resultados'
-      send_to_print: 'Enviado a imprimir'
-      print_error: 'Ha ocurrido un error. Por favor verifique la impresora y reintente'
+      date: "Fecha"
       date_filter:
-        start: 'Inicio'
-        end: 'Fin'
-        apply: 'Aplicar'
-      sales_by_seller:
-        title: 'Ventas por vendedor'
-      sales_earn:
-        title: 'Ganancia de ventas'
+        apply: "Aplicar"
+        end: "Fin"
+        start: "Inicio"
+      empty_result: "La busqueda no dio resultados"
+      index_title: "Estadísticas"
       payrolls:
-        title: 'Liquidación de sueldos'
-        for_month: 'De %{month}'
-        date_label: 'Ingresa cualquier día del mes que desees buscar'
-        by_date_detail: 'Detallados por día'
-        payrolls: 'Pagos'
-        details: 'Detalles'
-        seller: 'Vendedor'
-        sold: 'Ventas'
-        percentage: 'Porcentaje'
-        quantity-total: 'Cant | Total'
-        abbr_quantity: 'Cant:'
-        money: 'Pesos'
-        daily: 'Diario'
-        days: 'Días'
-        seller_number: 'Vdor %{seller}'
-        print_payrolls: 'Imprimir Liquidación'
-      sales_by_hours:
-        title: 'Ventas por hora'
-        for_day: 'Ventas por hora del día %{day}'
-        horary: 'Horario'
-        sales_count: 'Cant. ventas'
-        sold: 'Vendido'
-        date_label: 'Ingresa cualquier día del mes que desees buscar'
+        abbr_quantity: "Cant:"
+        by_date_detail: "Detallados por día"
+        daily: "Diario"
+        date_label: "Ingresa cualquier día del mes que desees buscar"
+        days: "Días"
+        details: "Detalles"
+        for_month: "De %{month}"
+        money: "Pesos"
+        payrolls: "Pagos"
+        percentage: "Porcentaje"
+        print_payrolls: "Imprimir Liquidación"
+        quantity-total: "Cant | Total"
+        seller: "Vendedor"
+        seller_number: "Vdor %{seller}"
+        sold: "Ventas"
+        title: "Liquidación de sueldos"
+      print_error: "Ha ocurrido un error. Por favor verifique la impresora y reintente"
       products_day_stats:
-        title: 'Stock vendido de Productos preferidos'
-        for_day: 'Día: %{day}'
-        date_label: 'Seleccione el día:'
+        date_label: "Seleccione el día:"
+        for_day: "Día: %{day}"
+        title: "Stock vendido de Productos preferidos"
+      sales_by_hours:
+        date_label: "Ingresa cualquier día del mes que desees buscar"
+        for_day: "Ventas por hora del día %{day}"
+        horary: "Horario"
+        sales_count: "Cant. ventas"
+        sold: "Vendido"
+        title: "Ventas por hora"
+      sales_by_seller:
+        title: "Ventas por vendedor"
+      sales_earn:
+        title: "Ganancia de ventas"
+      send_to_print: "Enviado a imprimir"
+      sold: "Vendido"
     transfer_products:
-      index_title: 'Productos transferidos'
-      show_title: 'Transferencia'
-      new_title: 'Nueva Transferencia'
-      new_transfer_line: 'Nueva linea'
-      correctly_created: 'Transferencia agregada correctamente.'
+      correctly_created: "Transferencia agregada correctamente."
       empty_index:
         html: 'No se ha creado ninguna transferencia hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nueva Transferencia</span>'
+      index_title: "Productos transferidos"
+      new_title: "Nueva Transferencia"
+      new_transfer_line: "Nueva linea"
+      show_title: "Transferencia"
     users:
-      index_title: 'Listado de usuarios'
-      show_title: 'Detalle de usuario'
-      new_title: 'Nuevo usuario'
-      edit_title: 'Modificar usuario'
-      correctly_created: 'Usuario agregado correctamente.'
-      correctly_updated: 'Usuario actualizado correctamente.'
-      stale_object_error: 'El usuario no pudo ser actualizado, intente nuevamente.'
+      correctly_created: "Usuario agregado correctamente."
+      correctly_updated: "Usuario actualizado correctamente."
+      edit_profile: "Editar perfil"
+      edit_title: "Modificar usuario"
       empty_index:
         html: 'No se ha creado ningún usuario hasta el momento, si quiere puede hacerlo desde el botón <span class="label label-info">Nuevo usuario</span>'
-      new: 'Nuevo usuario'
-      update_profile: 'Actualizar datos'
-      update_password: 'Actualizar contraseña'
-      profile_correctly_updated: 'Actualizaste tus datos correctamente.'
-      edit_profile: 'Editar perfil'
-      prefered_place: 'Local comercial de preferencia'
+      index_title: "Listado de usuarios"
+      new: "Nuevo usuario"
+      new_title: "Nuevo usuario"
+      prefered_place: "Local comercial de preferencia"
+      profile_correctly_updated: "Actualizaste tus datos correctamente."
       roles:
-        admin: 'Administrador'
-        regular: 'Normal'
+        admin: "Administrador"
+        regular: "Normal"
+      show_title: "Detalle de usuario"
+      stale_object_error: "El usuario no pudo ser actualizado, intente nuevamente."
+      update_password: "Actualizar contraseña"
+      update_profile: "Actualizar datos"

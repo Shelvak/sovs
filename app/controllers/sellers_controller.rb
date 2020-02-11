@@ -1,9 +1,9 @@
 class SellersController < ApplicationController
   before_action :authenticate_user!
-      
+
   check_authorization
   load_and_authorize_resource
-  
+
   # GET /sellers
   # GET /sellers.json
   def index
@@ -92,5 +92,11 @@ class SellersController < ApplicationController
       format.html { redirect_to sellers_url }
       format.json { head :ok }
     end
+  end
+
+  def assign_current
+    session[:current_seller] = params[:current_seller].to_i
+
+    render json: {}, status: :ok
   end
 end

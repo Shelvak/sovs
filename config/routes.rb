@@ -33,7 +33,12 @@ Rails.application.routes.draw do
     get :put_to_stock, on: :member
   end
 
-  resources :places, :customers, :sellers
+  resources :places, :customers
+  resources :sellers do
+    collection do
+      put :assign_current
+    end
+  end
 
   resources :transfer_products, except: [:edit, :update] do
     get :autocomplete_for_product_name, on: :collection

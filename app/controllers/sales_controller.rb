@@ -33,6 +33,7 @@ class SalesController < ApplicationController
   def new
     @title = t('view.sales.new_title')
     @sale = Sale.new
+    @sale.seller_code = session[:current_seller]
     @sale.product_lines.build unless @sale.product_lines.any?
 
     respond_to do |format|

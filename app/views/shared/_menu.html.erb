@@ -21,6 +21,20 @@
         </ul>
         <ul class="nav pull-right">
           <li>
+            <%= link_to(
+              '#', title: t('view.sellers.change_current'),
+              data: {
+                show_tooltip: true, placement: 'bottom',
+                confirm_msg: t('view.sellers.seller_code')
+              },
+              class: 'js-change-seller'
+            ) do %>
+              <span class="badge">
+                <%= '&#x270e;'.html_safe %>
+              </span>
+            <% end %>
+          </li>
+          <li>
             <%= link_to_low_stock_products if can?(:read, Product) %>
           </li>
           <li>

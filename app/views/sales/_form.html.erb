@@ -12,7 +12,7 @@
         <%= f.label :seller_id %>
         <%= f.input :seller_code, label: false, input_html: {
           class: 'span6', autofocus: true, autocomplete: 'off',
-          value: @sale.seller.try(:code), tabindex: 1, 
+          value: @sale.seller_code || @sale.seller.try(:code), tabindex: 1,
           data: { 'enter-scape' => true }
         } %>
       </div>
@@ -73,7 +73,7 @@
           <div id="iva-price" class="hide"><b>I.V.A. 21% => </b><span>
             <%= number_to_currency(iva)  %>
           </span></div>
-          <%= f.input :total_price, required: false, input_html: { readonly: true } %> 
+          <%= f.input :total_price, required: false, input_html: { readonly: true } %>
         </div>
       </div>
       <div class="span2"></div>
