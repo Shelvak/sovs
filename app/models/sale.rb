@@ -1,6 +1,4 @@
-class Sale < ActiveRecord::Base
-  has_paper_trail
-
+class Sale < ApplicationRecord
   attr_accessor :seller_code, :auto_customer_name, :default_price_type
 
   scope :between, ->(_from, _to) { where(

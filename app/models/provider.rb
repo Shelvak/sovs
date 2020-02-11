@@ -1,8 +1,12 @@
-class Provider < ActiveRecord::Base
-  has_paper_trail
+class Provider < ApplicationRecord
+  include PgSearch
 
-  #attr_accessible :name, :contact, :address, :cuit, :phone, :other_phone,
-  #  :locality, :city, :province, :fax, :postal_code
+  pg_search_scope :unicode_search,
+    against: :name,
+    ignoring: :accents,
+    using: {
+      tsearch: { any_word: true, prefix: true }
+    }
 
   validates :name, :cuit, presence: true
   validates :cuit, uniqueness: true
@@ -22,10 +26,6 @@ class Provider < ActiveRecord::Base
     }
 
     super(default_options.merge(options || {}))
-  end
-
-  def self.filtered_list(query)
-    all
   end
 
   def increase_all_products!(percentage)

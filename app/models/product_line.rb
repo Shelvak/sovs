@@ -1,5 +1,4 @@
-class ProductLine < ActiveRecord::Base
-  has_paper_trail
+class ProductLine < ApplicationRecord
 
   scope :at_day, ->(day) { where(
     [

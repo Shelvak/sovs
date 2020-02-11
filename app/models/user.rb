@@ -1,9 +1,15 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include RoleModel
+  include PgSearch
+
+  pg_search_scope :unicode_search,
+    against: [:name, :lastname, :email],
+    ignoring: :accents,
+    using: {
+      tsearch: { any_word: true, prefix: true }
+    }
 
   roles :admin, :regular
-
-  has_paper_trail
 
   devise :database_authenticatable, :recoverable, :rememberable, :trackable,
     :validatable, authentication_keys: [:login]
@@ -35,10 +41,6 @@ class User < ActiveRecord::Base
 
   def role=(role)
     self.roles = [role]
-  end
-
-  def self.filtered_list(query)
-    all
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)

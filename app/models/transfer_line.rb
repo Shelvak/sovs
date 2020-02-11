@@ -1,5 +1,4 @@
-class TransferLine < ActiveRecord::Base
-  has_paper_trail
+class TransferLine < ApplicationRecord
 
   attr_accessor :auto_product_name
   #attr_accessible :product_id, :transfer_product_id, :quantity,

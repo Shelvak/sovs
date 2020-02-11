@@ -125,6 +125,10 @@ GEM
       request_store (~> 1.1)
     pdf-core (0.7.0)
     pg (1.2.2)
+    pg_search (1.0.6)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -241,6 +245,7 @@ DEPENDENCIES
   kaminari
   paper_trail
   pg
+  pg_search
   prawn
   rails (~> 5.0.0)
   rails-controller-testing

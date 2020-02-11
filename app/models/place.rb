@@ -1,7 +1,4 @@
-class Place < ActiveRecord::Base
-  has_paper_trail
-
-  #attr_accessible :description, :transfer_default
+class Place < ApplicationRecord
 
   validates :description, presence: true
   validates :description, uniqueness: true

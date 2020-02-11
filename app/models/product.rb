@@ -1,5 +1,12 @@
-class Product < ActiveRecord::Base
-  has_paper_trail
+class Product < ApplicationRecord
+  include PgSearch
+
+  pg_search_scope :unicode_search,
+    against: { code: 'A', description: 'B' },
+    ignoring: :accents,
+    using: {
+      tsearch: { any_word: true, prefix: true }
+    }
 
   scope :with_code, ->(code) { where(code: code) }
   scope :with_preference, ->() { where(preference: true).order(:code) }
@@ -48,10 +55,6 @@ class Product < ActiveRecord::Base
     super(default_options.merge(options || {}))
   end
 
-  def self.filtered_list(query)
-    all
-  end
-
   def increase_prices_with_percentage!(percentage)
     self.cost *= percentage
     self.iva_cost *= percentage
@@ -65,9 +68,5 @@ class Product < ActiveRecord::Base
     self.total_stock ||= 0
     self.total_stock += quantity
     self.save!
-  end
-
-  def self.filtered_list(query)
-    where(code: query).or(where("description ILIKE '%#{query}%'"))
   end
 end

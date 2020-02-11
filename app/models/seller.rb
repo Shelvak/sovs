@@ -1,8 +1,4 @@
-class Seller < ActiveRecord::Base
-  has_paper_trail
-
-  # attr_accessible :code, :name, :address, :phone
-
+class Seller < ApplicationRecord
   validates :code, :name, presence: true
   validates :code, uniqueness: true
 

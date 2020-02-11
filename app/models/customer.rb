@@ -1,5 +1,12 @@
-class Customer < ActiveRecord::Base
-  has_paper_trail
+class Customer < ApplicationRecord
+  include PgSearch
+
+  pg_search_scope :unicode_search,
+    against: [:name, :business_name],
+    ignoring: :accents,
+    using: {
+      tsearch: { any_word: true, prefix: true }
+    }
 
   PRICE_TYPE = ['retail_price', 'unit_price', 'special_price']
 
@@ -53,9 +60,5 @@ class Customer < ActiveRecord::Base
       self.errors.add :name, :blank if self.name.blank?
     end
 
-  end
-
-  def self.filtered_list(query)
-    all
   end
 end

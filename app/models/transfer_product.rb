@@ -1,5 +1,4 @@
-class TransferProduct < ActiveRecord::Base
-  has_paper_trail
+class TransferProduct < ApplicationRecord
 
   #attr_accessible :place_id, :transfer_lines_attributes, :transfer_lines
 
