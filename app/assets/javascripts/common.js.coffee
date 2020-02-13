@@ -1,8 +1,13 @@
 new Rule
   load: ->
     # For browsers with no autofocus support
-    $('[autofocus]:not([readonly]):not([disabled]):visible:first').focus()
-    $('input:visible:not(.date_picker):not(.datetime_picker):first').focus()
+    focusInput = $('[autofocus]:not([readonly]):not([disabled]):visible:first')
+
+    if focusInput.length
+      focusInput.focus()
+    else
+      $('input:visible:not(.date_picker):not(.datetime_picker):first').focus()
+
     $('[data-show-tooltip]').tooltip()
 
     timers = @map.timers = []

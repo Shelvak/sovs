@@ -11,8 +11,8 @@
       <div class='span2'>
         <%= f.label :seller_id %>
         <%= f.input :seller_code, label: false, input_html: {
-          class: 'span6', autofocus: true, autocomplete: 'off',
-          value: @sale.seller_code || @sale.seller.try(:code), tabindex: 1,
+          class: 'span6', autocomplete: 'off',
+          value: @sale.seller_code || @sale.seller.try(:code),
           data: { 'enter-scape' => true }
         } %>
       </div>
