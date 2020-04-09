@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.0'
+gem 'rails', '~> 5.2.4'
 
 gem 'pg'
 gem 'pg_search'
@@ -9,7 +9,7 @@ gem 'jquery-ui-rails'
 gem 'kaminari'
 gem 'simple_form'
 gem 'devise'
-gem 'cancan'
+gem 'cancancan'
 gem 'role_model'
 gem 'paper_trail'
 gem 'validates_timeliness'
@@ -28,8 +28,6 @@ gem 'iodine'
 gem 'byebug'
 
 gem 'bugsnag'
-
-
 
 group :test do
   gem 'turn', require: false

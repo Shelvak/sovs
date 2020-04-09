@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery-ui
-//= require jquery_ujs
+//= require rails-ujs
 //= require jquery/jquery.ui.datepicker-es
 //= require jquery/jquery-ui-timepicker-addon
 //= require jquery/emuletab

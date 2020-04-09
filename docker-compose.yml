@@ -22,8 +22,6 @@ services:
     restart: unless-stopped
     ports:
       - 6379:6379
-    environment:
-      DB_HOST: postgres
     volumes:
       - ./volumes/logs:/logs:rw
       - ./volumes/redis:/etc/redis/data:rw
@@ -37,5 +35,7 @@ services:
     depends_on:
       - redis
       - postgres
+    environment:
+      DB_HOST: postgres
     volumes:
       - ./volumes/logs/sovs/:/app/log/:rw

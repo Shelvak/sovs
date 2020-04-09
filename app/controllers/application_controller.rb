@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
   before_action :permit_all
   after_action -> { expires_now if user_signed_in? }
 
