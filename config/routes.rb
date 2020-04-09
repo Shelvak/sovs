@@ -56,7 +56,6 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
 
   resources :users do
     member do
@@ -65,5 +64,6 @@ Rails.application.routes.draw do
     end
   end
 
+  devise_for :users
   root to: redirect('/sales/new')
 end
