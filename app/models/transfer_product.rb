@@ -7,7 +7,7 @@ class TransferProduct < ApplicationRecord
   before_save :assign_total_price
 
   has_many :transfer_lines
-  belongs_to :place
+  belongs_to :place, optional: true
 
   accepts_nested_attributes_for :transfer_lines, allow_destroy: true,
     reject_if: ->(attrs) { attrs['product_id'].blank? }

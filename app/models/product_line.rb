@@ -21,8 +21,8 @@ class ProductLine < ApplicationRecord
     allow_nil: true, allow_blank: true, greater_than: 0
   }
 
-  belongs_to :product
-  belongs_to :sale
+  belongs_to :product, optional: true
+  belongs_to :sale, optional: true
 
   before_validation :assign_prices_snapshot
   before_create :assign_prices_snapshot

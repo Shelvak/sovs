@@ -33,7 +33,7 @@ class Product < ApplicationRecord
     :iva_cost, :retail_price, :unit_price, :special_price, :gain, :unit_gain,
     :special_gain, numericality: { allow_nil: true, allow_blank: true }
 
-  belongs_to :provider
+  belongs_to :provider, optional: true
   has_many :product_lines
   has_many :transfer_lines
 

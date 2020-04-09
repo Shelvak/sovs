@@ -8,8 +8,8 @@ class TransferLine < ApplicationRecord
 
   before_save :discount_stock
 
-  belongs_to :product
-  belongs_to :transfer_product
+  belongs_to :product, optional: true
+  belongs_to :transfer_product, optional: true
 
   def initialize(attributes = {})
     super(attributes)

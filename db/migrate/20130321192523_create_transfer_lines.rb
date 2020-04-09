@@ -1,4 +1,4 @@
-class CreateTransferLines < ActiveRecord::Migration
+class CreateTransferLines < ActiveRecord::Migration[4.2]
   def change
     create_table :transfer_lines do |t|
       t.integer :product_id, null: false

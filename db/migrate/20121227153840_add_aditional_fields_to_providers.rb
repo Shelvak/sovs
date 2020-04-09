@@ -1,4 +1,4 @@
-class AddAditionalFieldsToProviders < ActiveRecord::Migration
+class AddAditionalFieldsToProviders < ActiveRecord::Migration[4.2]
   def up
     add_column :providers, :other_phone, :string
     add_column :providers, :locality, :string

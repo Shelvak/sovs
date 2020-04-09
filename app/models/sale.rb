@@ -22,8 +22,8 @@ class Sale < ApplicationRecord
   validates :total_price, numericality: { allow_nil: true, allow_blank: true }
   validate :must_have_one_item
 
-  belongs_to :seller
-  belongs_to :customer
+  belongs_to :seller, optional: true
+  belongs_to :customer, optional: true
   has_many :product_lines, inverse_of: :sale, dependent: :destroy
 
   accepts_nested_attributes_for :product_lines, allow_destroy: true,

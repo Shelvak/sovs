@@ -1,4 +1,4 @@
-class AddGainsToProduct < ActiveRecord::Migration
+class AddGainsToProduct < ActiveRecord::Migration[4.2]
   def up
     add_column :products, :unit_gain, :decimal, precision: 15, scale: 2
     add_column :products, :special_gain, :decimal, precision: 15, scale: 2

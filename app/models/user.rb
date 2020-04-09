@@ -23,7 +23,7 @@ class User < ApplicationRecord
     allow_nil: true, allow_blank: true
   validates :username, uniqueness: { case_sensitive: false }
 
-  belongs_to :place
+  belongs_to :place, optional: true
 
   def initialize(attributes = {})
     super(attributes)
