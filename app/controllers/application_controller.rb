@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery prepend: true
+
   before_action :permit_all
-  after_action -> { expires_now if user_signed_in? }
 
   rescue_from Exception do |exception|
     begin

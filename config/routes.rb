@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+
   get 'daily_boxes' => 'daily_box#index'
   put 'daily_boxes/print_daily_report' => 'daily_box#print_daily_report',
     as: 'print_daily_report'
@@ -56,7 +60,6 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
 
   resources :users do
     member do

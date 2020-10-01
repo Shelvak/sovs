@@ -16,16 +16,16 @@ services:
       POSTGRES_DBUSER: docker
       POSTGRES_DBPASS: docker
 
-  redis:
-    image: redis:4
-    command: "redis-server /etc/redis/redis.conf"
-    restart: unless-stopped
-    ports:
-      - 6379:6379
-    volumes:
-      - ./volumes/logs:/logs:rw
-      - ./volumes/redis:/etc/redis/data:rw
-      - ./docker/redis.conf:/etc/redis/redis.conf
+  # redis:
+  #   image: redis:4
+  #   command: "redis-server /etc/redis/redis.conf"
+  #   restart: unless-stopped
+  #   ports:
+  #     - 6379:6379
+  #   volumes:
+  #     - ./volumes/logs:/logs:rw
+  #     - ./volumes/redis:/etc/redis/data:rw
+  #     - ./docker/redis.conf:/etc/redis/redis.conf
 
   sovs:
     build: .
@@ -33,7 +33,7 @@ services:
     ports:
       - 80:3000
     depends_on:
-      - redis
+      # - redis
       - postgres
     environment:
       DB_HOST: postgres
